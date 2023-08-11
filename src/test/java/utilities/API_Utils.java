@@ -6,17 +6,10 @@ import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.http.ContentType;
-import io.restassured.path.json.JsonPath;
-import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
+
 import java.util.HashMap;
 import java.util.Map;
 import static io.restassured.RestAssured.given;
-import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 
@@ -45,7 +38,7 @@ public class API_Utils {
         return fullPath;
     }
 
-    public static String generateAllToken(String userType, String endPoint) { //  "/ olmadan başla"
+    public static String generateTokenAll(String userType, String endPoint) { //  "/ olmadan başla"
         spec = new RequestSpecBuilder().setBaseUri(ConfigReader.getProperty("base_url")).build();
 
         String fullPath = createfullPath(endPoint);
@@ -77,7 +70,7 @@ public class API_Utils {
         spec = new RequestSpecBuilder().setBaseUri(ConfigReader.getProperty("base_url")).build();
 
         String fullPath = createfullPath(endPoint);
-        token =generateAllToken(userType, endPoint);
+        token = generateTokenAll(userType, endPoint);
         RequestSpecification requestSpecification = given().headers(
                 "Authorization",
                 "Bearer " + token,
@@ -139,7 +132,7 @@ public class API_Utils {
         spec = new RequestSpecBuilder().setBaseUri(ConfigReader.getProperty("base_url")).build();
 
         String fullPath = createfullPath(endPoint);
-        token =generateAllToken(userType, endPoint);
+        token = generateTokenAll(userType, endPoint);
         Response response;
         Map<String, Object> requestBody = new HashMap<>();
 
