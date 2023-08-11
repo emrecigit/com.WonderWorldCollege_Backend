@@ -14,9 +14,9 @@ public class HooksAPI {
 
 
   public static RequestSpecification spec;
-    public static String token;
-
-    public static String wrongToken;
+    public static String tokenAll;
+   public static String token;
+    public static String tokenWrong;
     public static String tokenAdmin;
     public static String tokenTeacher;
     public static String tokenStudent;
@@ -25,6 +25,13 @@ public class HooksAPI {
     public void setUpApi(){
 
         spec = new RequestSpecBuilder().setBaseUri(ConfigReader.getProperty("base_url")).build();
+    }
+
+    @Before(order = 1)
+
+    public  void  beforeGenerateTokenAll(String userType, String endPoint){
+        tokenAll = API_Utils.generateTokenAll(userType, endPoint);
+        System.out.println("Tokenim : " + tokenAll);
     }
 
     @Before(order = 1)
@@ -51,11 +58,8 @@ public class HooksAPI {
     }
 
     @Before (order=1)
-    public void beforeGeneratewrongToken(){
-        wrongToken = Authentication.generateToken();
+    public void beforeGenerateTokenWrong(){
+        tokenWrong = Authentication.generateToken();
     }
-
-
-
 
 }
