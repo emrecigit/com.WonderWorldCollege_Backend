@@ -5,7 +5,7 @@ Feature: As an administrator, I want to access the Books List through API connec
             the expected status code is 200, and the response message should be "Success."
 
 
-    * Set "api/visitorsBooksList" parameters
+    * Set "api/BooksList" parameters
     * Records response for Admin with valid authorization information
     * Verifies that status code is 200
     * Verifies that the message information is "Success"
@@ -15,7 +15,7 @@ Feature: As an administrator, I want to access the Books List through API connec
              the expected status code is 403, and the response message should be "failed."
 
 
-    * Set "api/visitorsBooksList" parameters
+    * Set "api/BooksList" parameters
     * Records response for Admin with invalid authorization information
     * Verifies that status code is 403
     * Verifies that the message information is "failed"
@@ -24,6 +24,6 @@ Feature: As an administrator, I want to access the Books List through API connec
   Scenario: Response body must be confirmed.
 
 
-    * Set "api/visitorsBooksList" parameters
+    * Set "api/BooksList" parameters
     * Records response for Admin with valid authorization information
     * The data of the record with "" is validated
