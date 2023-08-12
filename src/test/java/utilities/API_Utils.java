@@ -16,13 +16,25 @@ import static io.restassured.RestAssured.given;
 public class API_Utils {
 
     private static String token;
-    public static String fullPath;
-    public static RequestSpecification spec;
+    private static String fullPath;
+    private static RequestSpecification spec;
 
-    public static String createfullPath(String endPoint) {
-        String[] paths = endPoint.split("/");
+
+    // public static String createfullPath(String rawPaths)                                                  23
+    // public static String generateTokenAll(String userType, String rawPaths)                               44
+    // public static Response sendEveryRequest(String RequestMethodName, String userType, String endPoint)   73
+    // public static Response sendAllRequest(String RequestMethodName, String userType, String endPoint)     135
+    // public static Response getRequest(String token, String endpoint)                                      235
+    // public static Response deleteRequest(String token, String endpoint)                                   249
+    // public static String generateTokenAdmin()                                                             262
+    // public static String generateTokenTeacher()                                                           281
+    // public static String generateTokenStudent()                                                           298
+
+
+    public static String createfullPath(String rawPaths) {
+        String[] paths = rawPaths.split("/");
         StringBuilder tempPath = new StringBuilder("/{");
-        for (int i = 1; i <= paths.length; i++) {
+        for (int i = 0; i < paths.length; i++) {
             String key = "pp" + i; // pp0 pp1 pp2
             String value = paths[i].trim();
             System.out.println("value = " + value);
@@ -38,10 +50,9 @@ public class API_Utils {
         return fullPath;
     }
 
-    public static String generateTokenAll(String userType, String endPoint) { //  "/ olmadan başla"
+    public static String generateTokenAll(String userType, String rawPaths) { //  "/ olmadan başla"
         spec = new RequestSpecBuilder().setBaseUri(ConfigReader.getProperty("base_url")).build();
-
-        String fullPath = createfullPath(endPoint);
+        fullPath = createfullPath(rawPaths);
 
         Map<String, Object> dataCredential = new HashMap<>();
 
@@ -50,7 +61,7 @@ public class API_Utils {
         } else if ("teacher".equals(userType)) {
             dataCredential.put("email", ConfigReader.getProperty("emailTeacher"));
         } else if ("student".equals(userType)) {
-            //fullPath = createfullPath(endPoint);
+            //fullPath = createfullPath(rawPaths);
             dataCredential.put("email", ConfigReader.getProperty("emailStudent"));
         }
         dataCredential.put("password", ConfigReader.getProperty("password"));
@@ -290,7 +301,7 @@ public class API_Utils {
         spec = new RequestSpecBuilder().setBaseUri(ConfigReader.getProperty("base_url")).build();
         spec.pathParams("pp1", "apistudent", "pp2", "getToken");
         Map<String, Object> dataCredential = new HashMap<>();
-        dataCredential.put("email", ConfigReader.getProperty("emailStudent"));
+        dataCredential.put("username", ConfigReader.getProperty("emailStudent"));// email yerine username ile değişti
         dataCredential.put("password", ConfigReader.getProperty("password"));
         Response response = given()
                 .spec(spec)
