@@ -95,6 +95,7 @@ Mehmet Şah OKUMUŞ :3501-4000
     public void verifiesThatStatusCodeIs(int statusCode) {
 
         assertEquals(statusCode, response.getStatusCode());
+
     }
 
     @Then("Verifies that the message information is {string}")
