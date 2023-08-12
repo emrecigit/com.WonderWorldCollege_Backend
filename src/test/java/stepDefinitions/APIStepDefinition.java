@@ -7,6 +7,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.json.JSONObject;
+import org.junit.Assert;
 import utilities.API_Utils;
 import utilities.ConfigReader;
 import java.util.Arrays;
@@ -98,8 +99,11 @@ Mehmet Şah OKUMUŞ :3501-4000
 
     @Then("Verifies that the message information is {string}")
     public void verifiesThatTheMessageInformationIs(String message) {
+
         JsonPath resJP = response.jsonPath();
-        assertEquals(message, resJP.getString("message"));
+       Assert.assertEquals(message, resJP.getString("message"));
+
+
     }
 
 
@@ -161,7 +165,6 @@ Mehmet Şah OKUMUŞ :3501-4000
 
          */
     }
-
 
 
 
