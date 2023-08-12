@@ -15,9 +15,9 @@ import org.junit.runner.RunWith;
                 "junit:target/xml-report/cucumber.xml",
                 "rerun:target/failedRerun.txt"
         },
-        features = "src/test/resources/features/api",
-        glue = {"stepDefinitions/api", "hooks/api"},
-        tags = "@DB",
+        features = "src/test/resources/features.db",
+        glue = {"stepDefinitions", "hooks"},
+        tags = "@db",
         dryRun = false
 )
 public class RunnerDB {
