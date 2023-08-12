@@ -7,7 +7,7 @@ public class ConfigReader {
     //1-Properties objesi olusturacagiz
     private static Properties properties; //Diğer configreaderda static Properties properties;
 
-    //2-Bu classin amaci configration.propertiesdosyasini okumak
+    //2-Bu classin amaci configration.propertiesdosyasini okumak.
     // ve aradaki key ikililerini kullanarak istegimiz key e ait value bize getirmek
     static {
 
