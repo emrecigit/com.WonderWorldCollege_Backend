@@ -2,7 +2,12 @@ package stepDefinitions;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import org.junit.Assert;
+import utilities.DB_Utils;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +45,71 @@ Mehmet Şah OKUMUŞ :3501-4000
     }
     @Then("Database connection is closed")
     public void database_connection_is_closed() {
-            closeConnection();
+
+        closeConnection();
+    }
+
+
+    String query;
+    String searchSyllable;
+    String query1;
+    String query2;
+    ResultSet rs;
+    ResultSet rs1;
+    ResultSet rs2;
+    PreparedStatement ps;
+
+    @Given("Database connection is established")
+    public void database_connection_is_established() {
+
+        DB_Utils.createConnection();
+    }
+
+    @Given("E-mail query is prepared and run and the result is obtained")
+    public void e_mail_query_is_prepared_and_run_and_the_result_is_obtained() throws SQLException {
+
+        query = "SELECT email FROM wonderworld_qa.online_admissions WHERE firstname LIKE '%al%';";
+        rs = getStatement().executeQuery(query);
+    }
+    @Given("Email query result is validated")
+    public void email_query_result_is_validated() throws SQLException {
+
+        String expected="al";
+        String actual= DB_Utils.getColumnData(query,"email").toString();
+        Assert.assertTrue(actual.contains(expected));
+
+
+    }
+
+    @Given("Book-title query is prepared and run and the result is obtained")
+    public void book_title_query_is_prepared_and_run_and_the_result_is_obtained() throws SQLException {
+
+        query1 = "SELECT book_title FROM wonderworld_qa.books WHERE author IN ('Rubina malik', 'MRV');";
+        rs1 = getStatement().executeQuery(query1);
+        System.out.println(getQueryResultList(query1));
+    }
+    @Given("Book-title query result is validated")
+    public void book_title_query_result_is_validated() throws SQLException {
+
+        int expectedData = 4;
+        int flag=0;
+        while(rs1.next()){
+            flag++;
+        }
+        assertEquals(expectedData,flag);
+    }
+
+    @Given("List the books query is prepared and run and the result is obtained")
+    public void list_the_books_query_is_prepared_and_run_and_the_result_is_obtained() throws SQLException {
+
+        query2 = "SELECT qty FROM wonderworld_qa.books WHERE qty BETWEEN 100 AND 500;";
+        rs2 = getStatement().executeQuery(query2);
+    }
+
+    @Given("List the books query result is validated")
+    public void list_the_books_query_result_is_validated() {
+
+        System.out.println(getColumnData(query2, "qty"));
     }
 
 
