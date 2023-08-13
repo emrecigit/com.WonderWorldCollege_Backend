@@ -10,9 +10,12 @@ import io.restassured.specification.RequestSpecification;
 import org.hamcrest.Matchers;
 import org.json.JSONObject;
 import org.junit.Assert;
+import pojos.PojoAdmin;
 import utilities.API_Utils;
 import utilities.ConfigReader;
-import java.util.Arrays;
+
+import java.util.*;
+
 import static hooks.HooksAPI.spec;
 import static io.restassured.RestAssured.given;
 //import hooks.API_Hooks;
@@ -24,7 +27,7 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.json.JSONObject;
 import java.util.Arrays;
-import java.util.List;
+
 import static io.restassured.RestAssured.given;
 import static org.junit.Assert.assertEquals;
 
@@ -502,7 +505,30 @@ public class APIStepDefinition {
 
 
 
+    @Given("Patch body containing correct data is prepared.")
+    public void patch_body_containing_correct_data_is_prepared() {
+        PojoAdmin obj=new PojoAdmin();
+        Map<String, Object> adminUpdateReqBody=obj.expectedDataMethod("12","Art Activite","art","13","null","2023-11-14 00:00:00"
+                ,"2023-11-24 23:59:00","Paint","Art","0");
 
+        HashMap<String ,Object> expdata=new HashMap<>();
+        expdata.put("status",200);
+        expdata.put("message","Success");
+        expdata.put("updateId","12");
+
+        //response save
+
+        Response response=given().spec(HooksAPI.spec).contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(adminUpdateReqBody)
+                .patch(fullPath);
+
+        response.prettyPrint();
+
+        Map<String, Object> actualData = response.as(HashMap.class);
+        System.out.println("actualData = " + actualData);
+    }
 
 
 
