@@ -41,7 +41,7 @@ public class API_Utils {
             HooksAPI.spec.pathParam(key, value);
             tempPath.append(key + "}/{");
         }
-        // System.out.println("tempPath = " + tempPath);
+         System.out.println("tempPath = " + tempPath);
         tempPath.deleteCharAt(tempPath.lastIndexOf("{"));
         tempPath.deleteCharAt(tempPath.lastIndexOf("/"));
         System.out.println("tempPath = " + tempPath);
