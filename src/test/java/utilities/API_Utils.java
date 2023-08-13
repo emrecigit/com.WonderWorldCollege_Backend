@@ -1,27 +1,33 @@
 package utilities;
 
 import hooks.HooksAPI;
+import io.cucumber.gherkin.internal.com.eclipsesource.json.PrettyPrint;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-
+import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 import static io.restassured.RestAssured.given;
 
 import static io.restassured.RestAssured.given;
+import static org.junit.Assert.assertEquals;
 
 public class API_Utils {
 
     private static String token;
+    private static String tokenAll;
     private static String fullPath;
     private static RequestSpecification spec;
 
+    public static Response response;
+    public static JSONObject reqBody;
 
-    // public static String createfullPath(String rawPaths)                                                  23
-    // public static String generateTokenAll(String userType, String rawPaths)                               44
+
+    // public static String createfullPath(String rawPaths)                                                  37
+    // public static String generateTokenAll(String userType)                                                76
     // public static Response sendEveryRequest(String RequestMethodName, String userType, String endPoint)   73
     // public static Response sendAllRequest(String RequestMethodName, String userType, String endPoint)     135
     // public static Response getRequest(String token, String endpoint)                                      235
@@ -30,58 +36,67 @@ public class API_Utils {
     // public static String generateTokenTeacher()                                                           281
     // public static String generateTokenStudent()                                                           298
 
-
     public static String createfullPath(String rawPaths) {
         String[] paths = rawPaths.split("/");
         StringBuilder tempPath = new StringBuilder("/{");
         for (int i = 0; i < paths.length; i++) {
             String key = "pp" + i; // pp0 pp1 pp2
+            System.out.println("value = " + key);
             String value = paths[i].trim();
             System.out.println("value = " + value);
             HooksAPI.spec.pathParam(key, value);
             tempPath.append(key + "}/{");
+            /*
+            tempPath.append(key);            temPath den alta doğru bu şekilde de devam edebilir.
+            if (i < paths.length - 1) {
+                tempPath.append("}/{");
+            }
+         }
+        tempPath.append("}");
+        return tempPath.toString();
+             */
         }
+
          System.out.println("tempPath = " + tempPath);
+
         tempPath.deleteCharAt(tempPath.lastIndexOf("{"));
         tempPath.deleteCharAt(tempPath.lastIndexOf("/"));
         System.out.println("tempPath = " + tempPath);
         fullPath = tempPath.toString();
-        System.out.println("fullPath = " + fullPath);
+        System.out.println("Create fullPath = " + fullPath);
+        System.out.println(API_Utils.getPathParams(rawPaths));
         return fullPath;
     }
+    public static Map<String,String> getPathParams(String rawPaths) {
+        String[] paths = rawPaths.split("/");
+        Map<String,String> pathParams = new HashMap<>();
+        for (int i = 0; i < paths.length; i++) {
+            String key ="\""+ "pp" + i+"\""; // pp0 pp1 pp2
+            String value ="\""+ paths[i].trim()+"\"";
 
-    public static String generateTokenAll(String userType, String rawPaths) { //  "/ olmadan başla"
+            pathParams.put(key, value);
+            }
+        return pathParams;
+         }
+
+       public static String generateTokenAll(String userType) { //  "/ olmadan başla"
+           if (userType.toLowerCase().equals("admin")) {
+               tokenAll = API_Utils.generateTokenAdmin();
+           }
+           if (userType.toLowerCase().equals("teacher")) {
+               tokenAll = API_Utils.generateTokenTeacher();
+           }
+           if (userType.toLowerCase().equals("student")) {
+               tokenAll = API_Utils.generateTokenStudent();
+           }
+           return tokenAll;
+       }
+
+    public static Response sendEveryRequest(String RequestMethodName, String rawPaths, String userType, String tokenPoints) {
         spec = new RequestSpecBuilder().setBaseUri(ConfigReader.getProperty("base_url")).build();
+
         fullPath = createfullPath(rawPaths);
-
-        Map<String, Object> dataCredential = new HashMap<>();
-
-        if ("admin".equals(userType)) {
-            dataCredential.put("email", ConfigReader.getProperty("emailAdmin"));
-        } else if ("teacher".equals(userType)) {
-            dataCredential.put("email", ConfigReader.getProperty("emailTeacher"));
-        } else if ("student".equals(userType)) {
-            //fullPath = createfullPath(rawPaths);
-            dataCredential.put("email", ConfigReader.getProperty("emailStudent"));
-        }
-        dataCredential.put("password", ConfigReader.getProperty("password"));
-        Response response = given()
-                .spec(spec)
-                .contentType(ContentType.JSON)
-                .header("Accept", "application/json")
-                .when()
-                .body(dataCredential)
-                .post(fullPath);
-        JsonPath respJP = response.jsonPath();
-        token = respJP.getString("token");
-        return token;
-    }
-
-    public static Response sendEveryRequest(String RequestMethodName, String userType, String endPoint) {
-        spec = new RequestSpecBuilder().setBaseUri(ConfigReader.getProperty("base_url")).build();
-
-        String fullPath = createfullPath(endPoint);
-        token = generateTokenAll(userType, endPoint);
+        tokenAll = generateTokenAll(userType);
         RequestSpecification requestSpecification = given().headers(
                 "Authorization",
                 "Bearer " + token,
@@ -139,11 +154,10 @@ public class API_Utils {
     }
     //Response response = sendEveryRequest("POST","admin", "api/getToken");
 
-    public static Response sendAllRequest(String RequestMethodName, String userType, String endPoint) {
+    public static Response sendAllRequest(String RequestMethodName, String rawPaths, String userType, String tokenPoints ) {
         spec = new RequestSpecBuilder().setBaseUri(ConfigReader.getProperty("base_url")).build();
-
-        String fullPath = createfullPath(endPoint);
-        token = generateTokenAll(userType, endPoint);
+        fullPath = createfullPath(rawPaths);
+        tokenAll = generateTokenAll(userType);
         Response response;
         Map<String, Object> requestBody = new HashMap<>();
 
@@ -239,26 +253,29 @@ public class API_Utils {
 
 
 
-    public static Response getRequest(String token, String endpoint) {
-
+    public static Response getRequest(String rawPaths, String userType, String tokenPoints) {
+        tokenAll = API_Utils.generateTokenAll(userType);
+        fullPath = API_Utils.createfullPath(rawPaths);
         Response response = given().headers(
                 "Authorization",
-                "Bearer " + token,
+                "Bearer " + tokenAll,
                 "Content-Type",
                 ContentType.JSON,
                 "Accept",
-                ContentType.JSON).when().get(endpoint);
+                ContentType.JSON).when().get(fullPath);
         return response;
     }
 
-    public static Response deleteRequest(String token, String endpoint){
+    public static Response deleteRequest(String rawPaths, String userType, String tokenPoints){
+        tokenAll = API_Utils.generateTokenAll(userType);
+        fullPath = API_Utils.createfullPath(rawPaths);
         Response response = given().headers(
                 "Authorization",
-                "Bearer " + token,
+                "Bearer " + tokenAll,
                 "Content-Type",
                 ContentType.JSON,
                 "Accept",
-                ContentType.JSON).when().delete(endpoint);
+                ContentType.JSON).when().delete(fullPath);
         return  response;
     }
 
@@ -314,7 +331,31 @@ public class API_Utils {
         String token = respJP.getString("token");
         return token;
     }
+    public static String generateToken(){
 
+        spec = new RequestSpecBuilder().setBaseUri(ConfigReader.getProperty("base_url")).build();
+
+        spec.pathParams("pp1","api","pp2","getToken");
+
+        JSONObject reqBody = new JSONObject();
+
+        reqBody.put("email", ConfigReader.getProperty("email"));
+        reqBody.put("password", ConfigReader.getProperty("password"));
+
+        Response response = given()
+                .spec(spec)
+                .contentType(ContentType.JSON)
+                .header("Accept","application/json")
+                .when()
+                .body(reqBody.toString())
+                .post("/{pp1}/{pp2}");
+
+        JsonPath resJP = response.jsonPath();
+
+        String token=resJP.getString("token");
+
+        return token;
+    }
 
 
 }
