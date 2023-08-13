@@ -16,7 +16,7 @@ import org.junit.runner.RunWith;
         },
         features = "src/test/resources/features.api",
         glue = {"stepDefinitions", "hooks"},  // Eskisi:  glue = {"stepDefinitions/api", "hooks/api"}
-        tags = "@api",
+        tags = "",
         dryRun = false
 )
 
