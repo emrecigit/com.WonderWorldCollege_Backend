@@ -56,7 +56,9 @@ public class API_Utils {
         return tempPath.toString();
              */
         }
-        System.out.println("tempPath = " + tempPath);
+
+         System.out.println("tempPath = " + tempPath);
+
         tempPath.deleteCharAt(tempPath.lastIndexOf("{"));
         tempPath.deleteCharAt(tempPath.lastIndexOf("/"));
         System.out.println("tempPath = " + tempPath);
