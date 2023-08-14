@@ -7,6 +7,7 @@ import io.cucumber.java.en.When;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 import org.json.JSONObject;
 import org.junit.Assert;
 import pojos.PojoAdmin;
@@ -16,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 import static io.restassured.RestAssured.given;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static utilities.API_Utils.reqBody;
 
 public class APIStepDefinition {
 
@@ -32,6 +35,8 @@ public class APIStepDefinition {
      */
     public static String fullPath;
     public static String tokenAll;
+    public static RequestSpecification spec;
+
     JSONObject reqBodyJson;         // ReqBody Direk yazdirilabilir Put (Update)  Post (Create) Patch (İlave) body gondermek (gonderirken toString ile gonderilir)
     Response response;              // Response Database den donen body cevap
     JsonPath jsonPath;              // Response dan bilgi almak ,kaydetmek ve yazdırmak icin kullanilir.
@@ -162,8 +167,8 @@ public void record_the_response_of_the_endpoint_with_the_current_authorization(S
             exceptionMessage =e.getMessage();
         }
         System.out.println("Income Message :"+exceptionMessage);
-        Assert.assertTrue(exceptionMessage.contains(statusCode));
-        Assert.assertTrue(exceptionMessage.contains(message));
+        assertTrue(exceptionMessage.contains(statusCode));
+        assertTrue(exceptionMessage.contains(message));
     }
 
     // List element verification test [TC_03_API_US_001]_Step3
@@ -626,7 +631,7 @@ public void record_the_response_of_the_endpoint_with_the_current_authorization(S
     @Given("Verification is done by sending POST body to alumniEventsId endpoint with the updateId returned in the response body.")
     public void verification_is_done_by_sending_post_body_to_api_alumni_events_ıd_endpoint_with_the_update_ıd_returned_in_the_response_body() {
         JSONObject reqBody=new JSONObject();
-        reqBody.put("id",12);
+
 
         Response response=given()
                 .contentType(ContentType.JSON)
@@ -995,9 +1000,89 @@ public void record_the_response_of_the_endpoint_with_the_current_authorization(S
 
 
 
+//14
+@Given("A Post body with valid authorization information and correct data {string} is sent to the {string} endpoint")
+public void a_post_body_with_valid_authorization_information_and_correct_data_is_sent_to_the_endpoint(String string, String string2) {
+
+    HooksAPI.spec.pathParams("pp1", "api", "pp2", "vehicleId");
+    //Response response = given().when().get(url);
+    String fullPath = "/{pp1}/{pp2}";
+
+    JSONObject reqBody = new JSONObject();
+
+    reqBody.put("id", 3);
+
+        response = given()
+                .spec(HooksAPI.spec)
+                .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(reqBody.toString())
+                .post(fullPath);
+
+    response.prettyPrint();
+}
+    // 15
+    @Given("A POST body is sent to the {string} endpoint with valid authorization information and correct data {string}")
+    public void a_post_body_is_sent_to_the_endpoint_with_valid_authorization_information_and_correct_data(String string, String string2) {
+
+        JSONObject reqBody = new JSONObject();
+
+        reqBody.put("vehicle_no", "VH4584");
+        reqBody.put("vehicle_model", "Ford CAB");
+        reqBody.put("vehicle_photo", "1677502339-191558462463fca783b26b0!fd.png");
+        reqBody.put("manufacture_year", "2015");
+        reqBody.put("registration_number", "FFG-76575676787");
+        reqBody.put("chasis_number", "523422");
+        reqBody.put("max_seating_capacity", "50");
+        reqBody.put("driver_name", "Jasper");
+        reqBody.put("driver_licence", "258714545");
+        reqBody.put("driver_contact", "8521479630");
+        reqBody.put("note", "");
+
+        response = given()
+                .spec(HooksAPI.spec)
+                .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(reqBody.toString())
+                .post(fullPath);
+
+        response.prettyPrint();
+    }
+    @Given("A POST body is sent to the {string} endpoint with invalid authorization information and correct data {string}")
+    public void a_post_body_is_sent_to_the_endpoint_with_invalid_authorization_information_and_correct_data(String string, String string2) {
+
+        JSONObject reqBody = new JSONObject();
+
+        reqBody.put("vehicle_no", "BHC4584");
+        reqBody.put("vehicle_model", "Volvo xc90");
+        reqBody.put("vehicle_photo", "1577502339-191558462463fca783b26b0!fd.png");
+        reqBody.put("manufacture_year", "2023");
+        reqBody.put("registration_number", "FFG-76575676787");
+        reqBody.put("chasis_number", "523422");
+        reqBody.put("max_seating_capacity", "50");
+        reqBody.put("driver_name", "Jasper");
+        reqBody.put("driver_licence", "258714545");
+        reqBody.put("driver_contact", "8521479630");
 
 
+        response = given()
+                .spec(HooksAPI.spec)
+                .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(reqBody.toString())
+                .post(fullPath);
 
+        response.prettyPrint();
+    }
+
+    @Given("The successful creation of the new vehicle record via the API should be validated.")
+    public void the_successful_creation_of_the_new_vehicle_record_via_the_apı_should_be_validated(int expectedStatusCode) {
+
+
+    }
 
 
 
@@ -1684,7 +1769,7 @@ public void record_the_response_of_the_endpoint_with_the_current_authorization(S
         String[] expectedArr = expectedData.split(",");
 
         for (String each : expectedArr) {
-            Assert.assertTrue(actualData.contains(each));
+            assertTrue(actualData.contains(each));
         }
     }
 
