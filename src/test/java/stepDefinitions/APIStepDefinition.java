@@ -61,8 +61,6 @@ public class APIStepDefinition {
 
     // Givenden hemen sonra ContentType(ContentType.JSON) eklenir.Body When den sonra eklenir.
 
-   
-
 
     //   Set "api/visitorsPurposeList" parameters. [TC_01_API_US001]_Step1
     @Given("Set {string} parameters")
@@ -106,8 +104,6 @@ public class APIStepDefinition {
     }
 
 
-
-
 // Admin Authorization (Take Token)
     // @When("Records response for Admin with valid authorization information")
     // public void recordsResponseForAdminWithValidAuthorizationInformation() {
@@ -147,7 +143,6 @@ public class APIStepDefinition {
     //             .when()
     //             .get(fullPath);
     // }
-
 
 
     // Satus Code Assertion (Status Code 200) [TC_01_API_US001]_Step3
@@ -276,80 +271,64 @@ public class APIStepDefinition {
     }
 
 
+    //      response = given()
+    //              .contentType(ContentType.JSON)
+    //              .when()
+    //              .body(reqBody.toString())
+    //              .post(fullPath);
 
 
+    //       response
+    //               .then()//assert then olmadan  gelmez
+    //               .assertThat()
+    //               .statusCode(201)
+    //               .contentType(ContentType.JSON);
+//
+//
+    //   }
+//
 
 
+    @When("Prepare request body for admin api_alumniId endpoint and record response")
+    public void prepareRequestBodyForAdminApi_alumniIdEndpointAndRecordResponse() {
 
-
-
-
-
-
+        JSONObject reqBody = new JSONObject();
+        reqBody.put("id", "3");
 
         response = given()
+                .spec(HooksAPI.spec)
                 .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(reqBody.toString())
+                .post(fullPath);
+
+        response.prettyPrint();
+
+        response = given()
+                .spec(HooksAPI.spec)
+                .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
                 .when()
                 .body(reqBody.toString())
                 .post(fullPath);
 
 
+        response.prettyPrint();
 
 
+        response = given()
+                .spec(HooksAPI.spec)
+                .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(reqBody.toString())
+                .post(fullPath);
 
 
-
-        response
-                .then()//assert then olmadan  gelmez
-                .assertThat()
-                .statusCode(201)
-                .contentType(ContentType.JSON);
-
-
+        response.prettyPrint();
     }
-
-
-
-
-   @When("Prepare request body for admin api_alumniId endpoint and record response")
-   public void prepareRequestBodyForAdminApi_alumniIdEndpointAndRecordResponse() {
-
-       JSONObject reqBody = new JSONObject();
-       reqBody.put("id", "3");
-
-       response = given()
-               .spec(HooksAPI.spec)
-               .contentType(ContentType.JSON)
-               .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
-               .when()
-               .body(reqBody.toString())
-               .post(fullPath);
-
-       response.prettyPrint();
-
-       response = given()
-               .spec(HooksAPI.spec)
-               .contentType(ContentType.JSON)
-               .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
-               .when()
-               .body(reqBody.toString())
-               .post(fullPath);
-
-
-       response.prettyPrint();
-
-
-       response = given()
-               .spec(HooksAPI.spec)
-               .contentType(ContentType.JSON)
-               .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
-               .when()
-               .body(reqBody.toString())
-               .post(fullPath);
-
-
-       response.prettyPrint();
-   }
+}
 
 
  //  @When("Verifies that record includes {string}")
