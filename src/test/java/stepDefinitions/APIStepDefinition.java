@@ -356,135 +356,128 @@ public class APIStepDefinition {
 
     }
 
-    @When("Prepare request body for admin api_alumniId endpoint and record response")
-    public void prepareRequestBodyForAdminApi_alumniIdEndpointAndRecordResponse() {
 
 
-        JSONObject reqBody = new JSONObject();
-        reqBody.put("id", "3");
+
+   @When("Prepare request body for admin api_alumniId endpoint and record response")
+   public void prepareRequestBodyForAdminApi_alumniIdEndpointAndRecordResponse() {
+
+       JSONObject reqBody = new JSONObject();
+       reqBody.put("id", "3");
+
+       response = given()
+               .spec(HooksAPI.spec)
+               .contentType(ContentType.JSON)
+               .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+               .when()
+               .body(reqBody.toString())
+               .post(fullPath);
+
+       response.prettyPrint();
+
+       response = given()
+               .spec(HooksAPI.spec)
+               .contentType(ContentType.JSON)
+               .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+               .when()
+               .body(reqBody.toString())
+               .post(fullPath);
 
 
- //   @When("Prepare request body for admin api_alumniId endpoint and record response")
- //   public void prepareRequestBodyForAdminApi_alumniIdEndpointAndRecordResponse() {
+       response.prettyPrint();
+
+
+       response = given()
+               .spec(HooksAPI.spec)
+               .contentType(ContentType.JSON)
+               .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+               .when()
+               .body(reqBody.toString())
+               .post(fullPath);
+
+
+       response.prettyPrint();
+   }
+
+
+ //  @When("Verifies that record includes {string}")
+ //  public void verifiesThatRecordIncludes(String expectedData) {
 //
- //       JSONObject reqBody = new JSONObject();
- //       reqBody.put("id", "3");
-//
- //       response = given()
- //               .spec(HooksAPI.spec)
- //               .contentType(ContentType.JSON)
- //               .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
- //               .when()
- //               .body(reqBody.toString())
- //               .post(fullPath);
-//
- //       response.prettyPrint();
-//
- //       response = given()
- //               .spec(HooksAPI.spec)
- //               .contentType(ContentType.JSON)
- //               .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
- //               .when()
- //               .body(reqBody.toString())
- //               .post(fullPath);
-//
-//
- //       response.prettyPrint();
-//
-//
- //       response = given()
- //               .spec(HooksAPI.spec)
- //               .contentType(ContentType.JSON)
- //               .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
- //               .when()
- //               .body(reqBody.toString())
- //               .post(fullPath);
+ //      response = given()
+ //              .spec(HooksAPI.spec)
+ //              .contentType(ContentType.JSON)
+ //              .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+ //              .when()
+ //              .body(reqBody.toString())
+ //              .post(fullPath);
 //
 //
- //       response.prettyPrint();
- //   }
+ //      response.prettyPrint();
+ //  }
 //
 //
- //   @When("Verifies that record includes {string}")
- //   public void verifiesThatRecordIncludes(String expectedData) {
-//
- //       response = given()
- //               .spec(HooksAPI.spec)
- //               .contentType(ContentType.JSON)
- //               .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
- //               .when()
- //               .body(reqBody.toString())
- //               .post(fullPath);
+ //  @When("Verifies that record includes {string}")
+ //  public void verifiesThatRecordIncludes(String expectedData) {
 //
 //
- //       response.prettyPrint();
- //   }
+ //      JsonPath resJP = response.jsonPath();
 //
 //
- //   @When("Verifies that record includes {string}")
- //   public void verifiesThatRecordIncludes(String expectedData) {
+ //      String actualData = resJP.get("lists").toString();
+ //      System.out.println(actualData);
+//
+ //      JsonPath resJP = response.jsonPath();
+//
+ //      String[] expectedArr = expectedData.split(",");
 //
 //
- //       JsonPath resJP = response.jsonPath();
+ //      String actualData = resJP.get("lists").toString();
+ //      System.out.println(actualData);
 //
 //
- //       String actualData = resJP.get("lists").toString();
- //       System.out.println(actualData);
+ //      String[] expectedArr = expectedData.split(",");
 //
- //       JsonPath resJP = response.jsonPath();
-//
- //       String[] expectedArr = expectedData.split(",");
-//
-//
- //       String actualData = resJP.get("lists").toString();
- //       System.out.println(actualData);
+ //      for (String each : expectedArr) {
+ //          Assert.assertTrue(actualData.contains(each));
+ //      }
+ //  }
 //
 //
- //       String[] expectedArr = expectedData.split(",");
-//
- //       for (String each : expectedArr) {
- //           Assert.assertTrue(actualData.contains(each));
- //       }
- //   }
+ //  @Given("Create expected data and save delete response for {string} id deleteNotice")
+ //  public void create_expected_data_and_save_delete_response_for_id_delete_notice(String responseString) {
+ //      // 1- endpoint ve request body hazirla
 //
 //
- //   @Given("Create expected data and save delete response for {string} id deleteNotice")
- //   public void create_expected_data_and_save_delete_response_for_id_delete_notice(String responseString) {
- //       // 1- endpoint ve request body hazirla
+ //      for (String each : expectedArr) {
+ //          Assert.assertTrue(actualData.contains(each));
+ //      }
+ //  }
+//
+ //      reqBodyJson= new JSONObject();
+ //      reqBodyJson.put("type","notice");
+ //      reqBodyJson.put("title","deneme12");
+ //      reqBodyJson.put("description","huston12");
+ //      reqBodyJson.put("slug","deneme54");
 //
 //
- //       for (String each : expectedArr) {
- //           Assert.assertTrue(actualData.contains(each));
- //       }
- //   }
-//
- //       reqBodyJson= new JSONObject();
- //       reqBodyJson.put("type","notice");
- //       reqBodyJson.put("title","deneme12");
- //       reqBodyJson.put("description","huston12");
- //       reqBodyJson.put("slug","deneme54");
+ //      // 2- expected data olustur
 //
 //
- //       // 2- expected data olustur
+ //      // 3- request gonderip, donen response'i kaydet
+//
+ //      response= given().contentType(ContentType.JSON)
+ //              .when().body(reqBodyJson.toString())
+ //              .post(fullPath);
 //
 //
- //       // 3- request gonderip, donen response'i kaydet
+ //      this.responseString = jsonPath.get("addId");
 //
- //       response= given().contentType(ContentType.JSON)
- //               .when().body(reqBodyJson.toString())
- //               .post(fullPath);
+ //      response = given().contentType(ContentType.JSON)
+ //              .when().body(this.responseString)
+ //              .delete(fullPath);
 //
-//
- //       this.responseString = jsonPath.get("addId");
-//
- //       response = given().contentType(ContentType.JSON)
- //               .when().body(this.responseString)
- //               .delete(fullPath);
-//
-//
- //   }
-//
-//
+
+
 
 
 
@@ -4121,7 +4114,7 @@ public class APIStepDefinition {
 
 
 
-}
+
 
 
         //for (String each : expectedArr) {
