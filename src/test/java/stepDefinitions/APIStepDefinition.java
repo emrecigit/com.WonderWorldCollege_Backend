@@ -27,8 +27,10 @@ import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class APIStepDefinition {
+    String hataMesaji;
 
     /*
     Scope
@@ -166,8 +168,8 @@ public class APIStepDefinition {
             exceptionMessage = e.getMessage();
         }
         System.out.println("Income Message :" + exceptionMessage);
-        Assert.assertTrue(exceptionMessage.contains(statusCode));
-        Assert.assertTrue(exceptionMessage.contains(message));
+        assertTrue(exceptionMessage.contains(statusCode));
+        assertTrue(exceptionMessage.contains(message));
     }
 
     // List element verification test [TC_03_API_US_001]_Step3
@@ -553,14 +555,10 @@ public class APIStepDefinition {
 
     @Given("Patch body containing correct data is prepared.")
     public void patch_body_containing_correct_data_is_prepared() {
+        String fullPath=API_Utils.createfullPath("api/alumniEventsUpdate");
         PojoAdmin obj=new PojoAdmin();
         Map<String, Object> adminUpdateReqBody=obj.expectedDataMethod("12","Art Activite","art","13","null","2023-11-14 00:00:00"
                 ,"2023-11-24 23:59:00","Paint","Art","0");
-
-        HashMap<String ,Object> expdata=new HashMap<>();
-        expdata.put("status",200);
-        expdata.put("message","Success");
-        expdata.put("updateId","12");
 
         //response save
 
@@ -581,12 +579,19 @@ public class APIStepDefinition {
         PojoAdmin obj=new PojoAdmin();
         Map<String, Object> adminUpdateReqBody=obj.expectedDataMethod("12","Art Activite","art","13","null","2023-11-14 00:00:00"
                 ,"2023-11-24 23:59:00","Paint","Art","0");
-        Response response=given().spec(HooksAPI.spec).contentType(ContentType.JSON)
-                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
-                .when()
-                .body(adminUpdateReqBody)
-                .patch(fullPath);
-        assertEquals(statusCode, response.getStatusCode());
+        Response response= null;
+        try {
+            response = given().spec(HooksAPI.spec).contentType(ContentType.JSON)
+                    .headers("Authorization", "Bearer " + HooksAPI.tokenStudent)
+                    .when()
+                    .body(adminUpdateReqBody)
+                    .patch(fullPath);
+        } catch (Exception e) {
+            hataMesaji=e.getMessage();
+
+        }
+        System.out.println(hataMesaji);
+        assertTrue(hataMesaji.contains("403"));
     }
     @Given("It should be verified that the updateId information and the id information in the request body are the same.")
     public void ıt_should_be_verified_that_the_update_ıd_information_and_the_id_information_in_the_request_body_are_the_same() {
@@ -603,19 +608,23 @@ public class APIStepDefinition {
     }
     @Given("Verification is done by sending POST body to alumniEventsId endpoint with the updateId returned in the response body.")
     public void verification_is_done_by_sending_post_body_to_api_alumni_events_ıd_endpoint_with_the_update_ıd_returned_in_the_response_body() {
+
+        String fullPath=API_Utils.createfullPath("api/alumniEventsId");
         JSONObject reqBody=new JSONObject();
         reqBody.put("id",12);
 
         Response response=given()
                 .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
                 .when()
                 .body(reqBody.toString())
-                .post(fullPath);
+                .post("https://qa.wonderworldcollege.com/api/alumniEventsId");
+        response.prettyPrint();
 
         response
                 .then()//assert then olmadan  gelmez
                 .assertThat()
-                .statusCode(201)
+                .statusCode(200)
                 .contentType(ContentType.JSON);
 
     }
