@@ -1501,8 +1501,6 @@ public class APIStepDefinition {
 
 
 
-
-
     @When("Prepare request body for admin api_alumniId endpoint and record response")
     public void prepareRequestBodyForAdminApi_alumniIdEndpointAndRecordResponse() {
 
@@ -1520,16 +1518,6 @@ public class APIStepDefinition {
         response.prettyPrint();
 
 
-        response = given()
-                .spec(HooksAPI.spec)
-                .contentType(ContentType.JSON)
-                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
-                .when()
-                .body(reqBody.toString())
-                .post(fullPath);
-
-
-        response.prettyPrint();
     }
 
 
