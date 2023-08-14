@@ -12,7 +12,7 @@
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="51e64b9c-085d-443f-a3b4-89322306f160">
+    <connection id="5fd620eb-e7db-4d0e-946e-70395a1216ff">
       <console name="Connection" type="STANDARD" schema="wonderworld_qa" session="Main" />
     </connection>
   </component>
@@ -22,8 +22,8 @@
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files />
   </component>
-  <component name="DBNavigator.Project.ExecutionManager">
-    <retain-sticky-names value="false" />
+  <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="5fd620eb-e7db-4d0e-946e-70395a1216ff" dataset="wonderworld_qa.online_admissions" active-filter-id="" />
   </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
@@ -31,10 +31,10 @@
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="51e64b9c-085d-443f-a3b4-89322306f160" active="true" signed="true">
+      <connection id="5fd620eb-e7db-4d0e-946e-70395a1216ff" active="true" signed="true">
         <database>
           <name value="Connection" />
-          <description value="wonderworld_qa " />
+          <description value="" />
           <database-type value="MYSQL" />
           <config-type value="BASIC" />
           <database-version value="5.5" />
@@ -515,5 +515,8 @@
         </visibility-settings>
       </environment>
     </general-settings>
+  </component>
+  <component name="DBNavigator.Project.StatementExecutionManager">
+    <execution-variables />
   </component>
 </project>
