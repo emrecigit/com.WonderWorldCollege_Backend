@@ -13,7 +13,7 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="5fd620eb-e7db-4d0e-946e-70395a1216ff">
-      <console name="Connection" type="STANDARD" schema="wonderworld_qa" session="Main" />git
+      <console name="Connection" type="STANDARD" schema="wonderworld_qa" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
