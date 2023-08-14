@@ -1,3 +1,4 @@
+
 Feature: [API_US_001] As an administrator, I want to access the Purpose List through an API connection.
 
 
@@ -13,7 +14,7 @@ Feature: [API_US_001] As an administrator, I want to access the Purpose List thr
     * Verifies that status code is 200
     * Verifies that the message information is "Success"
 
-  @api
+
   Scenario:[TC_02_API_US_001] When invalid authorization information is sent with a GET request to the
   api/alumniEventsList endpoint the expected status code is 403,
   and the message in the response body should be "failed."
@@ -30,7 +31,7 @@ Feature: [API_US_001] As an administrator, I want to access the Purpose List thr
     * Set "api/visitorsPurposeList" parameters
     * Verifies that the Status Code of the failed connection from the endpoint "api/visitorsPurposeList" with invalid authorization "wrongToken" is "403" and the message is "Forbidden"
 
-
+  @api
   Scenario: [TC_03_API_US_001] The content of the lists in the response body should be validated
   to contain data with ID "1," where the visitors_purpose is "Marketing," and
   created_at is "2023-01-18 01:07:12."

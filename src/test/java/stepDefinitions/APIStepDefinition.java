@@ -3,34 +3,19 @@ package stepDefinitions;
 import hooks.HooksAPI;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
-import org.hamcrest.Matchers;
-import org.json.JSONObject;
-import org.junit.Assert;
-import org.junit.matchers.JUnitMatchers;
-import pojos.PojoAdmin;
-import utilities.API_Utils;
-import utilities.ConfigReader;
-import java.util.*;
-import static hooks.HooksAPI.spec;
-import static io.restassured.RestAssured.given;
-//import hooks.API_Hooks;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.json.JSONObject;
-import java.util.Arrays;
-
+import org.junit.Assert;
+import pojos.PojoAdmin;
+import utilities.API_Utils;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import static io.restassured.RestAssured.given;
 import static org.junit.Assert.assertEquals;
-import static utilities.API_Utils.createfullPath;
-import static utilities.API_Utils.generateTokenAll;
 
 public class APIStepDefinition {
 
@@ -178,8 +163,6 @@ public void record_the_response_of_the_endpoint_with_the_current_authorization(S
        //         .statusCode(200)
        //         .body("message", Matchers.equalTo("Success"));
     }
-
-        Assert.assertEquals(message, resJP.getString("message"));
 
 
     // Invalid Authorization Test [TC_02_API_US_001]_Step2
