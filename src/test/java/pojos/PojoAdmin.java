@@ -48,8 +48,6 @@ public class PojoAdmin {
         if (show_onwebsite != null) {
             expectedDataMap.put("show_onwebsite", show_onwebsite);
         }
-
-
         return expectedDataMap;
     }
 }
