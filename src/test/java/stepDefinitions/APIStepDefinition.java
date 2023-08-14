@@ -4,8 +4,10 @@ import hooks.HooksAPI;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 
+import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 import org.json.JSONObject;
 import org.junit.Assert;
 import utilities.API_Utils;
@@ -246,153 +248,17 @@ public class APIStepDefinition {
     }
 
 
-    @Given("Patch body containing correct data is prepared.")
-    public void patch_body_containing_correct_data_is_prepared() {
-        PojoAdmin obj = new PojoAdmin();
-        Map<String, Object> adminUpdateReqBody = obj.expectedDataMethod("12", "Art Activite", "art", "13", "null", "2023-11-14 00:00:00"
-                , "2023-11-24 23:59:00", "Paint", "Art", "0");
-
-        HashMap<String, Object> expdata = new HashMap<>();
-        expdata.put("status", 200);
-        expdata.put("message", "Success");
-        expdata.put("updateId", "12");
-
-        //response save
-
-        Response response = given().spec(HooksAPI.spec).contentType(ContentType.JSON)
-                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
-                .when()
-                .body(adminUpdateReqBody)
-                .patch(fullPath);
-
-        response.prettyPrint();
-
-        Map<String, Object> actualData = response.as(HashMap.class);
-        System.out.println("actualData = " + actualData);
-    }
-
-    @Given("Verifies that status code is {int}.")
-    public void verifies_that_status_code_is(int statusCode) {
-        PojoAdmin obj = new PojoAdmin();
-        Map<String, Object> adminUpdateReqBody = obj.expectedDataMethod("12", "Art Activite", "art", "13", "null", "2023-11-14 00:00:00"
-                , "2023-11-24 23:59:00", "Paint", "Art", "0");
-        Response response = given().spec(HooksAPI.spec).contentType(ContentType.JSON)
-                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
-                .when()
-                .body(adminUpdateReqBody)
-                .patch(fullPath);
-        assertEquals(statusCode, response.getStatusCode());
-    }
-
-    @Given("It should be verified that the updateId information and the id information in the request body are the same.")
-    public void ıt_should_be_verified_that_the_update_ıd_information_and_the_id_information_in_the_request_body_are_the_same() {
-        PojoAdmin obj = new PojoAdmin();
-        Map<String, Object> adminUpdateReqBody = obj.expectedDataMethod("12", "Art Activite", "art", "13", "null", "2023-11-14 00:00:00"
-                , "2023-11-24 23:59:00", "Paint", "Art", "0");
-        Response response = given().spec(HooksAPI.spec).contentType(ContentType.JSON)
-                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
-                .when()
-                .body(adminUpdateReqBody)
-                .patch(fullPath);
-        JsonPath respJP = response.jsonPath();
-        assertEquals(adminUpdateReqBody.get("id"), respJP.get("updateId"));
-    }
-
-    @Given("Verification is done by sending POST body to alumniEventsId endpoint with the updateId returned in the response body.")
-    public void verification_is_done_by_sending_post_body_to_api_alumni_events_ıd_endpoint_with_the_update_ıd_returned_in_the_response_body() {
-        JSONObject reqBody = new JSONObject();
-        reqBody.put("id", 12);
-
-        Response response = given()
-                .contentType(ContentType.JSON)
-                .when()
-                .body(reqBody.toString())
-                .post(fullPath);
-
-        response
-                .then()//assert then olmadan  gelmez
-                .assertThat()
-                .statusCode(201)
-                .contentType(ContentType.JSON);
-
-    }
 
 
-    @When("Prepare request body for admin api_alumniId endpoint and record response")
-    public void prepareRequestBodyForAdminApi_alumniIdEndpointAndRecordResponse() {
-
-        JSONObject reqBody = new JSONObject();
-        reqBody.put("id", "3");
-
-        response = given()
-                .spec(HooksAPI.spec)
-                .contentType(ContentType.JSON)
-                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
-                .when()
-                .body(reqBody.toString())
-                .post(fullPath);
-
-        response.prettyPrint();
 
 
-        response = given()
-                .spec(HooksAPI.spec)
-                .contentType(ContentType.JSON)
-                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
-                .when()
-                .body(reqBody.toString())
-                .post(fullPath);
 
 
-        response.prettyPrint();
-    }
 
 
-    @When("Verifies that record includes {string}")
-    public void verifiesThatRecordIncludes(String expectedData) {
 
 
-        JsonPath resJP = response.jsonPath();
 
-        String actualData = resJP.get("lists").toString();
-        System.out.println(actualData);
-
-        String[] expectedArr = expectedData.split(",");
-
-
-        for (String each : expectedArr) {
-            Assert.assertTrue(actualData.contains(each));
-        }
-    }
-
-    @Given("Create expected data and save delete response for {string} id deleteNotice")
-    public void create_expected_data_and_save_delete_response_for_id_delete_notice(String responseString) {
-        // 1- endpoint ve request body hazirla
-
-        reqBodyJson= new JSONObject();
-        reqBodyJson.put("type","notice");
-        reqBodyJson.put("title","deneme12");
-        reqBodyJson.put("description","huston12");
-        reqBodyJson.put("slug","deneme54");
-
-        // 2- expected data olustur
-
-
-        // 3- request gonderip, donen response'i kaydet
-
-        response= given().contentType(ContentType.JSON)
-                .when().body(reqBodyJson.toString())
-                .post(fullPath);
-
-
-        this.responseString = jsonPath.get("addId");
-
-        response = given().contentType(ContentType.JSON)
-                .when().body(this.responseString)
-                .delete(fullPath);
-
-
-    }
 
 
 
@@ -4292,7 +4158,7 @@ public class APIStepDefinition {
 
 
 
-}
+
 
 
 
