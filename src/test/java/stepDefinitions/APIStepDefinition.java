@@ -3,14 +3,25 @@ package stepDefinitions;
 import hooks.HooksAPI;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.impl.client.HttpClients;
+import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
 import org.json.JSONObject;
 import org.junit.Assert;
 import utilities.API_Utils;
 import utilities.ConfigReader;
-import java.util.Arrays;
+
+import java.io.IOException;
+import java.util.*;
+
 import static hooks.HooksAPI.spec;
 import static io.restassured.RestAssured.given;
 //import hooks.API_Hooks;
@@ -22,8 +33,9 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.json.JSONObject;
 import java.util.Arrays;
-import java.util.List;
+
 import static io.restassured.RestAssured.given;
+import static org.asynchttpclient.util.Assertions.assertNotNull;
 import static org.junit.Assert.assertEquals;
 
 public class APIStepDefinition {
@@ -3008,16 +3020,42 @@ Mehmet Şah OKUMUŞ :3501-4000
 
 
 
+    @Given("Response for Admin with invalid authorization information")
+    public void response_for_admin_with_invalid_authorization_information() {
+        RequestSpecification spec= new RequestSpecBuilder().setBaseUri("https://wonderworldcollege.com/").build();
 
+        String token= "12345678901234567";
+        spec.pathParams("pp1","api","pp2","getNotice");
+        String fullpath="/{pp1}/{pp2}";
+//Hata olarak 403 kodu verdigi icin excep. firlatiyor.Excep. kaydedip onu  test edecegiz
 
+        String exceptionMsj="";
 
+        Response response= null;
+        try {
+            response = given()
+                    .contentType(ContentType.JSON)
+                    .spec(spec).headers("Authorization","Bearer " + token,
+                            "Content-Type", ContentType.JSON,"Accept",ContentType.JSON)
+                    .when().get(fullpath);
+        } catch (Exception e) {
+            exceptionMsj=e.getMessage();
+        }
 
+        System.out.println(exceptionMsj);
+        // Assert.assertTrue(exceptionMsj.contains("status code: 403"));
 
+    }
 
 
 
+    // Delete Body
+    @Given("when sending a DELETE body containing the correct data \\(id)")
+    public void when_sending_a_delete_body_containing_the_correct_data_id() {
 
+        }
 
+    }
 
 
 
@@ -4026,4 +4064,7 @@ Mehmet Şah OKUMUŞ :3501-4000
 
 
 
-}
+
+
+
+

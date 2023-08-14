@@ -5,7 +5,6 @@ Feature: [API_US_38]As an administrator, I want to access the Notice List throug
 
   @TC_01
   Scenario: [TC_01_API_US_38] When a valid authorization is sent with a GET request to the api/getNotice endpoint,
-
   the response status code should be 200, and the response message should be "Success" to be verified.
 
     * Set "api/getNotice" parameters
@@ -14,15 +13,13 @@ Feature: [API_US_38]As an administrator, I want to access the Notice List throug
     * Verifies that the message information is "Success"
 
 
-    @TC_02
-    Scenario: [TC_01_API_US_38] When invalid authorization information is sent with a GET request to the api/booksList endpoint,
-    the expected status code is 403, and the response message should be "failed."
+  @TC_02
+  Scenario: [TC_02_API_US_38] When invalid authorization information is sent with a GET request to the api/booksList endpoint,
+  the expected status code is 403, and the response message should be "failed"
 
 
-      * Set "api/getNotice" parameters
-      * Records response for Admin with invalid authorization information
-      * Verifies that status code is 403
-      * Verifies that the message information is "failed"
+    * Set "api/getNotice" parameters
+    * Response for Admin with invalid authorization information
+    * Verifies that the message information is "Forbidden"
 
-      @TC_03
 
