@@ -3,7 +3,6 @@ package hooks;
 import io.cucumber.java.Before;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;
-import utilities.Authentication;
 import utilities.ConfigReader;
 import utilities.API_Utils;
 
@@ -19,7 +18,6 @@ public class HooksAPI {
     @Before (order = 0)
     public void setUpApi(){
         spec = new RequestSpecBuilder().setBaseUri(ConfigReader.getProperty("base_url")).build();
-        System.out.println(spec.toString());
     }
     @Before(order = 1)
     public void beforeGenerateTokenAdmin(){

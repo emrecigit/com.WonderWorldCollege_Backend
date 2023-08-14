@@ -15,11 +15,9 @@ import org.junit.runner.RunWith;
                 "rerun:target/failedRerun.txt"
         },
         features = "src/test/resources/features.api",
-        glue = {"stepDefinitions", "hooks"},  // Eskisi:  glue = {"stepDefinitions/api", "hooks/api"}
+        glue = {"stepDefinitions","hooks"},  // Eskisi:  glue = {"stepDefinitions/api", "hooks/api"}
         tags = "@api",
         dryRun = false
 )
-
 public class RunnerAPI {
-
 }
