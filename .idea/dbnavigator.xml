@@ -13,7 +13,7 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="5fd620eb-e7db-4d0e-946e-70395a1216ff">
-      <console name="Connection" type="STANDARD" schema="wonderworld_qa" session="Main"><![CDATA[SELECT email FROM wonderworld_qa.online_admissions WHERE firstname LIKE '%al%';]]></console>
+      <console name="Connection" type="STANDARD" schema="wonderworld_qa" session="Main" />git
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -24,9 +24,6 @@
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="5fd620eb-e7db-4d0e-946e-70395a1216ff" dataset="wonderworld_qa.online_admissions" active-filter-id="" />
-  </component>
-  <component name="DBNavigator.Project.ExecutionManager">
-    <retain-sticky-names value="false" />
   </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
