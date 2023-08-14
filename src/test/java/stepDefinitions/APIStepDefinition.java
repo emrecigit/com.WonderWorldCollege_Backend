@@ -33,7 +33,7 @@ public class APIStepDefinition {
     public static String fullPath;
     public static String tokenAll;
     JSONObject reqBodyJson;         // ReqBody Direk yazdirilabilir Put (Update)  Post (Create) Patch (İlave) body gondermek (gonderirken toString ile gonderilir)
-    Response response;              // Response Database den donen body cevap
+    Response response;              // Response Database den body olarak donen cevap
     JsonPath jsonPath;              // Response dan bilgi almak ,kaydetmek ve yazdırmak icin kullanilir.
     String exceptionMessage = "";  // Sorguda ReqBody gonderiyorsak gonderdigimiz Datanın formatını belirtiriz.(PreCondition)
                                    // Givenden hemen sonra ContentType(ContentType.JSON) eklenir.Body When den sonra eklenir.
