@@ -91,24 +91,6 @@ public class APIStepDefinition {
                 .get(fullPath);
     }
 
-
-    @When("Records response for Admin with invalid authorization information")
-    public void recordsResponseForAdminWithInvalidAuthorizationInformation() {
-        // Admin icin, gecersiz authorization bilgileri ile  response kaydeder
-        try {
-            response = given()
-                    .spec(HooksAPI.spec)
-                    .headers("Authorization", "Bearer " + "wrongToken")
-                    .contentType(ContentType.JSON)
-                    .when()
-                    .get(fullPath);
-            response.prettyPrint();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-
-    }
 // Admin Authorization (Take Token)
  // @When("Records response for Admin with valid authorization information")
  // public void recordsResponseForAdminWithValidAuthorizationInformation() {
