@@ -27,8 +27,10 @@ import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class APIStepDefinition {
+    String hataMesaji;
 
     /*
     Scope
@@ -47,19 +49,11 @@ public class APIStepDefinition {
     Response response;              // Response Database den body olarak donen cevap
     JsonPath jsonPath;              // Response dan bilgi almak ,kaydetmek ve yazdırmak icin kullanilir.
     String exceptionMessage = "";  // Sorguda ReqBody gonderiyorsak gonderdigimiz Datanın formatını belirtiriz.(PreCondition)
-    String responseString;
-// Givenden hemen sonra ContentType(ContentType.JSON) eklenir.Body When den sonra eklenir.
-// Post,Put,Patch methodlari ile body göndereceksek obje olusturup uzerinden reqBodyJson.put("key",value").put("key","value") seklinde data gonderilir
-// Body gönderecekse Given dan sonra precondition yani on hazırlık olarak ContentType(ContentType.JSON) girilmeli
-// Body olarak reqBodyJson objesi gönderirken de body icinde toString ile Stringe cevirmeliyiz
-// Assertion yaparken de response.then().assertThat seklinde assertion oncesi that kullanilir.
-// Assertion da body degilde temel bilgiler sorgulanacaksa asserThat sonrası direk statusCode,contentType,Header degerleri sorgulanabilir
-// Body ıcın ise;
-// 1-Matchers.:(Cok fazal methodu vardır):
-// AssertThat sonrası :response.then().assertThat().body("title",Matchers.equalTo("aaa"),"name",Matchers.equalTo("bbb"),....seklinde sorgulanabilir.
-// Matchers da equalTo(null) test edilebiliyor.
-
     // Givenden hemen sonra ContentType(ContentType.JSON) eklenir.Body When den sonra eklenir.
+
+
+    String responseString;
+=======
 
 
     //   Set "api/visitorsPurposeList" parameters. [TC_01_API_US001]_Step1
@@ -132,6 +126,7 @@ public class APIStepDefinition {
     }
 
 
+
 // Admin Authorization (Take Token)
     // @When("Records response for Admin with valid authorization information")
     // public void recordsResponseForAdminWithValidAuthorizationInformation() {
@@ -143,6 +138,7 @@ public class APIStepDefinition {
     //             .when()
     //             .get(fullPath);
     // }
+
 
 
     // Satus Code Assertion (Status Code 200) [TC_01_API_US001]_Step3
@@ -189,8 +185,8 @@ public class APIStepDefinition {
             exceptionMessage = e.getMessage();
         }
         System.out.println("Income Message :" + exceptionMessage);
-        Assert.assertTrue(exceptionMessage.contains(statusCode));
-        Assert.assertTrue(exceptionMessage.contains(message));
+        assertTrue(exceptionMessage.contains(statusCode));
+        assertTrue(exceptionMessage.contains(message));
     }
 
     // List element verification test [TC_03_API_US_001]_Step3
@@ -295,15 +291,6 @@ public class APIStepDefinition {
         JSONObject reqBody = new JSONObject();
         reqBody.put("id", "3");
 
-        response = given()
-                .spec(HooksAPI.spec)
-                .contentType(ContentType.JSON)
-                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
-                .when()
-                .body(reqBody.toString())
-                .post(fullPath);
-
-        response.prettyPrint();
 
         response = given()
                 .spec(HooksAPI.spec)
@@ -315,6 +302,18 @@ public class APIStepDefinition {
 
 
         response.prettyPrint();
+
+        response = given()
+                .spec(HooksAPI.spec)
+                .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(reqBody.toString())
+                .post(fullPath);
+
+
+        response.prettyPrint();
+
 
 
         response = given()
@@ -331,82 +330,6 @@ public class APIStepDefinition {
 }
 
 
- //  @When("Verifies that record includes {string}")
- //  public void verifiesThatRecordIncludes(String expectedData) {
-//
- //      response = given()
- //              .spec(HooksAPI.spec)
- //              .contentType(ContentType.JSON)
- //              .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
- //              .when()
- //              .body(reqBody.toString())
- //              .post(fullPath);
-//
-//
- //      response.prettyPrint();
- //  }
-//
-//
- //  @When("Verifies that record includes {string}")
- //  public void verifiesThatRecordIncludes(String expectedData) {
-//
-//
- //      JsonPath resJP = response.jsonPath();
-//
-//
- //      String actualData = resJP.get("lists").toString();
- //      System.out.println(actualData);
-//
- //      JsonPath resJP = response.jsonPath();
-//
- //      String[] expectedArr = expectedData.split(",");
-//
-//
- //      String actualData = resJP.get("lists").toString();
- //      System.out.println(actualData);
-//
-//
- //      String[] expectedArr = expectedData.split(",");
-//
- //      for (String each : expectedArr) {
- //          Assert.assertTrue(actualData.contains(each));
- //      }
- //  }
-//
-//
- //  @Given("Create expected data and save delete response for {string} id deleteNotice")
- //  public void create_expected_data_and_save_delete_response_for_id_delete_notice(String responseString) {
- //      // 1- endpoint ve request body hazirla
-//
-//
- //      for (String each : expectedArr) {
- //          Assert.assertTrue(actualData.contains(each));
- //      }
- //  }
-//
- //      reqBodyJson= new JSONObject();
- //      reqBodyJson.put("type","notice");
- //      reqBodyJson.put("title","deneme12");
- //      reqBodyJson.put("description","huston12");
- //      reqBodyJson.put("slug","deneme54");
-//
-//
- //      // 2- expected data olustur
-//
-//
- //      // 3- request gonderip, donen response'i kaydet
-//
- //      response= given().contentType(ContentType.JSON)
- //              .when().body(reqBodyJson.toString())
- //              .post(fullPath);
-//
-//
- //      this.responseString = jsonPath.get("addId");
-//
- //      response = given().contentType(ContentType.JSON)
- //              .when().body(this.responseString)
- //              .delete(fullPath);
-//
 
 
 
@@ -683,16 +606,81 @@ public class APIStepDefinition {
 
 
 
+    @Given("Patch body containing correct data is prepared.")
+    public void patch_body_containing_correct_data_is_prepared() {
+        String fullPath=API_Utils.createfullPath("api/alumniEventsUpdate");
+        PojoAdmin obj=new PojoAdmin();
+        Map<String, Object> adminUpdateReqBody=obj.expectedDataMethod("12","Art Activite","art","13","null","2023-11-14 00:00:00"
+                ,"2023-11-24 23:59:00","Paint","Art","0");
 
+        //response save
 
+        Response response=given().spec(HooksAPI.spec).contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(adminUpdateReqBody)
+                .patch(fullPath);
 
+        response.prettyPrint();
 
+        Map<String, Object> actualData = response.as(HashMap.class);
+        System.out.println("actualData = " + actualData);
+    }
 
+    @Given("Verifies that status code is {int}.")
+    public void verifies_that_status_code_is(int statusCode) {
+        PojoAdmin obj=new PojoAdmin();
+        Map<String, Object> adminUpdateReqBody=obj.expectedDataMethod("12","Art Activite","art","13","null","2023-11-14 00:00:00"
+                ,"2023-11-24 23:59:00","Paint","Art","0");
+        Response response= null;
+        try {
+            response = given().spec(HooksAPI.spec).contentType(ContentType.JSON)
+                    .headers("Authorization", "Bearer " + HooksAPI.tokenStudent)
+                    .when()
+                    .body(adminUpdateReqBody)
+                    .patch(fullPath);
+        } catch (Exception e) {
+            hataMesaji=e.getMessage();
 
+        }
+        System.out.println(hataMesaji);
+        assertTrue(hataMesaji.contains("403"));
+    }
+    @Given("It should be verified that the updateId information and the id information in the request body are the same.")
+    public void ıt_should_be_verified_that_the_update_ıd_information_and_the_id_information_in_the_request_body_are_the_same() {
+        PojoAdmin obj=new PojoAdmin();
+        Map<String, Object> adminUpdateReqBody=obj.expectedDataMethod("12","Art Activite","art","13","null","2023-11-14 00:00:00"
+                ,"2023-11-24 23:59:00","Paint","Art","0");
+        Response response=given().spec(HooksAPI.spec).contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(adminUpdateReqBody)
+                .patch(fullPath);
+        JsonPath respJP=response.jsonPath();
+        assertEquals(adminUpdateReqBody.get("id"),respJP.get("updateId"));
+    }
+    @Given("Verification is done by sending POST body to alumniEventsId endpoint with the updateId returned in the response body.")
+    public void verification_is_done_by_sending_post_body_to_api_alumni_events_ıd_endpoint_with_the_update_ıd_returned_in_the_response_body() {
 
+        String fullPath=API_Utils.createfullPath("api/alumniEventsId");
+        JSONObject reqBody=new JSONObject();
+        reqBody.put("id",12);
 
+        Response response=given()
+                .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(reqBody.toString())
+                .post("https://qa.wonderworldcollege.com/api/alumniEventsId");
+        response.prettyPrint();
 
+        response
+                .then()//assert then olmadan  gelmez
+                .assertThat()
+                .statusCode(200)
+                .contentType(ContentType.JSON);
 
+    }
 
 
 
@@ -1570,6 +1558,170 @@ public class APIStepDefinition {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @When("Prepare request body for admin api_alumniId endpoint and record response")
+    public void prepareRequestBodyForAdminApi_alumniIdEndpointAndRecordResponse() {
+
+        JSONObject reqBody = new JSONObject();
+        reqBody.put("id", "3");
+
+        response = given()
+                .spec(HooksAPI.spec)
+                .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(reqBody.toString())
+                .post(fullPath);
+
+        response.prettyPrint();
+
+
+        response = given()
+                .spec(HooksAPI.spec)
+                .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(reqBody.toString())
+                .post(fullPath);
+
+
+        response.prettyPrint();
+    }
+
+
+    @When("Verifies that record includes {string}")
+    public void verifiesThatRecordIncludes(String expectedData) {
+
+
+        JsonPath resJP = response.jsonPath();
+
+        String actualData = resJP.get("lists").toString();
+        System.out.println(actualData);
+
+        String[] expectedArr = expectedData.split(",");
 
 
 
@@ -3061,14 +3213,30 @@ public class APIStepDefinition {
 
    // @Given("Response for Admin with invalid authorization information")
    // public void response_for_admin_with_invalid_authorization_information() {
-   //     RequestSpecification spec= new RequestSpecBuilder().setBaseUri("https://wonderworldcollege.com/").build();
+        RequestSpecification spec= new RequestSpecBuilder().setBaseUri("https://wonderworldcollege.com/").build();
 
+        String token= "12345678901234567";
+        spec.pathParams("pp1","api","pp2","getNotice");
+        String fullpath="/{pp1}/{pp2}";
+//Hata olarak 403 kodu verdigi icin excep. firlatiyor.Excep. kaydedip onu  test edecegiz
 
+        String exceptionMsj="";
 
+        Response response= null;
+        try {
+            response = given()
+                    .contentType(ContentType.JSON)
+                    .spec(spec).headers("Authorization","Bearer " + token,
+                            "Content-Type", ContentType.JSON,"Accept",ContentType.JSON)
+                    .when().get(fullpath);
+        } catch (Exception e) {
+            exceptionMsj=e.getMessage();
+        }
 
+        System.out.println(exceptionMsj);
+        // Assert.assertTrue(exceptionMsj.contains("status code: 403"));
 
-
-
+    }
 
 
 
@@ -3076,9 +3244,7 @@ public class APIStepDefinition {
    // @Given("when sending a DELETE body containing the correct data \\(id)")
    // public void when_sending_a_delete_body_containing_the_correct_data_id() {
 
-
-
-
+        }
 
 
 
