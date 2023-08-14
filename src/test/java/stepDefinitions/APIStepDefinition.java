@@ -69,6 +69,15 @@ public class APIStepDefinition {
     JsonPath jsonPath;              // Response dan bilgi almak ,kaydetmek ve yazdırmak icin kullanilir.
     String exceptionMessage = "";  // Sorguda ReqBody gonderiyorsak gonderdigimiz Datanın formatını belirtiriz.(PreCondition)
                                    // Givenden hemen sonra ContentType(ContentType.JSON) eklenir.Body When den sonra eklenir.
+// Post,Put,Patch methodlari ile body göndereceksek obje olusturup uzerinden reqBodyJson.put("key",value").put("key","value") seklinde data gonderilir
+// Body gönderecekse Given dan sonra precondition yani on hazırlık olarak ContentType(ContentType.JSON) girilmeli
+// Body olarak reqBodyJson objesi gönderirken de body icinde toString ile Stringe cevirmeliyiz
+// Assertion yaparken de response.then().assertThat seklinde assertion oncesi that kullanilir.
+// Assertion da body degilde temel bilgiler sorgulanacaksa asserThat sonrası direk statusCode,contentType,Header degerleri sorgulanabilir
+// Body ıcın ise;
+// 1-Matchers.:(Cok fazal methodu vardır):
+// AssertThat sonrası :response.then().assertThat().body("title",Matchers.equalTo("aaa"),"name",Matchers.equalTo("bbb"),....seklinde sorgulanabilir.
+// Matchers da equalTo(null) test edilebiliyor.
 
 
     //   Set "api/visitorsPurposeList" parameters. [TC_01_API_US001]_Step1
