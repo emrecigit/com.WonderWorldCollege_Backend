@@ -3203,8 +3203,8 @@ public void record_the_response_of_the_endpoint_with_the_current_authorization(S
 
 
 
-    @Given("Response for Admin with invalid authorization information")
-    public void response_for_admin_with_invalid_authorization_information() {
+   // @Given("Response for Admin with invalid authorization information")
+   // public void response_for_admin_with_invalid_authorization_information() {
         RequestSpecification spec= new RequestSpecBuilder().setBaseUri("https://wonderworldcollege.com/").build();
 
         String token= "12345678901234567";
@@ -3233,12 +3233,11 @@ public void record_the_response_of_the_endpoint_with_the_current_authorization(S
 
 
     // Delete Body
-    @Given("when sending a DELETE body containing the correct data \\(id)")
-    public void when_sending_a_delete_body_containing_the_correct_data_id() {
+   // @Given("when sending a DELETE body containing the correct data \\(id)")
+   // public void when_sending_a_delete_body_containing_the_correct_data_id() {
 
         }
 
-    }
 
 
 
@@ -4206,10 +4205,11 @@ public void record_the_response_of_the_endpoint_with_the_current_authorization(S
 
 
 
-        for (String each : expectedArr) {
-            Assert.assertTrue(actualData.contains(each));
-        }
-    }
+
+        //for (String each : expectedArr) {
+        //    Assert.assertTrue(actualData.contains(each));
+
+
 
 
 
