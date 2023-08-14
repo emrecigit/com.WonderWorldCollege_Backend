@@ -53,7 +53,7 @@ public class APIStepDefinition {
 
 
     String responseString;
-=======
+
 
 
     //   Set "api/visitorsPurposeList" parameters. [TC_01_API_US001]_Step1
@@ -282,52 +282,6 @@ public class APIStepDefinition {
 //
 //
     //   }
-//
-
-
-    @When("Prepare request body for admin api_alumniId endpoint and record response")
-    public void prepareRequestBodyForAdminApi_alumniIdEndpointAndRecordResponse() {
-
-        JSONObject reqBody = new JSONObject();
-        reqBody.put("id", "3");
-
-
-        response = given()
-                .spec(HooksAPI.spec)
-                .contentType(ContentType.JSON)
-                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
-                .when()
-                .body(reqBody.toString())
-                .post(fullPath);
-
-
-        response.prettyPrint();
-
-        response = given()
-                .spec(HooksAPI.spec)
-                .contentType(ContentType.JSON)
-                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
-                .when()
-                .body(reqBody.toString())
-                .post(fullPath);
-
-
-        response.prettyPrint();
-
-
-
-        response = given()
-                .spec(HooksAPI.spec)
-                .contentType(ContentType.JSON)
-                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
-                .when()
-                .body(reqBody.toString())
-                .post(fullPath);
-
-
-        response.prettyPrint();
-    }
-}
 
 
 
@@ -1724,6 +1678,7 @@ public class APIStepDefinition {
         String[] expectedArr = expectedData.split(",");
 
 
+    }
 
 
 
@@ -3210,9 +3165,8 @@ public class APIStepDefinition {
 
 
 
-
-   // @Given("Response for Admin with invalid authorization information")
-   // public void response_for_admin_with_invalid_authorization_information() {
+    @Given("Response for Admin with invalid authorization information")
+   public void response_for_admin_with_invalid_authorization_information() {
         RequestSpecification spec= new RequestSpecBuilder().setBaseUri("https://wonderworldcollege.com/").build();
 
         String token= "12345678901234567";
