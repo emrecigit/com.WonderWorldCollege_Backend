@@ -1647,6 +1647,25 @@ public class APIStepDefinition {
 
 
 
+    @Given("Verifies that status code {int}")
+    public void verifies_that_status_code(Integer int1) {
+            PojoAdmin obj=new PojoAdmin();
+            Map<String, Object> adminUpdateReqBody=obj.expectedDataMethod("12","Art Activite","art","13","null","2023-11-14 00:00:00"
+                    ,"2023-11-24 23:59:00","Paint","Art","0");
+            Response response= null;
+            try {
+                response = given().spec(HooksAPI.spec).contentType(ContentType.JSON)
+                        .headers("Authorization", "Bearer " + HooksAPI.tokenStudent)
+                        .when()
+                        .body(adminUpdateReqBody)
+                        .patch(fullPath);
+            } catch (Exception e) {
+                hataMesaji=e.getMessage();
+
+            }
+            System.out.println(hataMesaji);
+            assertTrue(hataMesaji.contains("403"));
+        }
 
 
 

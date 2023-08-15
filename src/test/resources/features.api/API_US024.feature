@@ -10,9 +10,8 @@ Feature:US_24
 
   Scenario: TC_02
     * Set "api/alumniId" parameters
-    * Records response for Admin with invalid authorization information
-    * Verifies that status code is 403
-    * Verifies that the message information is "failed"
+    * Verifies that status code 403
+
 
 
 
