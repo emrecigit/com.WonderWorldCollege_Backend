@@ -58,6 +58,12 @@ Mehmet Şah OKUMUŞ :3501-4000
     ResultSet rs1;
     ResultSet rs2;
     PreparedStatement ps;
+    String query4;
+    ResultSet rs4;
+    String query5;
+    ResultSet rs5;
+    String query6;
+    ResultSet rs6;
 
     @Given("Database connection is established")
     public void database_connection_is_established() {
@@ -497,6 +503,35 @@ Mehmet Şah OKUMUŞ :3501-4000
 
 
 
+
+    @Given("List the students query is prepared and run and the result is obtained")
+    public void list_the_students_query_is_prepared_and_run_and_the_result_is_obtained() throws SQLException {
+
+        query4 = "SELECT lastname,firstname from wonderworld_qa.students WHERE admission_no<18011 AND  admission_no>18000;";
+        rs4 = getStatement().executeQuery(query4);
+    }
+    @Given("List the students query result is validated")
+    public void list_the_students_query_result_is_validated() {
+        System.out.println(getColumnData(query4, "firstname, lastname"));
+    }
+    @Given("List the mother name and mother occupation query is prepared and run and the result is obtained")
+    public void list_the_mother_name_and_mother_occupation_query_is_prepared_and_run_and_the_result_is_obtained() throws SQLException {
+        query5 = "SELECT mother_occupation,mother_name from wonderworld_qa.students WHERE lastname LIKE 'T%';";
+        rs5 = getStatement().executeQuery(query5);
+    }
+    @Given("List the mother name and mother occupation query result is validated")
+    public void list_the_mother_name_and_mother_occupation_query_result_is_validated() {
+        System.out.println(getColumnData(query5, " mother_occupation,mother_name"));
+    }
+    @Given("List the roll no query is prepared and run and the result is obtained")
+    public void list_the_roll_no_query_is_prepared_and_run_and_the_result_is_obtained() throws SQLException {
+        query6 = "SELECT roll_no FROM wonderworld_qa.students WHERE father_occupation IN ('Doctor', 'Police') ORDER BY roll_no DESC;";
+        rs6 = getStatement().executeQuery(query6);
+    }
+    @Given("List the roll no query result is validated")
+    public void list_the_roll_no_query_result_is_validated() {
+        System.out.println(getColumnData(query6, "roll_no"));
+    }
 
 
 
