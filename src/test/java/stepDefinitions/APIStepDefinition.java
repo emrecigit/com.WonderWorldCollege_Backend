@@ -8,6 +8,7 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Assert;
 import utilities.API_Utils;
@@ -46,69 +47,38 @@ public class APIStepDefinition {
     public static String fullPath;
     public static String tokenAll;
     JSONObject reqBodyJson;         // ReqBody Direk yazdirilabilir Put (Update)  Post (Create) Patch (İlave) body gondermek (gonderirken toString ile gonderilir)
-    Response response;              // Response Database den body olarak donen cevap
-    JsonPath jsonPath;              // Response dan bilgi almak ,kaydetmek ve yazdırmak icin kullanilir.
+    Response response;              // Response Database den body olarak donen cevap direk kullanilmaz JsonPath ile kullanilir.response.prettyPrint veya prettyPeek ile yazdirilabilir.
+    JsonPath responseJsonPath;// Kendi Methodlari var Response dan bilgi almak ,kaydetmek ve yazdırmak icin kullanilir.Bu sekilde AssertTrue,Assert Equal testleri yapilabilir.
     String exceptionMessage = "";  // Sorguda ReqBody gonderiyorsak gonderdigimiz Datanın formatını belirtiriz.(PreCondition)
-    // Givenden hemen sonra ContentType(ContentType.JSON) eklenir.Body When den sonra eklenir.
-
-
     String responseString;
-
-
-
+    // Givenden hemen sonra ContentType(ContentType.JSON) eklenir.Body When den sonra eklenir.
+    // Post,Put,Patch methodlari ile body göndereceksek obje olusturup uzerinden reqBodyJson.put("key",value").put("key","value") seklinde data gonderilir
+    // Body gönderecekse Given dan sonra precondition yani on hazırlık olarak ContentType(ContentType.JSON) girilmeli
+    // Body olarak reqBodyJson objesi gönderirken de body icinde toString ile Stringe cevirmeliyiz
+    // Assertion yaparken de response.then().assertThat seklinde assertion oncesi that kullanilir.
+    // Assertion da body degilde temel bilgiler sorgulanacaksa asserThat sonrası direk statusCode,contentType,Header degerleri sorgulanabilir
+    // JSON Object Cagirirken ;
+    // jsonObject(<==obje adı).get("key") ,
+    // inner da jsonObject(<==obje adı).getJSONObject("adress").get("city")
+    // Array de jsonObject(<==obje adı).getJSONArray("adress").getJSONObject(0).get("city") (Index ile put yapilir)
+    // JSONPath.com (JSON Object icin yolu gosterir Inner da adress.city / array de phoneNumber[0].type seklinde [.type yazarak tum type valulerini verir basina $.da konulabiliyor)
+    // Json Obje Assert edilirken JsonPath Yolu ile cagrilip Assert edilebilir ;
+    // Ornek;.body("booking.firstname",Matchers.equalTo("Ali")
+    // Ornek;.body("booking.bookingdates.checkin",equalTo("2021-06-21") // Matchers silinebilir de.
+    // *Normal Assertionda equalTo,JSON List elemanSayısı hasSize,List elemanı Assert edilirken hasItem ,Listin aynı yür elemanlari hasItems ile assert edilir.
+    // Temel bilgiler Assert edilirken AssertThat yeterlidir(Response ile gelen genel bilgiler Status Code,Header etc...)
+    // Body ıcın ise;
+    // 1-Matchers.: Response body deki key ile valuleri test etme (Cok fazla methodu vardır):
+    // AssertThat sonrası :response.then().assertThat().body("title",Matchers.equalTo("aaa"),"name",Matchers.equalTo("bbb"),....seklinde sorgulanabilir.
+    // Matchers da equalTo(null) test edilebiliyor.
+    // 2-Junit Assert methodlari: Key degerleri uzerinden kıyaslar,expected ve actual (Response JsonPath e cevrilir)
+    // Assert yaparken JsonObject icin : getJSONObject("booking").get("date"), JsonPath icin : responseJsonPath.get("booking-date") ile equals yapilir
+    // 3-TestNG SoftAssert methodlari: Durum raporu icin enson softAssert.assertAll() ile tamamlanır.
     //   Set "api/visitorsPurposeList" parameters. [TC_01_API_US001]_Step1
     @Given("Set {string} parameters")
     public void set_parameters(String rawPaths) {
-
         fullPath = API_Utils.createfullPath(rawPaths);
-        //   String[] paths = rawPaths.split("/");
-        //   StringBuilder tempPath = new StringBuilder("/{");
-        //   for (int i = 0; i < paths.length; i++) {
-        //       String key = "pp" + i; // pp0 pp1 pp2
-        //       //System.out.println("key = " + key); // key = pp0 / key = pp1
-        //       String value = paths[i].trim();
-        //       //System.out.println("value = " + value); // value = api / value = visitorsPurposeList
-        //       HooksAPI.spec.pathParam(key, value);
-        //       tempPath.append(key + "}/{");
-        //   }
-        //   //System.out.println("tempPath = " + tempPath); // tempPath = /{pp0}/{pp1}/{
-        //   tempPath.deleteCharAt(tempPath.lastIndexOf("{"));
-        //   tempPath.deleteCharAt(tempPath.lastIndexOf("/"));
-        //   //System.out.println("tempPath = " + tempPath); // tempPath = /{pp0}/{pp1}
-        //   fullPath = tempPath.toString();
-        //   System.out.println("Definition fullPath = " + fullPath); // fullPath = /{pp0}/{pp1}
-
-
-        String[] paths = rawPaths.split("/");
-        StringBuilder tempPath = new StringBuilder("/{");
-        for (int i = 0; i < paths.length; i++) {
-            String key = "pp" + i; // pp0 pp1 pp2
-            System.out.println("key = " + key); // key = pp0 / key = pp1
-            String value = paths[i].trim();
-            System.out.println("value = " + value); // value = api / value = visitorsPurposeList
-            HooksAPI.spec.pathParam(key, value);
-            tempPath.append(key + "}/{");
-        }
-        // System.out.println("tempPath = " + tempPath); // tempPath = /{pp0}/{pp1}/{
-        tempPath.deleteCharAt(tempPath.lastIndexOf("{"));
-        tempPath.deleteCharAt(tempPath.lastIndexOf("/"));
-        System.out.println("tempPath = " + tempPath); // tempPath = /{pp0}/{pp1}
-        fullPath = tempPath.toString();
-        System.out.println("fullPath = " + fullPath); // fullPath = /{pp0}/{pp1}
     }
-
-
-// Admin Authorization (Take Token)
-    // @When("Records response for Admin with valid authorization information")
-    // public void recordsResponseForAdminWithValidAuthorizationInformation() {
-    //     // Admin icin, gecerli authorization bilgileri ile  response kaydeder
-    //     response = given()
-    //             .spec(HooksAPI.spec)
-    //             .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
-    //             .contentType(ContentType.JSON)
-    //             .when()
-    //             .get(fullPath);
-    // }
 
     // Success record the response body (Status Code 200) [TC_01_API_US001]_Step2
     @Given("Record the response of the endpoint {string} with the current authorization {string}")
@@ -125,22 +95,6 @@ public class APIStepDefinition {
         // response.prettyPrint();
     }
 
-
-
-// Admin Authorization (Take Token)
-    // @When("Records response for Admin with valid authorization information")
-    // public void recordsResponseForAdminWithValidAuthorizationInformation() {
-    //     // Admin icin, gecerli authorization bilgileri ile  response kaydeder
-    //     response = given()
-    //             .spec(HooksAPI.spec)
-    //             .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
-    //             .contentType(ContentType.JSON)
-    //             .when()
-    //             .get(fullPath);
-    // }
-
-
-
     // Satus Code Assertion (Status Code 200) [TC_01_API_US001]_Step3
     @Then("Verifies that status code is {int}")
     public void verifiesThatStatusCodeIs(int statusCode) {
@@ -153,7 +107,6 @@ public class APIStepDefinition {
                 .statusCode(statusCode);
 
     }
-
 
     // Message Verification (Success Message) [TC_01_API_US001]_Step4
     @Then("Verifies that the message information is {string}")
@@ -168,7 +121,6 @@ public class APIStepDefinition {
         //         .statusCode(200)
         //         .body("message", Matchers.equalTo("Success"));
     }
-
 
     // Invalid Authorization Test [TC_02_API_US_001]_Step2
     @Given("Verifies that the Status Code of the failed connection from the endpoint {string} with invalid authorization {string} is {string} and the message is {string}")
@@ -190,20 +142,43 @@ public class APIStepDefinition {
     }
 
     // List element verification test [TC_03_API_US_001]_Step3
-    @Given("From the data in the list returned from the response body {string}, data content {string} and {string}, validation test that")
-    public void from_the_data_in_the_list_returned_from_the_response_body_data_content_and_validation_test_that(String string, String string2, String string3) {
+    @Given("The data visitors purpose {string} and created at {string} in the list with Id number {string} must be validated")
+    public void the_data_visitors_purpose_and_created_at_in_the_list_with_ıd_number_must_be_validated(String id, String visitors_purpose, String created_at) {
+ //     // Responsedan "lists" Array dizisi getirin
 
-        reqBodyJson = new JSONObject();  //put post patch body içeriği için reqBodyJson.put("email","emre.cigit@admin.wonderworldcollege.com"); gibi
-        response = given()
-                .contentType(ContentType.JSON)
-                .when()
-                .body(reqBodyJson.toString())
-                .post(fullPath);
+ //     //Id "2" olan öğeyi bulma ve doğrulama
+ //      boolean found = false;
+ //      for (int i = 0; i < listsArray.length(); i++) {
+ //          JSONObject element = listsArray.getJSONObject(i);
+ //          if (element.getString(id).equals("2")) {
+ //              visitors_purpose = element.getString("visitors_purpose");
+ //              created_at = element.getString("created_at");
+
+ //              if (visitors_purpose.equals("Parent Teacher Meeting") && created_at.equals("2023-01-18 01:07:12")) {
+ //                  System.out.println("Validation passed for element with ID 2");
+ //                  found = true;
+ //              } else {
+ //                  System.out.println("Validation failed for element with ID 2");
+ //              }
+ //              break;
+ //          }
+ //      }
+
+ //      if (!found) {
+ //          System.out.println("Element with ID 2 not found");
+ //      }
+ //  }
+
+
+
+
+
+
         //   JSONObject reqBodyJson;                   // Put Post Patch işlemlerinde body gondermek icin olusturulur.
         //   response.prettyPrint();                   // Burdan bir mesaj almak için response JsonPath objesine cevrilir
-        //   jsonPath =response.jsonPath();            // Direk yazdirilabilir.
-        //   tokenAll  = jsonPath.getString("token");  // JsonPath ile Response dan token alınır Bu islemle String haline geldi
-    }
+        //   responseJsonPath =response.responseJsonPath();            // Direk yazdirilabilir.
+        //   tokenAll  = responseJsonPath.getString("token");  // JsonPath ile Response dan token alınır Bu islemle String haline geldi
+
 
 
     // Teacher Authorization (Take Token)
@@ -4168,8 +4143,19 @@ public class APIStepDefinition {
 
 
 
-        //for (String each : expectedArr) {
-        //    Assert.assertTrue(actualData.contains(each));
+
+
+          // Admin Authorization (Take Token)
+          // @When("Records response for Admin with valid authorization information")
+          // public void recordsResponseForAdminWithValidAuthorizationInformation() {
+          //     // Admin icin, gecerli authorization bilgileri ile  response kaydeder
+          //     response = given()
+          //             .spec(HooksAPI.spec)
+          //             .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+          //             .contentType(ContentType.JSON)
+          //             .when()
+          //             .get(fullPath);
+          // }
 
 
 
@@ -4217,7 +4203,16 @@ public class APIStepDefinition {
 
 
 
-
-
-
+ // Admin Authorization (Take Token)
+ @When("Records response for Admin with valid authorization information")
+ public void recordsResponseForAdminWithValidAuthorizationInformation() {
+     // Admin icin, gecerli authorization bilgileri ile  response kaydeder
+     response = given()
+             .spec(HooksAPI.spec)
+             .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+             .contentType(ContentType.JSON)
+             .when()
+             .get(fullPath);
+ }
+}
 
