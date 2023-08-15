@@ -10,6 +10,7 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.json.JSONObject;
 import org.junit.Assert;
+import pojos.pojoBooksUpdate;
 import utilities.API_Utils;
 
 import static io.restassured.RestAssured.given;
@@ -1999,10 +2000,80 @@ public class APIStepDefinition {
 
 
 
+    @Given("Prepare request body for admin api_booksId endpoint and record response")
+    public void prepare_request_body_for_admin_api_books_ıd_endpoint_and_record_response() {
+        JSONObject reqBody = new JSONObject();
+        reqBody.put("id", "3");
 
+        response = given()
+                .spec(HooksAPI.spec)
+                .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(reqBody.toString())
+                .post(fullPath);
 
+        response.prettyPrint();
 
+    }
 
+    @Given("Booksupdate patch body containing correct data is prepared.")
+    public void booksupdate_patch_body_containing_correct_data_is_prepared() {
+        String fullPath=API_Utils.createfullPath("api/booksUpdate");
+        pojoBooksUpdate obj=new pojoBooksUpdate();
+        Map<String, Object> adminUpdateReqBody=obj.expectedDataMethod1("122","Vadideki Zambak1","7887893","","null","110"
+                ,"Dünya Klasikleri","Balzac","101","13.00", "2022-05-04","Ortaokulda okuduğum en iyi kitap.","yes","no");
+
+        //response save
+
+        Response response=given().spec(HooksAPI.spec).contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(adminUpdateReqBody)
+                .patch(fullPath);
+
+        response.prettyPrint();
+
+        Map<String, Object> actualData = response.as(HashMap.class);
+        System.out.println("actualData = " + actualData);
+
+    }
+
+    @Given("Verification is done by sending POST body to booksId endpoint with the updateId returned in the response body.")
+    public void verification_is_done_by_sending_post_body_to_books_ıd_endpoint_with_the_update_ıd_returned_in_the_response_body() {
+        String fullPath=API_Utils.createfullPath("api/booksId");
+        JSONObject reqBody=new JSONObject();
+        reqBody.put("id",122);
+
+        Response response=given()
+                .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(reqBody.toString())
+                .post("https://qa.wonderworldcollege.com/api/booksId");
+        response.prettyPrint();
+
+        response
+                .then()//assert then olmadan  gelmez
+                .assertThat()
+                .statusCode(200)
+                .contentType(ContentType.JSON);
+
+    }
+
+    @Given("It should be verified that the  books updateId information and the id information in the request body are the same.")
+    public void ıt_should_be_verified_that_the_books_update_ıd_information_and_the_id_information_in_the_request_body_are_the_same() {
+        pojoBooksUpdate obj=new pojoBooksUpdate();
+        Map<String, Object> adminUpdateReqBody=obj.expectedDataMethod1("122","Art Activite","art","13","null","2023-11-14 00:00:00"
+                ,"2023-11-24 23:59:00","Paint","Art","0", "2022-05-04","Ortaokulda okuduğum en iyi kitap.","yes","no");
+        Response response=given().spec(HooksAPI.spec).contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(adminUpdateReqBody)
+                .patch(fullPath);
+        JsonPath respJP=response.jsonPath();
+        assertEquals(adminUpdateReqBody.get("id"),respJP.get("updateId"));
+    }
 
 
 
