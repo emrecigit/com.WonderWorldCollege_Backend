@@ -53,7 +53,7 @@ public class APIStepDefinition {
 
 
     String responseString;
-//=======
+=======
 
 
     //   Set "api/visitorsPurposeList" parameters. [TC_01_API_US001]_Step1
@@ -327,7 +327,7 @@ public class APIStepDefinition {
 
         response.prettyPrint();
     }
-
+}
 
 
 
@@ -681,22 +681,8 @@ public class APIStepDefinition {
                 .contentType(ContentType.JSON);
 
     }
-    //us 9
-    @Given("Prepare request body for admin api_alumniEventsId endpoint and record response")
-    public void prepare_request_body_for_admin_api_alumni_events_ıd_endpoint_and_record_response() {
-        JSONObject reqBody = new JSONObject();
-        reqBody.put("id", "3");
 
-        response = given()
-                .spec(HooksAPI.spec)
-                .contentType(ContentType.JSON)
-                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
-                .when()
-                .body(reqBody.toString())
-                .post(fullPath);
 
-        response.prettyPrint();
-    }
 
 
 
@@ -1696,9 +1682,6 @@ public class APIStepDefinition {
 
 
 
-
-
-/*
     @When("Prepare request body for admin api_alumniId endpoint and record response")
     public void prepareRequestBodyForAdminApi_alumniIdEndpointAndRecordResponse() {
 
@@ -1727,10 +1710,6 @@ public class APIStepDefinition {
 
         response.prettyPrint();
     }
-
- */
-
-
 
 
     @When("Verifies that record includes {string}")
