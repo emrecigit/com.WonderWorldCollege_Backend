@@ -8,6 +8,7 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.hamcrest.Matchers;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Assert;
@@ -47,6 +48,7 @@ public class APIStepDefinition {
      */
     public static String fullPath;
     public static String tokenAll;
+    JSONObject jsonObject;
     JSONObject reqBodyJson;         // ReqBody Direk yazdirilabilir Put (Update)  Post (Create) Patch (İlave) body gondermek (gonderirken toString ile gonderilir)
     Response response;              // Response Database den body olarak donen cevap direk kullanilmaz JsonPath ile kullanilir.response.prettyPrint veya prettyPeek ile yazdirilabilir.
     JsonPath responseJsonPath;// Kendi Methodlari var Response dan bilgi almak ,kaydetmek ve yazdırmak icin kullanilir.Bu sekilde AssertTrue,Assert Equal testleri yapilabilir.
@@ -59,15 +61,17 @@ public class APIStepDefinition {
     // Body olarak reqBodyJson objesi gönderirken de body icinde toString ile Stringe cevirmeliyiz
     // Assertion yaparken de response.then().assertThat seklinde assertion oncesi that kullanilir.
     // Assertion da body degilde temel bilgiler sorgulanacaksa asserThat sonrası direk statusCode,contentType,Header degerleri sorgulanabilir
-    // JSON Object Cagirirken ;
+    // JSON Object Cagirirken ; ( Value getirir.)
     // jsonObject(<==obje adı).get("key") ,
     // inner da jsonObject(<==obje adı).getJSONObject("adress").get("city")
+    // ReqBody olustururken.Array de Ornegin list.put(0,listElemanObjeAdi)
     // Array de jsonObject(<==obje adı).getJSONArray("adress").getJSONObject(0).get("city") (Index ile put yapilir)
     // JSONPath.com (JSON Object icin yolu gosterir Inner da adress.city / array de phoneNumber[0].type seklinde [.type yazarak tum type valulerini verir basina $.da konulabiliyor)
-    // Json Obje Assert edilirken JsonPath Yolu ile cagrilip Assert edilebilir ;
-    // Ornek;.body("booking.firstname",Matchers.equalTo("Ali")
-    // Ornek;.body("booking.bookingdates.checkin",equalTo("2021-06-21") // Matchers silinebilir de.
-    // *Normal Assertionda equalTo,JSON List elemanSayısı hasSize,List elemanı Assert edilirken hasItem ,Listin aynı yür elemanlari hasItems ile assert edilir.
+    // ResponseBody Assert edilirken JsonPath Yolu ile cagrilip Assert edilebilir ;
+    // Ornek;response...body("booking.firstname",Matchers.equalTo("Ali")
+    // Ornek;response...body("booking.bookingdates.checkin",equalTo("2021-06-21") // Matchers silinebilir de.
+    // *Normal Assertionda equalTo,Response List elemanSayısı hasSize,List elemanı Assert edilirken hasItem ,Listin aynı yür elemanlari hasItems ile assert edilir.
+    // // response.then().asserThat().body("lists.id",Matchers.hasSize(24), "data.emloyename",hasItem("ashton cox")
     // Temel bilgiler Assert edilirken AssertThat yeterlidir(Response ile gelen genel bilgiler Status Code,Header etc...)
     // Body ıcın ise;
     // 1-Matchers.: Response body deki key ile valuleri test etme (Cok fazla methodu vardır):
@@ -144,33 +148,15 @@ public class APIStepDefinition {
     }
 
     // List element verification test [TC_03_API_US_001]_Step3
-    @Given("The data visitors purpose {string} and created at {string} in the list with Id number {string} must be validated")
-    public void the_data_visitors_purpose_and_created_at_in_the_list_with_ıd_number_must_be_validated(String id, String visitors_purpose, String created_at) {
-        //     // Responsedan "lists" Array dizisi getirin
-
-        //     //Id "2" olan öğeyi bulma ve doğrulama
-        //      boolean found = false;
-        //      for (int i = 0; i < listsArray.length(); i++) {
-        //          JSONObject element = listsArray.getJSONObject(i);
-        //          if (element.getString(id).equals("2")) {
-        //              visitors_purpose = element.getString("visitors_purpose");
-        //              created_at = element.getString("created_at");
-
-        //              if (visitors_purpose.equals("Parent Teacher Meeting") && created_at.equals("2023-01-18 01:07:12")) {
-        //                  System.out.println("Validation passed for element with ID 2");
-        //                  found = true;
-        //              } else {
-        //                  System.out.println("Validation failed for element with ID 2");
-        //              }
-        //              break;
-        //          }
-        //      }
-
-        //      if (!found) {
-        //          System.out.println("Element with ID 2 not found");
-        //      }
-    }
-
+    @Given("The data visitors purpose {string} and created at {string} in the list with id number {string} must be validated")
+    public void the_data_visitors_purpose_and_created_at_in_the_list_with_id_number_must_be_validated(String visitors_purpose, String created_at, String id) {
+        response.prettyPrint();
+        responseJsonPath  = response.jsonPath();
+        Assert.assertEquals(id, responseJsonPath.get("lists[0].id"));
+        Assert.assertEquals(visitors_purpose, responseJsonPath.get("lists[0].visitors_purpose"));
+        Assert.assertEquals(created_at, responseJsonPath.get("lists[0].created_at"));
+        //   response.then().assertThat().body("lists[0].id", Matchers.hasItem(id),"lists[0].visitors_purpose",Matchers.hasItem(visitors_purpose),"lists[0].created_at",Matchers.hasItem(created_at));
+        }
 
     //   JSONObject reqBodyJson;                   // Put Post Patch işlemlerinde body gondermek icin olusturulur.
     //   response.prettyPrint();                   // Burdan bir mesaj almak için response JsonPath objesine cevrilir
