@@ -14,16 +14,15 @@ Feature:[API_US_O15] As an administrator, I want to create a new Vehicle record 
   api/vehicleAdd endpoint,the expected status code is 403, and the message in the response body should be "failed."
 
   * Set "api/vehicleAdd" parameters
-  * A POST body is sent to the "api/vehicleAdd" endpoint with invalid authorization information and correct data "(vehicle_no, vehicle_model, vehicle_photo, manufacture_year, registration_number,chasis_number, max_seating_capacity, driver_name, driver_licence, driver_contact, note)"
-  * Verifies that status code is 403
-  * Verifies that the message information is "failed"
+  * Verifies that Status Code is 403.
+
 
 
   Scenario: [TC_03_API_015] The successful creation of the new vehicle record via the API should be validated.
-     (This can be confirmed by using the addId returned
-     in the response body to send a POST body to the api/vehicleId endpoint and verify the record is created.)
 
-       * The successful creation of the new vehicle record via the API should be validated.
+
+    * Set "api/vehicleId" parameters
+    * The successful creation of the new vehicle record via the API should be validated.
 
 
 

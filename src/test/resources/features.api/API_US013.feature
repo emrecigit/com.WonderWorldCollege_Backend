@@ -17,3 +17,5 @@ Feature: [API_US_013] As an administrator, I want to access the Vehicle List thr
 
     * Set "api/vehicleList" parameters
     * Verifies that the Status Code of the failed connection from the endpoint "api/vehicleList" with invalid authorization "wrongToken" is "403" and the message is "Forbidden"
+
+    Scenario:
