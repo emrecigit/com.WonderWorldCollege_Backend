@@ -50,4 +50,37 @@ public class PojoAdmin {
         }
         return expectedDataMap;
     }
+
+//rumeysa
+//id, student_id, current_email, current_phone, occupation, address, photo
+
+    public Map<String, Object> expectedRMMethod(String id, String student_id, String current_email,
+                                                  String current_phone, String occupation, String address, String photo) {
+
+        Map<String, Object> expectedDataMap = new HashMap<>();
+
+        if (id != null) {
+            expectedDataMap.put("id", id);
+        }
+        if (student_id != null) {
+            expectedDataMap.put("student_id", student_id);
+        }
+        if (current_email != null) {
+            expectedDataMap.put("current_email", current_email);
+        }
+        if (current_phone != null) {
+            expectedDataMap.put("current_phone", current_phone);
+        }
+        if (occupation != null) {
+            expectedDataMap.put("occupation", occupation);
+        }
+        if (address != null) {
+            expectedDataMap.put("address", address);
+        }
+        if (photo != null) {
+            expectedDataMap.put("photo", photo);
+        }
+
+        return expectedDataMap;
+    }
 }
