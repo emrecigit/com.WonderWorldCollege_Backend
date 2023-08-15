@@ -1698,7 +1698,7 @@ public class APIStepDefinition {
 
 
 
-
+/*
     @When("Prepare request body for admin api_alumniId endpoint and record response")
     public void prepareRequestBodyForAdminApi_alumniIdEndpointAndRecordResponse() {
 
@@ -1727,6 +1727,9 @@ public class APIStepDefinition {
 
         response.prettyPrint();
     }
+
+ */
+
 
 
 
