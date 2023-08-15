@@ -18,5 +18,5 @@ Feature:US_24
 
   Scenario: TC_03
     * Set "api/alumniId" parameters
-    * Prepare request body for admin api_alumniId endpoint and record response
+    * Prepare request body for admin api_alumniId endpoint and record response r.
     * Verifies that record includes "id,student_id,current_email,current_phone,occupation,address,photo,created_at"

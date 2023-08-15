@@ -1500,158 +1500,18 @@ public class APIStepDefinition {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//"id": 3,
+//        "student_id": "29",
+//        "current_email": "deneme@deneme.com",
+//        "current_phone": "9809967867",
+//        "occupation": "",
+//        "address": "",
+//        "photo": ""
     @Given("Verifies that status code {int}")
     public void verifies_that_status_code(Integer int1) {
             PojoAdmin obj=new PojoAdmin();
-            Map<String, Object> adminUpdateReqBody=obj.expectedDataMethod("12","Art Activite","art","13","null","2023-11-14 00:00:00"
-                    ,"2023-11-24 23:59:00","Paint","Art","0");
+        Map<String, Object> adminUpdateReqBody=obj.expectedDataMethod("12","Art Activite","art","13","null","2023-11-14 00:00:00"
+                ,"2023-11-24 23:59:00","Paint","Art","0");
             Response response= null;
             try {
                 response = given().spec(HooksAPI.spec).contentType(ContentType.JSON)
@@ -1666,10 +1526,6 @@ public class APIStepDefinition {
             System.out.println(hataMesaji);
             assertTrue(hataMesaji.contains("403"));
         }
-
-
-
-
     @When("Prepare request body for admin api_alumniId endpoint and record response")
     public void prepareRequestBodyForAdminApi_alumniIdEndpointAndRecordResponse() {
 
@@ -1686,23 +1542,108 @@ public class APIStepDefinition {
 
         response.prettyPrint();
 
-
     }
-
-
     @When("Verifies that record includes {string}")
     public void verifiesThatRecordIncludes(String expectedData) {
 
-
         JsonPath resJP = response.jsonPath();
-
         String actualData = resJP.get("lists").toString();
         System.out.println(actualData);
-
         String[] expectedArr = expectedData.split(",");
 
+    }
+    @Given("Patch body containing correct data is prepared rumeysa.")
+    public void patch_body_containing_correct_data_is_prepared_rumeysa() {
+        String fullPath=API_Utils.createfullPath("api/alumniUpdate");
+        PojoAdmin obj=new PojoAdmin();
+
+        Map<String, Object> adminUpdateReqBody=obj.expectedRMMethod("3","29","deneme@deneme.com","9809967867","",""
+                ,"");
+        //response save
+
+        Response response=given().spec(HooksAPI.spec).contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(adminUpdateReqBody)
+                .patch(fullPath);
+
+        response.prettyPrint();
+
+        Map<String, Object> actualData = response.as(HashMap.class);
+        System.out.println("actualData = " + actualData);
+    }
+
+    @Given("Verifies that status code is {int} rumeysa.")
+    public void verifies_that_status_code_is_rumeysa(int statusCode) {
+        PojoAdmin obj=new PojoAdmin();
+        Map<String, Object> adminUpdateReqBody=obj.expectedDataMethod("12","Art Activite","art","13","null","2023-11-14 00:00:00"
+                ,"2023-11-24 23:59:00","Paint","Art","0");
+        Response response= null;
+        try {
+            response = given().spec(HooksAPI.spec).contentType(ContentType.JSON)
+                    .headers("Authorization", "Bearer " + HooksAPI.tokenStudent)
+                    .when()
+                    .body(adminUpdateReqBody)
+                    .patch(fullPath);
+        } catch (Exception e) {
+            hataMesaji=e.getMessage();
+
+        }
+        System.out.println(hataMesaji);
+        assertTrue(hataMesaji.contains("403"));
+    }
+    @Given("It should be verified that the updateId information and the id information in the request body are the same rumeysa.")
+    public void ıt_should_be_verified_that_the_update_ıd_information_and_the_id_information_in_the_request_body_are_the_same_rumeysa() {
+        PojoAdmin obj=new PojoAdmin();
+        Map<String, Object> adminUpdateReqBody=obj.expectedRMMethod("3","29","deneme@deneme.com","9809967867","",""
+                ,"");
+
+        Response response=given().spec(HooksAPI.spec).contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(adminUpdateReqBody)
+                .patch(fullPath);
+        JsonPath respJP=response.jsonPath();
+        assertEquals(adminUpdateReqBody.get("id"),respJP.get("updateId"));
+    }
+    @Given("Verification is done by sending POST body to alumniEventsId endpoint with the updateId returned in the response body rumeysa.")
+    public void verification_is_done_by_sending_post_body_to_api_alumni_events_ıd_endpoint_with_the_update_ıd_returned_in_the_response_body_rumeysa() {
+
+        String fullPath=API_Utils.createfullPath("api/alumniId");
+        JSONObject reqBody=new JSONObject();
+        reqBody.put("id",12);
+
+        Response response=given()
+                .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(reqBody.toString())
+                .post("https://qa.wonderworldcollege.com/api/alumniEventsId");
+        response.prettyPrint();
+
+        response
+                .then()//assert then olmadan  gelmez
+                .assertThat()
+                .statusCode(200)
+                .contentType(ContentType.JSON);
 
     }
+    @Given("Prepare request body for admin api_alumniEventsId endpoint and record response r.")
+    public void prepare_request_body_for_admin_api_alumni_events_ıd_endpoint_and_record_response_r() {
+        JSONObject reqBody = new JSONObject();
+        reqBody.put("id", "3");
+
+        response = given()
+                .spec(HooksAPI.spec)
+                .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(reqBody.toString())
+                .post(fullPath);
+
+        response.prettyPrint();
+    }
+
 
 
 
