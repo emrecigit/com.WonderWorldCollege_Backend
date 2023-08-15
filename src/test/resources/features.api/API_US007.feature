@@ -5,7 +5,7 @@ Feature: [API_US_007] As an administrator, I want to access the Alumni List thro
   "Success" must be confirmed.
 
     * Set "api/alumniEventsList" parameters
-    * Records response for Admin with valid authorization information
+    * Record the response of the endpoint "api/alumniEventsList" with the current authorization "Admin"
     * Verifies that status code is 200
     * Verifies that the message information is "Success"
 
@@ -14,11 +14,13 @@ Feature: [API_US_007] As an administrator, I want to access the Alumni List thro
   and the message in the response body should be "failed."
 
     * Set "api/alumniEventsList" parameters
-    * Records response for Admin with invalid authorization information
-    * Verifies that status code is 403
-    * Verifies that the message information is "failed"
+    * Verifies that the Status Code of the failed connection from the endpoint "api/alumniEventsList" with invalid authorization "wrongToken" is "403" and the message is "Forbidden"
 
   Scenario: [TC_03_API_US_007] The lists content in the response body must be validated.
+
+    * Set "api/alumniEventsList" parameters
+    * Record the response of the endpoint "api/alumniEventsList" with the current authorization "Admin"
+    * From the data in the list returned from the response body "id: 1", data content "visitors_purpose: Marketing" and "created_at: 2023-01-18 01:07:12", validation test that
 
 
 
