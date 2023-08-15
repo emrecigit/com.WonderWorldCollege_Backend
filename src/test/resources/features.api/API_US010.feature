@@ -19,4 +19,4 @@ Feature:[API_US_O10] As an administrator, I want to create a new Alumni Events r
   Scenario: [TC_03_API_010] The successful creation of a new Alumni Events record via the API should be validated.
 
     * Set "api/vehicleAdd" parameters
-    * The successful creation of the new vehicle record via the API should be validated.
+    * The successful creation of the new event record via the API must be verified.

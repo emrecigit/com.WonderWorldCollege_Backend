@@ -381,6 +381,22 @@ public class APIStepDefinition {
         // Assert.assertEquals(reqBody.get("vehicle_model"),jsonPath.get("vehicle_model"));
 
     }
+    @Given("The successful creation of the new event record via the API must be verified.")
+    public void the_successful_creation_of_the_new_event_record_via_the_apı_must_be_verified() {
+        JSONObject reqBody = new JSONObject();
+        reqBody.put("id", 1184);
+
+        response = given()
+                .spec(HooksAPI.spec)
+                .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(reqBody.toString())
+                .post(fullPath);
+
+        response.prettyPrint();
+
+    }
 
 
     @Given("Prepare request body for admin api_alumniEventsId endpoint and record response")
@@ -1316,7 +1332,7 @@ public void a_post_body_with_valid_authorization_information_and_correct_data_is
     public void the_successful_creation_of_the_new_vehicle_record_via_the_apı_should_be_validated() {
 
         JSONObject reqBody = new JSONObject();
-        reqBody.put("id", 1184);
+        reqBody.put("id", 288);
 
         response = given()
                 .spec(HooksAPI.spec)
