@@ -7,7 +7,7 @@ Feature: As an administrator, I want to access the book information
            and the response body's message should be "Success."
 
     * Set "api/booksId" parameters
-    * Prepare request body for admin api_alumniId endpoint and record response
+    * Prepare request body for admin api_booksId endpoint and record response
     * Verifies that status code is 200
     * Verifies that the message information is "Success"
 
@@ -26,5 +26,5 @@ Feature: As an administrator, I want to access the book information
   Scenario: The content of the list in the response body should contain data with the following attributes.
 
     * Set "api/booksId" parameters
-    * Prepare request body for admin api_alumniId endpoint and record response
+    * Prepare request body for admin api_booksId endpoint and record response
     * Verifies that record includes "id,book_title,book_no,isbn_no,subject,rock_no,publish,author"
