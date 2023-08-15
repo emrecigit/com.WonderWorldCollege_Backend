@@ -9,14 +9,11 @@ Feature: [API_US_011] As an administrator, I would like to update the Alumni Lis
     * Patch body containing correct data is prepared.
     * Verifies that status code is 200.
 
-
   Scenario: [TC_02_API_US_011] When invalid authorization information or missing/wrong data (id) are sent in the
   PATCH body to the api/alumniEventsUpdate endpoint, the expected status code is 403, and the message in the
   response body should be "failed."
 
-
     * Set "api/alumniEventsUpdate" parameters
-    * Patch body containing correct data is prepared.
     * Verifies that status code is 403.
 
   Scenario: [TC_03_API_US_011] The updateId information in the response body should be validated to be the
