@@ -16,7 +16,11 @@ import org.junit.Assert;
 import org.testng.asserts.SoftAssert;
 
 import pojos.pojoBooksUpdate;
+<<<<<<< HEAD
+import testData.TestDataAdmin;
+=======
 
+>>>>>>> main
 import utilities.API_Utils;
 
 import static io.restassured.RestAssured.given;
@@ -3519,12 +3523,55 @@ public void a_post_body_with_valid_authorization_information_and_correct_data_is
 
 
 
+    @Given("It is verified that the DeletedId in the response body is the same as the id in the request body.")
+    public void ıt_is_verified_that_the_deleted_ıd_in_the_response_body_is_the_same_as_the_id_in_the_request_body() {
+     JsonPath responseJP = response.jsonPath();
+     TestDataAdmin testDataAdmin = new TestDataAdmin();
+     JSONObject reqDeleteResponseBody = testDataAdmin.requestDeleteBody();
+     Assert.assertEquals(reqDeleteResponseBody.get("id"),responseJP.get("deleteId"));
+
+    }
 
 
 
+    @Given("Delete body containing correct data is prepared.")
+    public void delete_body_containing_correct_data_is_prepared() {
+        TestDataAdmin testDataAdmin = new TestDataAdmin();
+        JSONObject reqDeleteResponseBody = testDataAdmin.requestDeleteBody();
+        response= given()
+                .spec(HooksAPI.spec)
+                .headers("Authorization","Bearer"+HooksAPI.tokenAdmin)
+                .contentType(ContentType.JSON)
+                .when()
+                .body(reqDeleteResponseBody.toString())
+                .delete("https://qa.wonderworldcollege.com/api/deleteNotice");
+
+        System.out.println("Request Delete Response Body : " + reqDeleteResponseBody);
+        response.prettyPrint();
+
+    }
 
 
+    @Given("The deletion of the desired notice record through the API should be validated.")
+    public void the_deletion_of_the_desired_notice_record_through_the_apı_should_be_validated() {
 
+        TestDataAdmin testDataAdmin = new TestDataAdmin();
+        JSONObject deleteByIdBody = testDataAdmin.requestDeleteBody();
+        deleteByIdBody.put("id",292);
+        response= given()
+                .spec(HooksAPI.spec)
+                .headers("Authorization","Bearer"+HooksAPI.tokenAdmin)
+                .contentType(ContentType.JSON)
+                .when()
+                .body(deleteByIdBody.toString())
+                .post("https://qa.wonderworldcollege.com/api/getNoticeById");
+
+        System.out.println("Delete By Id Body : " + deleteByIdBody);
+        response.prettyPrint();
+
+        Assert.assertEquals(response.statusCode(),403);
+
+    }
 
 
     @Given("Response for Admin with invalid authorization information")
@@ -3554,6 +3601,9 @@ public void a_post_body_with_valid_authorization_information_and_correct_data_is
 
     }
 
+<<<<<<< HEAD
+ }
+=======
 
 
     // Delete Body
@@ -3561,6 +3611,7 @@ public void a_post_body_with_valid_authorization_information_and_correct_data_is
     // public void when_sending_a_delete_body_containing_the_correct_data_id() {
 
 }
+>>>>>>> main
 
 
 
