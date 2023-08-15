@@ -99,6 +99,7 @@ public class APIStepDefinition {
     }
 
 
+
 // Admin Authorization (Take Token)
     // @When("Records response for Admin with valid authorization information")
     // public void recordsResponseForAdminWithValidAuthorizationInformation() {
@@ -651,7 +652,6 @@ public class APIStepDefinition {
 
         response.prettyPrint();
     }
-
 
 
 
