@@ -18,38 +18,36 @@ public class PojoAdmin {
         Map<String, Object> expectedDataMap = new HashMap<>();
 
         if (id != null) {
-            expectedDataMap.put("Status", id);
+            expectedDataMap.put("id", id);
         }
         if (title != null) {
-            expectedDataMap.put("Message", title);
+            expectedDataMap.put("title", title);
         }
 
         if (event_for != null) {
-            expectedDataMap.put("Update id", event_for);
+            expectedDataMap.put("event_for", event_for);
         }
         if (session_id != null) {
-            expectedDataMap.put("Session id", session_id);
+            expectedDataMap.put("session_id", session_id);
         }
         if (section != null) {
-            expectedDataMap.put("Section", section);
+            expectedDataMap.put("section", section);
         }
         if (from_date != null) {
-            expectedDataMap.put("From date", from_date);
+            expectedDataMap.put("from_date", from_date);
         }
         if (to_date != null) {
-            expectedDataMap.put("To date", to_date);
+            expectedDataMap.put("to_date", to_date);
         }
         if (note != null) {
-            expectedDataMap.put("Note", note);
+            expectedDataMap.put("note", note);
         }
         if (event_notification_message != null) {
-            expectedDataMap.put("Event notification message", event_notification_message);
+            expectedDataMap.put("event_notification_message", event_notification_message);
         }
         if (show_onwebsite != null) {
-            expectedDataMap.put("Show onwebsite", show_onwebsite);
+            expectedDataMap.put("show_onwebsite", show_onwebsite);
         }
-
-
         return expectedDataMap;
     }
 }

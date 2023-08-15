@@ -12,11 +12,13 @@ Feature: [API_US_38]As an administrator, I want to access the Notice List throug
 
 
 
+
     Scenario: [TC_01_API_US_38] When invalid authorization information is sent with a GET request to the api/booksList endpoint,
     the expected status code is 403, and the response message should be "failed."
 
       * Set "api/getNotice" parameters
       * Verifies that the Status Code of the failed connection from the endpoint "api/getNotice" with invalid authorization "wrongToken" is "403" and the message is "Forbidden"
+
 
 
 
