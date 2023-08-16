@@ -399,8 +399,8 @@ public class APIStepDefinition {
     }
 
 
-    @Given("Prepare request body for admin api_alumniEventsId endpoint and record response")
-    public void prepare_request_body_for_admin_api_alumni_events_ıd_endpoint_and_record_response() {
+    @Given("Prepare request body for admin api_alumniEventsId endpoint and record response ")
+    public void prepare_request_body_for_admin_api_alumni_events_ıd_endpoint_and_record_response () {
         JSONObject reqBody = new JSONObject();
         reqBody.put("id", "3");
 
@@ -1865,8 +1865,8 @@ public void a_post_body_with_valid_authorization_information_and_correct_data_is
             System.out.println(hataMesaji);
             assertTrue(hataMesaji.contains("403"));
         }
-    @When("Prepare request body for admin api_alumniId endpoint and record response")
-    public void prepareRequestBodyForAdminApi_alumniIdEndpointAndRecordResponse() {
+    @When("Prepare request body for admin api_alumniId endpoint and record response rumeysa")
+    public void prepareRequestBodyForAdminApi_alumniIdEndpointAndRecordResponse_rumeysa() {
 
         JSONObject reqBody = new JSONObject();
         reqBody.put("id", "3");
@@ -1879,9 +1879,7 @@ public void a_post_body_with_valid_authorization_information_and_correct_data_is
                 .body(reqBody.toString())
                 .post(fullPath);
 
-        response.prettyPrint();
-
-    }
+  
 //    @When("Verifies that record includes {string}")
 //    public void verifiesThatRecordIncludes(String expectedData) {
 //
@@ -1891,6 +1889,17 @@ public void a_post_body_with_valid_authorization_information_and_correct_data_is
 //        String[] expectedArr = expectedData.split(",");
 //
 //    }
+
+    @When("Verifies that record includes {string}rumeysa")
+    public void verifiesThatRecordIncludes_rumeysa(String expectedData) {
+
+        JsonPath resJP = response.jsonPath();
+        String actualData = resJP.get("lists").toString();
+        System.out.println(actualData);
+        String[] expectedArr = expectedData.split(",");
+
+    }
+
     @Given("Patch body containing correct data is prepared rumeysa.")
     public void patch_body_containing_correct_data_is_prepared_rumeysa() {
         String fullPath=API_Utils.createfullPath("api/alumniUpdate");
