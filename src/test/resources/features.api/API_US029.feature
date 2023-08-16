@@ -12,15 +12,11 @@ Feature: As an administrator, I want to access the book information
     * Verifies that the message information is "Success"
 
 
-
   Scenario: When invalid authorization information is sent with a GET request to the api/booksList
             endpoint, the expected status code is 403, and the response message should be "failed."
 
     * Set "api/booksId" parameters
-    * Records response for Admin with invalid authorization information
-    * Verifies that status code is 403
-    * Verifies that the message information is "failed"
-
+    * Verifies that the Status Code of the failed connection from the endpoint "api/visitorsPurposeList" with invalid authorization "wrongToken" is "403" and the message is "Forbidden"
 
 
   Scenario: The content of the list in the response body should contain data with the following attributes.
