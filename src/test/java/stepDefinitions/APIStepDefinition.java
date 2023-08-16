@@ -980,7 +980,7 @@ public class APIStepDefinition {
 
 
     @Given("The successful creation of the new vehicle record via the API should be validated.")
-    public void the_successful_creation_of_the_new_vehicle_record_via_the_apı_should_be_validated() {
+    public void the_successful_creation_of_the_new_vehicle_record_via_the_api_should_be_validated() {
 
         JSONObject reqBody = new JSONObject();
         reqBody.put("id", 288);
@@ -1322,24 +1322,14 @@ public class APIStepDefinition {
         } catch (Exception e) {
             exceptionMsj = e.getMessage();
         }
-
         System.out.println(exceptionMsj);
         // Assert.assertTrue(exceptionMsj.contains("status code: 403"));
-
     }
 
-
-    // Delete Body
-    // @Given("when sending a DELETE body containing the correct data \\(id)")
-    // public void when_sending_a_delete_body_containing_the_correct_data_id() {
-
-
-//for (String each : expectedArr) {
-//    Assert.assertTrue(actualData.contains(each));
-
-
-    @Given("A POST body is sent to the {string} endpoint with valid authorization information and correct id {int}")
-    public void a_post_body_is_sent_to_the_endpoint_with_valid_authorization_information_and_correct_id(String rawPaths, int id) {
+    @Given("A Post body is sent to the endpoint {string} with valid authorization credentials {string} user and correct id {int}")
+    public void a_post_body_is_sent_to_the_endpoint_with_valid_authorization_credentials_user_and_correct_id(String rawPaths, String userType, Integer id) {
+        fullPath = API_Utils.createfullPath(rawPaths);
+        tokenAll = API_Utils.generateTokenAll(userType);
 
         reqBodyJson = new JSONObject();
         reqBodyJson.put("id", id);
@@ -1347,17 +1337,23 @@ public class APIStepDefinition {
         response = given()
                 .spec(HooksAPI.spec)
                 .contentType(ContentType.JSON)
-                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .headers("Authorization", "Bearer " + tokenAll)
                 .when()
                 .body(reqBodyJson.toString())
                 .post(fullPath);
 
         response.prettyPrint();
         jsonPath = response.jsonPath();
-        //    System.out.println("ReqBody "+reqBody);
-        //  System.out.println("JsonPath " + jsonPath.toString());
 
-        // Assert.assertEquals(reqBody.get("vehicle_model"),jsonPath.get("vehicle_model"));
 
     }
+
+
+
+
+
+
+
+
+
 }

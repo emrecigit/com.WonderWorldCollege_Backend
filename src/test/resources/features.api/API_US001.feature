@@ -24,11 +24,12 @@ Feature: [API_US_001] As an administrator, I want to access the Purpose List thr
     * Verifies that the Status Code of the failed connection from the endpoint "api/visitorsPurposeList" with invalid authorization "wrongToken" is "403" and the message is "Forbidden"
 
 
-  Scenario: [TC_03_API_US_001] The content of the lists in the response body should be validated
+ Scenario: [TC_03_API_US_001] The content of the lists in the response body should be validated
   to contain data with ID "1," where the visitors_purpose is "Marketing," and
   created_at is "2023-01-18 01:07:12."
 
     * Set "api/visitorsPurposeList" parameters
     * Record the response of the endpoint "api/visitorsPurposeList" with the current authorization "Admin"
     * The data visitors purpose "Parent Teacher Meeting" and created at "2023-01-18 01:07:12" in the list with id number "2" must be validated
+
 
