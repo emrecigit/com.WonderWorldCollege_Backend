@@ -6,30 +6,23 @@ Feature :[API_US002] As an administrator, I want to access the Visitor Purpose i
   and the message in the response body should be "Success."
 
 
-    * b
-    * b
-    * b
-    * b
+    * Set "api/visitorsPurposeId" parameters
+    * A POST body is sent to the "api/visitorsPurposeId" endpoint with valid authorization information and correct id 2
+    * Verifies that status code is 200
+    * Verifies that the message information is "Success"
 
 
   Scenario: [TC_02_API_US002] When invalid authorization information or invalid data (ID)
   is sent in the POST body to the api/visitorsPurposeId endpoint, the expected status code is 403,
   and the message in the response body should be "failed."
 
-    * b
-    * b
-    * b
-    * b
+
 
 
 
   Scenario: [TC03_API_US004] The content of the list data (ID, visitors_purpose, description,
   created_at) in the response body should be validated.
 
-    * b
-    * b
-    * b
-    * b
 
 
 
