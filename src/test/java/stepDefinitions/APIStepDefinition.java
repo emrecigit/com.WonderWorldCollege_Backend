@@ -1882,15 +1882,15 @@ public void a_post_body_with_valid_authorization_information_and_correct_data_is
         response.prettyPrint();
 
     }
-    @When("Verifies that record includes {string}")
-    public void verifiesThatRecordIncludes(String expectedData) {
-
-        JsonPath resJP = response.jsonPath();
-        String actualData = resJP.get("lists").toString();
-        System.out.println(actualData);
-        String[] expectedArr = expectedData.split(",");
-
-    }
+//    @When("Verifies that record includes {string}")
+//    public void verifiesThatRecordIncludes(String expectedData) {
+//
+//        JsonPath resJP = response.jsonPath();
+//        String actualData = resJP.get("lists").toString();
+//        System.out.println(actualData);
+//        String[] expectedArr = expectedData.split(",");
+//
+//    }
     @Given("Patch body containing correct data is prepared rumeysa.")
     public void patch_body_containing_correct_data_is_prepared_rumeysa() {
         String fullPath=API_Utils.createfullPath("api/alumniUpdate");
@@ -3628,7 +3628,7 @@ public void a_post_body_with_valid_authorization_information_and_correct_data_is
     }
 
 
- }
+
 
 
 
@@ -3636,7 +3636,7 @@ public void a_post_body_with_valid_authorization_information_and_correct_data_is
     // @Given("when sending a DELETE body containing the correct data \\(id)")
     // public void when_sending_a_delete_body_containing_the_correct_data_id() {
 
-}
+
 
 
 
@@ -4662,3 +4662,37 @@ public void a_post_body_with_valid_authorization_information_and_correct_data_is
 
 
 
+    @Given("A POST body is sent to the {string} endpoint with valid authorization information and correct id {int}")
+    public void a_post_body_is_sent_to_the_endpoint_with_valid_authorization_information_and_correct_id(String string, int id) {
+
+        JSONObject reqBody = new JSONObject();
+
+        reqBody.put("vehicle_no", "VH4584");
+        reqBody.put("vehicle_model", "Ford CAB");
+        reqBody.put("vehicle_photo", "1677502339-191558462463fca783b26b0!fd.png");
+        reqBody.put("manufacture_year", "2015");
+        reqBody.put("registration_number", "FFG-76575676787");
+        reqBody.put("chasis_number", "523422");
+        reqBody.put("max_seating_capacity", "50");
+        reqBody.put("driver_name", "Jasper");
+        reqBody.put("driver_licence", "258714545");
+        reqBody.put("driver_contact", "8521479630");
+        reqBody.put("note", "");
+
+        response = given()
+                .spec(HooksAPI.spec)
+                .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(reqBody.toString())
+                .post(fullPath);
+
+        response.prettyPrint();
+        jsonPath = response.jsonPath();
+        //    System.out.println("ReqBody "+reqBody);
+        //  System.out.println("JsonPath " + jsonPath.toString());
+
+        // Assert.assertEquals(reqBody.get("vehicle_model"),jsonPath.get("vehicle_model"));
+
+    }
+}

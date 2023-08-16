@@ -7,21 +7,13 @@ Feature :[API_US003] As an administrator, I want to create a new visitor purpose
   endpoint, the expected status code is 200, and the message in the response body should be "Success."
 
 
-    * b
-    * b
-    * b
-    * b
+
 
 
   Scenario: [TC_02_API_US003] When invalid authorization information or missing data
   (visitors_purpose, description) is sent in the POST body to the api/visitorsPurposeAdd endpoint,
   the expected status code is 403, and the message in the response body should be "failed."
 
-
-    * b
-    * b
-    * b
-    * b
 
 
 
@@ -30,7 +22,4 @@ Feature :[API_US003] As an administrator, I want to create a new visitor purpose
   send a POST body to the api/visitorsPurposeId endpoint and verify the record is created.)
 
 
-    * b
-    * b
-    * b
-    * b
+
