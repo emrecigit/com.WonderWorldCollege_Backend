@@ -20,7 +20,7 @@ Feature: [API_US_007] As an administrator, I want to access the Alumni List thro
 
     * Set "api/alumniEventsList" parameters
     * Record the response of the endpoint "api/alumniEventsList" with the current authorization "Admin"
-    * From the data in the list returned from the response body "id: 1", data content "visitors_purpose: Marketing" and "created_at: 2023-01-18 01:07:12", validation test that
+    * The data alumni event list  purpose "12" and created at "art" in the list with id number "13"                                      " must be validated
 
 
 

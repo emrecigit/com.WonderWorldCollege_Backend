@@ -414,6 +414,59 @@ public class APIStepDefinition {
 
         response.prettyPrint();
     }
+    @Given("Events prepares the deletion body containing the deletion data.")
+    public void events_prepares_the_deletion_body_containing_the_deletion_data() {
+        TestDataAdmin testDataAdmin = new TestDataAdmin();
+        JSONObject alumniEventsReqDeleteResponseBody = testDataAdmin.alumniEventsRequestDeleteBody();
+        response= given()
+                .spec(HooksAPI.spec)
+                .headers("Authorization","Bearer"+HooksAPI.tokenAdmin)
+                .contentType(ContentType.JSON)
+                .when()
+                .body(alumniEventsReqDeleteResponseBody.toString())
+                .delete(fullPath);
+
+        System.out.println("Request Delete Response Body : " + alumniEventsReqDeleteResponseBody);
+        response.prettyPrint();
+
+    }
+    @Given("Response body DeletedId should be verified that it is the same as the DELETE request body id information.")
+    public void response_body_deleted_ıd_should_be_verified_that_it_is_the_same_as_the_delete_request_body_id_information() {
+        JsonPath responseJP = response.jsonPath();
+        TestDataAdmin testDataAdmin = new TestDataAdmin();
+        JSONObject alumniEventReqDeleteResponseBody = testDataAdmin.alumniEventsRequestDeleteBody();
+        Assert.assertEquals(alumniEventReqDeleteResponseBody.get("id"),responseJP.get("deleteId"));
+    }
+    @Given("The deletion of the alumni events record requested via the API must be verified.")
+    public void the_deletion_of_the_alumni_events_record_requested_via_the_apı_must_be_verified() {
+        TestDataAdmin testDataAdmin = new TestDataAdmin();
+        JSONObject deleteByAlmuniEventsIdBody = testDataAdmin.alumniEventsRequestDeleteBody();
+        deleteByAlmuniEventsIdBody.put("id",1196);
+        response= given()
+                .spec(HooksAPI.spec)
+                .headers("Authorization","Bearer"+HooksAPI.tokenAdmin)
+                .contentType(ContentType.JSON)
+                .when()
+                .body(deleteByAlmuniEventsIdBody.toString())
+                .post("https://qa.wonderworldcollege.com/api/getNoticeById");
+
+        System.out.println("Delete By Id Body : " + deleteByAlmuniEventsIdBody);
+        response.prettyPrint();
+
+        Assert.assertEquals(response.statusCode(),403);
+    }
+    @Given("The data alumni event list  purpose {string} and created at {string} in the list with id number {string}                                      \" must be validated")
+    public void the_data_alumni_event_list_purpose_and_created_at_in_the_list_with_id_number_must_be_validated(String id, String event_for, String session_id) {
+        response.prettyPrint();
+        responseJsonPath  = response.jsonPath();
+        Assert.assertEquals(id, responseJsonPath.get("lists[0].id"));
+        Assert.assertEquals(event_for, responseJsonPath.get("lists[0].event_for"));
+        Assert.assertEquals(session_id, responseJsonPath.get("lists[0].session_id"));
+    }
+
+
+
+
 
 
     /*
@@ -1984,7 +2037,7 @@ public void a_post_body_with_valid_authorization_information_and_correct_data_is
     }
 
 
-
+/*
     @When("Verifies that record includes {string}")
     public void verifiesThatRecordIncludes(String expectedData) {
 
@@ -2001,6 +2054,8 @@ public void a_post_body_with_valid_authorization_information_and_correct_data_is
         }
 
     }
+ */
+
 
 
 
@@ -3636,7 +3691,6 @@ public void a_post_body_with_valid_authorization_information_and_correct_data_is
     // @Given("when sending a DELETE body containing the correct data \\(id)")
     // public void when_sending_a_delete_body_containing_the_correct_data_id() {
 
-}
 
 
 
