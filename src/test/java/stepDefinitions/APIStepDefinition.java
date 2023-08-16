@@ -8,12 +8,8 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import org.hamcrest.Matchers;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Assert;
-
-import org.testng.asserts.SoftAssert;
 
 import pojos.pojoBooksUpdate;
 
@@ -886,19 +882,31 @@ public class APIStepDefinition {
     }
 
  */
+    // 13
+    @Given("Validates list content with user {string} ,{string},{string},{string},{string},{string},{string},{string},{string},{string},{string},{string},{string}")
+    public void validates_list_content_with_user(String id, String vehicle_no, String vehicle_model, String vehicle_photo, String manufacture_year, String registration_number, String chasis_number, String max_seating_capacity, String driver_name, String driver_licence, String driver_contact, String note, String created_at) {
 
+        JSONObject reqBody = new JSONObject();
+        reqBody.put("id", "1");
 
-    //14
-    @Given("A Post body with valid authorization information and correct data {string} is sent to the {string} endpoint")
-    public void a_post_body_with_valid_authorization_information_and_correct_data_is_sent_to_the_endpoint(String string, String string2) {
+        response = given()
+                .spec(HooksAPI.spec)
+                .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(reqBody.toString())
+                .post(fullPath);
+    }
 
-        HooksAPI.spec.pathParams("pp1", "api", "pp2", "vehicleId");
-        //Response response = given().when().get(url);
+    /*14
+    @Given("User sends a POST body to the {string} endpoint with valid authorization information and the correct id")
+    public void user_sends_a_post_body_to_the_endpoint_with_valid_authorization_information_and_the_correct_id(String string) {
+
+        // spec.pathParams("pp1","api","pp2","vehicleId");
         String fullPath = "/{pp1}/{pp2}";
 
         JSONObject reqBody = new JSONObject();
-
-        reqBody.put("id", 3);
+        reqBody.put("id", 288);
 
         response = given()
                 .spec(HooksAPI.spec)
@@ -909,7 +917,57 @@ public class APIStepDefinition {
                 .post(fullPath);
 
         response.prettyPrint();
+        System.out.println("VehicleID "+ reqBody);
+
     }
+
+     */
+
+        @Given("Confirms STATUS CODE IS {int}")
+    public void confirms_status_code_ıs(int statusCode) {
+        System.out.println("Status Code :" + response.getStatusCode());
+        assertEquals(statusCode, response.getStatusCode());
+
+        response                            // Assert olarak bu da kullanılabilir.
+                .then()
+                .assertThat()
+                .statusCode(statusCode);
+
+    }
+
+    @Given("Confirms that the message information is\"SUCCESS\".")
+    public void confirms_that_the_message_information_is_success(String message) {
+        JsonPath resJP = response.jsonPath();
+
+        System.out.println("Message = " + resJP.getString("message"));
+        Assert.assertEquals(message, resJP.getString("message"));
+
+    }
+
+    // 14
+    @Given("A Post body with valid authorization information and correct data id is sent to the {string}")
+    public void a_post_body_with_valid_authorization_information_and_correct_data_id_is_sent_to_the(String expectedData) {
+
+
+    JSONObject reqBody = new JSONObject();
+        reqBody.put("id", "1");
+
+        response = given()
+                .spec(HooksAPI.spec)
+                .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(reqBody.toString())
+                .post(fullPath);
+
+        JsonPath resJP = response.jsonPath();
+        String actualData = resJP.get("lists").toString();
+        System.out.println(actualData);
+        String[] expectedArr = expectedData.split(",");
+
+    }
+
+
 
     // 15
     @Given("A POST body is sent to the {string} endpoint with valid authorization information and correct data {string}")
@@ -939,7 +997,7 @@ public class APIStepDefinition {
 
         response.prettyPrint();
         jsonPath = response.jsonPath();
-        //    System.out.println("ReqBody "+reqBody);
+        //   System.out.println("ReqBody "+reqBody);
         //  System.out.println("JsonPath " + jsonPath.toString());
 
         // Assert.assertEquals(reqBody.get("vehicle_model"),jsonPath.get("vehicle_model"));
@@ -983,7 +1041,7 @@ public class APIStepDefinition {
     public void the_successful_creation_of_the_new_vehicle_record_via_the_apı_should_be_validated() {
 
         JSONObject reqBody = new JSONObject();
-        reqBody.put("id", 288);
+        reqBody.put("id", 349);
 
         response = given()
                 .spec(HooksAPI.spec)
@@ -994,6 +1052,8 @@ public class APIStepDefinition {
                 .post(fullPath);
 
         response.prettyPrint();
+
+
 
     }
 
@@ -1051,8 +1111,8 @@ public class APIStepDefinition {
 //    }
     }
 
-    @When("Verifies that record includes {string}rumeysa")
-    public void verifiesThatRecordIncludes_rumeysa(String expectedData) {
+    @When("Verifies that record includes {string}")
+    public void verifiesThatRecordIncludes(String expectedData) {
 
         JsonPath resJP = response.jsonPath();
         String actualData = resJP.get("lists").toString();
@@ -1156,7 +1216,7 @@ public class APIStepDefinition {
         response.prettyPrint();
     }
 
-
+/*
     @When("Verifies that record includes {string}")
     public void verifiesThatRecordIncludes(String expectedData) {
 
@@ -1174,6 +1234,8 @@ public class APIStepDefinition {
 
     }
 
+
+ */
 
     @Given("Prepare request body for admin api_booksId endpoint and record response")
     public void prepare_request_body_for_admin_api_books_ıd_endpoint_and_record_response() {
