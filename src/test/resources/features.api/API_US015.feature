@@ -17,7 +17,6 @@ Feature:[API_US_O15] As an administrator, I want to create a new Vehicle record 
   * Verifies that Status Code is 403.
 
 
-
   Scenario: [TC_03_API_015] The successful creation of the new vehicle record via the API should be validated.
 
 
