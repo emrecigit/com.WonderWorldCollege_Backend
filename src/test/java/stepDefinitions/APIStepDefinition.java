@@ -88,6 +88,8 @@ public class APIStepDefinition {
     // Assert yaparken JsonObject icin : getJSONObject("booking").get("date"), JsonPath icin : responseJsonPath.get("booking-date") ile equals yapilir
     // 3-TestNG SoftAssert methodlari: Durum raporu icin enson softAssert.assertAll() ile tamamlanır.
     //   Set "api/visitorsPurposeList" parameters. [TC_01_API_US001]_Step1
+
+    // [TC_01_US_001] Step1
     @Given("Set {string} parameters")
     public void set_parameters(String rawPaths) {
         fullPath = API_Utils.createfullPath(rawPaths);
@@ -1440,7 +1442,7 @@ public class APIStepDefinition {
         System.out.println(exceptionMsj);
         // Assert.assertTrue(exceptionMsj.contains("status code: 403"));
     }
-
+    // [TC_01_US_002] Step2
     @Given("A Post body is sent to the endpoint {string} with valid authorization credentials {string} user and correct id {int}")
     public void a_post_body_is_sent_to_the_endpoint_with_valid_authorization_credentials_user_and_correct_id(String rawPaths, String userType, Integer id) {
         fullPath = API_Utils.createfullPath(rawPaths);
@@ -1463,11 +1465,49 @@ public class APIStepDefinition {
 
     }
 
+    @Given("Validates that when sending correct or incorrect data with id {int} to the {string} endpoint with invalid authorization {string}, the status Code of the failed connection is {int} and the message is {string}")
+    public void validates_that_when_sending_correct_or_incorrect_data_with_id_to_the_endpoint_with_invalid_authorization_the_status_code_of_the_failed_connection_is_and_the_message_is(Integer id, String rawPaths, String wrongToken, Integer statusCode, String message) {
+        fullPath = API_Utils.createfullPath(rawPaths);
+        reqBodyJson = new JSONObject();
+        reqBodyJson.put("id", id);
+
+        try {
+            response = given()
+                    .spec(HooksAPI.spec)
+                    .contentType(ContentType.JSON)
+                    .headers("Authorization", "Bearer " + wrongToken)
+                    .when()
+                    .body(reqBodyJson.toString())
+                    .post(fullPath);
+        } catch (Exception e) {
+            exceptionMessage = e.getMessage();
+            System.out.println("Exception :"+exceptionMessage);
+        }
+        System.out.println(exceptionMessage);
+
+        try {
+            response = given()
+                    .spec(HooksAPI.spec)
+                    .headers("Authorization", "Bearer " + wrongToken)
+                    .contentType(ContentType.JSON)
+                    .when()
+                    .get(fullPath);
+        } catch (Exception e) {
+            exceptionMessage = e.getMessage();
+        }
+
+        System.out.println("Income Message :" + exceptionMessage);
+
+        System.out.println("Income Message :" + exceptionMessage);
+
+        assertTrue(exceptionMessage.contains(""+statusCode));
+        assertTrue(exceptionMessage.contains(message));
+
+       // assertTrue(exceptionMessage.contains(""+statusCode));
+       // assertTrue(exceptionMessage.contains(message));
 
 
-
-
-
+    }
 
 
 
