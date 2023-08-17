@@ -953,15 +953,27 @@ public class APIStepDefinition {
                 .post(fullPath);
     }
 
-    /*14
-    @Given("User sends a POST body to the {string} endpoint with valid authorization information and the correct id")
-    public void user_sends_a_post_body_to_the_endpoint_with_valid_authorization_information_and_the_correct_id(String string) {
+    // 14
+  /* @Given("A Post body with valid authorization information correct data id is sent to the {string}.")
+public void a_post_body_with_valid_authorization_information_correct_data_id_is_sent_to_the(String string) {
+       JSONObject reqBody = new JSONObject();
+       reqBody.put("id", "288");
 
-        // spec.pathParams("pp1","api","pp2","vehicleId");
-        String fullPath = "/{pp1}/{pp2}";
+       response = given()
+               .spec(HooksAPI.spec)
+               .contentType(ContentType.JSON)
+               .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+               .when()
+               .body(reqBody.toString())
+               .post(fullPath);
+}
+
+   */
+    @Given("Prepare request body for admin api\\/vehicleId endpoint and record response api\\/vehicleId\"")
+    public void prepare_request_body_for_admin_api_vehicle_ıd_endpoint_and_record_response_api_vehicle_ıd() {
 
         JSONObject reqBody = new JSONObject();
-        reqBody.put("id", 288);
+        reqBody.put("id", "3");
 
         response = given()
                 .spec(HooksAPI.spec)
@@ -970,13 +982,25 @@ public class APIStepDefinition {
                 .when()
                 .body(reqBody.toString())
                 .post(fullPath);
-
-        response.prettyPrint();
-        System.out.println("VehicleID "+ reqBody);
-
     }
 
-     */
+        @Given("Confirms CODE is {int}.")
+public void confirms_code_is(int statusCode) {
+    System.out.println("Status Code :" + response.getStatusCode());
+    assertEquals(statusCode, response.getStatusCode());
+
+    response                            // Assert olarak bu da kullanılabilir.
+            .then()
+            .assertThat()
+            .statusCode(statusCode);
+}
+@Given("Message information is\"SUCCESS\"")
+public void message_information_is_success(String message) {
+    JsonPath resJP = response.jsonPath();
+
+    System.out.println("Message = " + resJP.getString("message"));
+    Assert.assertEquals(message, resJP.getString("message"));
+}
 
         @Given("Confirms STATUS CODE IS {int}")
     public void confirms_status_code_ıs(int statusCode) {
@@ -1000,12 +1024,11 @@ public class APIStepDefinition {
     }
 
     // 14
-    @Given("A Post body with valid authorization information and correct data id is sent to the {string}")
-    public void a_post_body_with_valid_authorization_information_and_correct_data_id_is_sent_to_the(String expectedData) {
-
+    @Given("Request body for admin api\\/vehicleId endpoint and record response")
+    public void request_body_for_admin_api_vehicle_ıd_endpoint_and_record_response() {
 
     JSONObject reqBody = new JSONObject();
-        reqBody.put("id", "1");
+        reqBody.put("id", "288");
 
         response = given()
                 .spec(HooksAPI.spec)
@@ -1014,11 +1037,10 @@ public class APIStepDefinition {
                 .when()
                 .body(reqBody.toString())
                 .post(fullPath);
-
         JsonPath resJP = response.jsonPath();
         String actualData = resJP.get("lists").toString();
         System.out.println(actualData);
-        String[] expectedArr = expectedData.split(",");
+        //String[] expectedArr = expectedData.split(",");
 
     }
 
@@ -1108,9 +1130,233 @@ public class APIStepDefinition {
 
         response.prettyPrint();
 
+    }
+    //16
+    @Given("Patch Body with the correct data is sent")
+    public void patch_body_with_the_correct_data_is_sent() {
+        String fullPath = API_Utils.createfullPath("api/vehicleUpdate");
+        PojoAdmin Pojobj = new PojoAdmin();
+        Map<String, Object> adminUpdateReqBody = Pojobj.expDataMethod("3","VH4584","Audi Q7",
+                "1677502339-191558462463fca783b26b0!fd.png","2023",
+                "FFG-76575676787","523422","50",
+                "Jasper","258714545","8521479630","Made in Turkey");
+
+        //response save
+
+        Response response = given().spec(HooksAPI.spec).contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(adminUpdateReqBody)
+                .patch(fullPath);
+
+        response.prettyPrint();
+
+        Map<String, Object> actualData = response.as(HashMap.class);
+        System.out.println("actualData = " + actualData);
+
+    }
+    @Given("Patch body containing correct data which is prepared")
+    public void patch_body_containing_correct_data_which_is_prepared() {
+        String fullPath = API_Utils.createfullPath("api/vehicleUpdate");
+        PojoAdmin Pojobj = new PojoAdmin();
+        Map<String, Object> adminUpdateReqBody = Pojobj.expDataMethod("3","VH4584","Audi Q7",
+                "1677502339-191558462463fca783b26b0!fd.png","2023",
+                "FFG-76575676787","523422","50",
+                "Jasper","258714545","8521479630","Made in Turkey");
+
+        //response save
+
+        Response response = given().spec(HooksAPI.spec).contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(adminUpdateReqBody)
+                .patch(fullPath);
+
+        response.prettyPrint();
+
+        Map<String, Object> actualData = response.as(HashMap.class);
+        System.out.println("actualData = " + actualData);
+
+    }
+    @Given("It should be verified the updateId information and the id information in the request body are the same")
+    public void ıt_should_be_verified_the_update_ıd_information_and_the_id_information_in_the_request_body_are_the_same() {
+        //String fullPath = API_Utils.createfullPath("api/vehicleUpdate");
+        PojoAdmin Pojobj = new PojoAdmin();
+        Map<String, Object> adminUpdateReqBody = Pojobj.expDataMethod("3","VH4584","Audi Q7",
+                "1677502339-191558462463fca783b26b0!fd.png","2023",
+                "FFG-76575676787","523422","50",
+                "Jasper","258714545","8521479630","Made in Turkey");
+        Response response = given().spec(HooksAPI.spec).contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(adminUpdateReqBody)
+                .patch(fullPath);
+        JsonPath respJP = response.jsonPath();
+        assertEquals(adminUpdateReqBody.get("id"), respJP.get("updateId"));
+    }
+    @Given("POST body api vehicleId endpoint to verify that the record has been updated")
+    public void post_body_api_vehicle_ıd_endpoint_to_verify_that_the_record_has_been_updated() {
+
+
+        String fullPath = API_Utils.createfullPath("api/vehicleId");
+        JSONObject reqBody = new JSONObject();
+        reqBody.put("id", 288);
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(reqBody.toString())
+                .post("https://qa.wonderworldcollege.com/api/vehicleId");
+        response.prettyPrint();
+
+        response
+                .then()//assert then olmadan  gelmez
+                .assertThat()
+                .statusCode(200)
+                .contentType(ContentType.JSON);
+    }
+
+    // 17
+    @Given("The user prepares the deletion body containing the correct data.")
+    public void the_user_prepares_the_deletion_body_containing_the_correct_data() {
+
+        JSONObject requestDeleteBody = new JSONObject();
+        requestDeleteBody.put("id",358); //293
+
+
+        TestDataAdmin testDataAdmin = new TestDataAdmin();
+        JSONObject reqDeleteResponseBody = testDataAdmin.requestDeleteBody();
+        response = given()
+                .spec(HooksAPI.spec)
+                .headers("Authorization", "Bearer" + HooksAPI.tokenAdmin)
+                .contentType(ContentType.JSON)
+                .when()
+                .body(reqDeleteResponseBody.toString())
+                .delete("https://qa.wonderworldcollege.com/api/vehicleDelete");
+
+        System.out.println("Request Delete Response Body : " + reqDeleteResponseBody);
+        response.prettyPrint();
+
+       // return requestDeleteBody;
+    }
+
+    @Given("Verifies status code is {int}")
+    public void verifies_status_code_is(int statusCode) {
+        System.out.println("Status Code :" + response.getStatusCode());
+        assertEquals(statusCode, response.getStatusCode());
+
+        response                            // Assert olarak bu da kullanılabilir.
+                .then()
+                .assertThat()
+                .statusCode(statusCode);
 
 
     }
+    @Given("Verifies the message information is {string}")
+    public void verifies_the_message_information_is(String message) {
+        JsonPath resJP = response.jsonPath();
+
+        System.out.println("Message = " + resJP.getString("message"));
+        Assert.assertEquals(message, resJP.getString("message"));
+    }
+
+    @Given("Verifies Status Code of the failed connection from the endpoint {string} with invalid authorization {string} is {string} and the message is {string}")
+    public void verifies_status_code_of_the_failed_connection_from_the_endpoint_with_invalid_authorization_is_and_the_message_is(String rawPaths, String wrongToken, String statusCode, String message){
+        fullPath = API_Utils.createfullPath(rawPaths);
+        try {
+            response = given()
+                    .spec(HooksAPI.spec)
+                    .headers("Authorization", "Bearer " + wrongToken)
+                    .contentType(ContentType.JSON)
+                    .when()
+                    .get(fullPath);
+        } catch (Exception e) {
+            exceptionMessage = e.getMessage();
+        }
+
+        System.out.println("Income Message :" + exceptionMessage);
+
+        System.out.println("Income Message :" + exceptionMessage);
+
+        assertTrue(exceptionMessage.contains(statusCode));
+        assertTrue(exceptionMessage.contains(message));
+    }
+
+    @Given("Create a delete body the correct data")
+    public void create_a_delete_body_the_correct_data() {
+        TestDataAdmin testDataAdmin = new TestDataAdmin();
+        JSONObject reqDeleteResponseBody = testDataAdmin.requestDeleteBody();
+        response = given()
+                .spec(HooksAPI.spec)
+                .headers("Authorization", "Bearer" + HooksAPI.tokenAdmin)
+                .contentType(ContentType.JSON)
+                .when()
+                .body(reqDeleteResponseBody.toString())
+                .delete("https://qa.wonderworldcollege.com/api/vehicleDelete");
+
+        System.out.println("Request Delete Response Body : " + reqDeleteResponseBody);
+        response.prettyPrint();
+
+    }
+    @Given("Verifies that the id in the DELETE request body sent to {string} in the response is correct")
+    public void verifies_that_the_id_in_the_delete_request_body_sent_to_in_the_response_is_correct(String string) {
+        JsonPath responseJP = response.jsonPath();
+        TestDataAdmin testDataAdmin = new TestDataAdmin();
+        JSONObject reqDeleteResponseBody = testDataAdmin.requestDeleteBody();
+        Assert.assertEquals(reqDeleteResponseBody.get("id"), responseJP.get("deleteId"));
+
+    }
+
+
+
+
+    /*
+    @Given("Verifies that Status Code is {int}.")
+    public void verifies_that_status_code_is() {
+        PojoAdmin Pojobj = new PojoAdmin();
+        Map<String, Object> adminUpdateReqBody = Pojobj.expDataMethod("3","VH4584","Audi Q7",
+                "1677502339-191558462463fca783b26b0!fd.png","2023",
+                "FFG-76575676787","523422","50",
+                "Jasper","258714545","8521479630","Made in Turkey");
+
+        Response response = null;
+        try {
+            response = given().spec(HooksAPI.spec).contentType(ContentType.JSON)
+                    .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                    .when()
+                    .body(adminUpdateReqBody)
+                    .patch(fullPath);
+        } catch (Exception e) {
+            hataMesaji = e.getMessage();
+
+        }
+        System.out.println(hataMesaji);
+        assertTrue(hataMesaji.contains("403"));
+    }*/
+
+   /*
+    @Given("Status Code is {int}")
+    public void status_code_is(Integer int1) {
+        PojoAdmin Pojobj = new PojoAdmin();
+        Map<String, Object> adminUpdateReqBody = Pojobj.expDataMethod("3","VH4584","Audi Q7",
+                "1677502339-191558462463fca783b26b0!fd.png","2023",
+                "FFG-76575676787","523422","50",
+                "Jasper","258714545","8521479630","Made in Turkey");
+
+
+            response = given().spec(HooksAPI.spec).contentType(ContentType.JSON)
+                    .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                    .when()
+                    .body(adminUpdateReqBody)
+                    .patch(fullPath);
+        System.out.println(successMsj);
+        assertTrue(successMsj.contains("200"));
+    }
+
+    */
+
+
 
 
     //"id": 3,
@@ -1388,7 +1634,7 @@ public class APIStepDefinition {
                 .contentType(ContentType.JSON)
                 .when()
                 .body(reqDeleteResponseBody.toString())
-                .delete("https://qa.wonderworldcollege.com/api/deleteNotice");
+                .delete("https://qa.wonderworldcollege.com/api/vehicleDelete");
 
         System.out.println("Request Delete Response Body : " + reqDeleteResponseBody);
         response.prettyPrint();

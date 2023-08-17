@@ -7,9 +7,9 @@
     and the message in the response body should be "Success."
 
       * Set "api/vehicleId" parameters
-      * A Post body with valid authorization information and correct data id is sent to the "api/vehicleId endpoint".
-      * Confirms STATUS CODE IS 200.
-      * Confirms that the message information is"SUCCESS"
+      * Request body for admin "api/vehicleId" endpoint and record response
+      * Confirms CODE is 200.
+      * Message information is"SUCCESS"
 
 
 
@@ -18,6 +18,7 @@
     POST body to the api/vehicleId endpoint, the expected status code is 403,
     and the message in the response body should be "failed."
 
+      *
 
 
 
