@@ -998,6 +998,510 @@ public class APIStepDefinition {
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     //"id": 3,
 //        "student_id": "29",
 //        "current_email": "deneme@deneme.com",
@@ -1213,6 +1717,30 @@ public class APIStepDefinition {
         System.out.println("actualData = " + actualData);
 
     }
+    @Given("It is verified that the DeletedId in the response body is the same as the id in the request body rumeysa.")
+    public void ıt_is_verified_that_the_deleted_ıd_in_the_response_body_is_the_same_as_the_id_in_the_request_body_rumeysa() {
+        JsonPath responseJP = response.jsonPath();
+        TestDataAdmin testDataAdmin = new TestDataAdmin();
+        JSONObject reqDeleteResponseBody = testDataAdmin.requestDeleteBody();
+        Assert.assertEquals(reqDeleteResponseBody.get("id"),responseJP.get("deleteId"));
+
+    }
+    @Given("Delete body containing correct data is prepared rumeysa.")
+    public void delete_body_containing_correct_data_is_prepared_rumeysa() {
+        TestDataAdmin testDataAdmin = new TestDataAdmin();
+        JSONObject reqDeleteResponseBody = testDataAdmin.requestDeleteBody();
+        response= given()
+                .spec(HooksAPI.spec)
+                .headers("Authorization","Bearer"+HooksAPI.tokenAdmin)
+                .contentType(ContentType.JSON)
+                .when()
+                .body(reqDeleteResponseBody.toString())
+                .delete("https://qa.wonderworldcollege.com/api/DeletedId");
+
+        System.out.println("Request Delete Response Body : " + reqDeleteResponseBody);
+        response.prettyPrint();
+
+    }
 
     @Given("Verification is done by sending POST body to booksId endpoint with the updateId returned in the response body.")
     public void verification_is_done_by_sending_post_body_to_books_ıd_endpoint_with_the_update_ıd_returned_in_the_response_body() {
@@ -1359,5 +1887,26 @@ public class APIStepDefinition {
 
         // Assert.assertEquals(reqBody.get("vehicle_model"),jsonPath.get("vehicle_model"));
 
+    }
+
+    //{
+    //            "id": "2",
+    //            "student_id": "41",
+    //            "current_email": "rohan@gmail.com",
+    //            "current_phone": "0808080707",
+    //            "occupation": "",
+    //            "address": "",
+    //            "photo": null,
+    //            "created_at": "2023-03-11 03:04:50"
+    //        },
+    //"41" "deneme@gmail.com" "2"
+    @Given("rumeysa The data visitors purpose  created at {string} {string} {string}  in the list with id number must be validated")
+    public void rumeysa_the_data_visitors_purpose_created_at_in_the_list_with_id_number_must_be_validated(String id, String student_id, String current_email) {
+        response.prettyPrint();
+        responseJsonPath = response.jsonPath();
+        Assert.assertEquals(id, responseJsonPath.get("lists[0].id"));
+        Assert.assertEquals(student_id, responseJsonPath.get("lists[0].student_id"));
+        Assert.assertEquals(current_email, responseJsonPath.get("lists[0].current_email"));
+        //   response.then().assertThat().body("lists[0].id", Matchers.hasItem(id),"lists[0].visitors_purpose",Matchers.hasItem(visitors_purpose),"lists[0].created_at",Matchers.hasItem(created_at));
     }
 }

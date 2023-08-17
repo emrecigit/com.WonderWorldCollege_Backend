@@ -3,11 +3,10 @@ package stepDefinitions;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.junit.Assert;
+import utilities.ConfigReader;
 import utilities.DB_Utils;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -1516,10 +1515,97 @@ Mehmet Şah OKUMUŞ :3501-4000
 
 
 
+//-------------rumeysa
+    String query10;
+    ResultSet rs10;
+    @Given("visitors_book query is prepared and run and the result is obtained")
+    public void visitors_book_query_is_prepared_and_run_and_the_result_is_obtained() throws SQLException {
+        /*public static void deleteRecord(String  visitors_book, String columnName, int recordId) {
+            Connection connection = null;
+            PreparedStatement preparedStatement = null;
+
+            try {
+                connection = getConnection();
+                String deleteQuery = "DELETE FROM " + tableName + " WHERE " + columnName + " = ?";
+                preparedStatement = connection.prepareStatement(deleteQuery);
+                preparedStatement.setInt(1, recordId);
+
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Kayıt silindi.");
+                } else {
+                    System.out.println("Silme işlemi başarısız oldu veya hiçbir kayıt etkilenmedi.");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+         */
+        Statement st = DB_Utils.createStatement(DB_Utils.getConnection());
+
+        String query = "DELETE FROM visitors_book WHERE id = kimlik_numarası";
+
+        ResultSet rs = st.executeQuery(query);
+
+        while(rs.next()) {
+            System.out.println(rs.getString("username") +" - - "+ rs.getString("password"));
+        }
+
+        rs.close();
+        st.close();
+       /* query10 = "DELETE FROM visitors_book WHERE id = kimlik_numarası";
+        rs10 = getStatement().executeQuery(query);
+        System.out.println(query10);
+
+        */
+
+    }
+
+    @Given("visitors_book query result is validated")
+    public void visitors_book_query_result_is_validated() throws SQLException {
+
+    }
 
 
+    //11
+    String updateQuery10;
+    @Given("transport_feemaster query is prepared and run and the result is obtained")
+    public void transport_feemaster_query_is_prepared_and_run_and_the_result_is_obtained() throws SQLException {
+
+       /* String updateQuery10= ConfigReader.getProperty();
+        String updatename10=ConfigReader.getProperty();
+        String updateId10=ConfigReader.getProperty();
+
+        DB_Utils.update();
+
+        */
+        Statement st= DB_Utils.createStatement(DB_Utils.getConnection());
+
+        String query= "UPDATE transport_feemaster SET fine_amount = '200.00' WHERE month = 'October';";
+
+        ResultSet rs = st.executeQuery(query);
+
+        //UPDATE transport_feemaster SET fine_amount = '200.00' WHERE month = 'October';
+    }
+
+    @Given("transport_feemaster query result is validated")
+    public void transport_feemaster_query_result_is_validated() {
+
+    }
 
 
+    //12
+    @Given("work_exp query is prepared and run and the result is obtained")
+    public void work_exp_query_is_prepared_and_run_and_the_result_is_obtained() {
+
+        //SELECT * FROM staff ORDER BY work_exp ASC LIMIT 5;
+    }
+
+    @Given("work_exp query result is validated")
+    public void work_exp_query_result_is_validated() {
+
+    }
 
 
 
