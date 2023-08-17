@@ -283,25 +283,24 @@ public class APIStepDefinition {
         System.out.println("actualData = " + actualData);
     }
 
-    //  @Given("Verifies that status code is {int}.")
-    //  public void verifies_that_status_code_is(int statusCode) {
-    //      PojoAdmin obj = new PojoAdmin();
-    //      Map<String, Object> adminUpdateReqBody = obj.expectedDataMethod("12", "Art Activite", "art", "13", "null", "2023-11-14 00:00:00"
-    //              , "2023-11-24 23:59:00", "Paint", "Art", "0");
-    //      Response response = null;
-    //      try {
-    //          response = given().spec(HooksAPI.spec).contentType(ContentType.JSON)
-    //                  .headers("Authorization", "Bearer " + HooksAPI.tokenStudent)
-    //                  .when()
-    //                  .body(adminUpdateReqBody)
-    //                  .patch(fullPath);
-    //      } catch (Exception e) {
-    //          hataMesaji = e.getMessage();
-
-    //      }
-    //      System.out.println(hataMesaji);
-    //      assertTrue(hataMesaji.contains("403"));
-    //  }
+      @Given("Verifies that status code is {int}.")
+      public void verifies_that_status_code_is(int statusCode) {
+          PojoAdmin obj = new PojoAdmin();
+          Map<String, Object> adminUpdateReqBody = obj.expectedDataMethod("12", "Art Activite", "art", "13", "null", "2023-11-14 00:00:00"
+                  , "2023-11-24 23:59:00", "Paint", "Art", "0");
+          Response response = null;
+          try {
+              response = given().spec(HooksAPI.spec).contentType(ContentType.JSON)
+                      .headers("Authorization", "Bearer " + HooksAPI.tokenStudent)
+                      .when()
+                      .body(adminUpdateReqBody)
+                      .patch(fullPath);
+          } catch (Exception e) {
+              hataMesaji = e.getMessage();
+          }
+          System.out.println(hataMesaji);
+          assertTrue(hataMesaji.contains("403"));
+      }
 
     @Given("It should be verified that the updateId information and the id information in the request body are the same.")
     public void ıt_should_be_verified_that_the_update_ıd_information_and_the_id_information_in_the_request_body_are_the_same() {

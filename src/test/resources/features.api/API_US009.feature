@@ -14,12 +14,12 @@ Feature: [API_US_009] As an administrator, I want to access the Alumni Events in
   the response body should be "failed."
 
     * Set "api/alumniEventsId" parameters
-    * Records response for Admin with invalid authorization information
+    * Record the response of the endpoint "api/alumniEventsId" with the current authorization "Admin"
     * Verifies that status code is 403
     * Verifies that the message information is "failed"
 
   Scenario: [TC_03_API_US_009] The content of the list data in the response body should be validated.
 
     * Set "api/alumniEventsId" parameters
-    * Prepare request body for admin api_alumniEventsId endpoint and record response
+    * Record the response of the endpoint "api/alumniEventsId" with the current authorization "Admin"
     * Verifies that record includes "id, title, event_for, session_id, class_id, section, from_date, to_date, note, photo, is_active, event_notification_message, show_onwebsite, created_at"
