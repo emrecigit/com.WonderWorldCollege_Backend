@@ -18,4 +18,11 @@ public class TestDataAdmin {
 
     }
 
+    public JSONObject vehicleDeleteReqDeleteResponseBody(){
+        JSONObject requestDeleteBody = new JSONObject();
+        requestDeleteBody.put("id",3); // en son olusturdugum liste id
+        return requestDeleteBody;
+
+    }
+
 }

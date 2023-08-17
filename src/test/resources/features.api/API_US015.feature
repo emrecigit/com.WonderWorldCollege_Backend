@@ -6,7 +6,7 @@ Feature:[API_US_O15] As an administrator, I want to create a new Vehicle record 
   the expected status code is 200, and the message in the response body should be "Success."
 
     * Set "api/vehicleAdd" parameters
-    * A POST body is sent to the "api/vehicleAdd" endpoint with valid authorization information and correct data "(vehicle_no, vehicle_model, vehicle_photo, manufacture_year, registration_number,chasis_number, max_seating_capacity, driver_name, driver_licence, driver_contact, note)"
+    * Ilk a post body is sent to the "api/vehicleAdd" endpoint with valid authorization information and correct data "(vehicle_no, vehicle_model, vehicle_photo, manufacture_year, registration_number,chasis_number, max_seating_capacity, driver_name, driver_licence, driver_contact, note)"
     * Verifies that status code is 200
     * Verifies that the message information is "Success"
 
@@ -21,7 +21,7 @@ Feature:[API_US_O15] As an administrator, I want to create a new Vehicle record 
 
 
     * Set "api/vehicleId" parameters
-    * The successful creation of the new vehicle record via the API should be validated.
+    * Ilk the successful creation of the new vehicle record via the API should be validated
 
 
 

@@ -6,7 +6,7 @@ Feature: [API_US_O17] As an administrator, I want to be able to delete a Vehicle
   and the message in the response body should be "Success."
 
     * Set "api/vehicleDelete" parameters
-    * The user prepares the deletion body containing the correct data.
+    * The user prepares the deletion body containing the correct data ilk
     * Verifies status code is 200
     * Verifies the message information is "Success"
 
