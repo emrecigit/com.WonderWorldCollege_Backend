@@ -2500,6 +2500,118 @@ public class APIStepDefinition {
 
 
 
+    // patch sorgusu bilgi guncelleme 36.US
+
+    /*
+
+    @Given("Patch body containing correct data is prepared.")
+    public void patch_body_containing_correct_data_is_prepared() {
+        String fullPath=API_Utils.createfullPath("api/visitorsUpdate");
+        PojoAdmin obj=new PojoAdmin();
+        Map<String, Object> adminUpdateLmBody=obj.expectedDataMethod("232","Principal Meeting","Kenan1","9808678686112","312121","16"
+                ,"2023-03-16","06:00 PM","06:30 PM","PTM meeting");
+
+        //response save
+
+        Response response=given().spec(HooksAPI.spec).contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(adminUpdateLmBody)
+                .patch(fullPath);
+
+        response.prettyPrint();
+
+        Map<String, Object> actualData = response.as(HashMap.class);
+        System.out.println("actualData = " + actualData);
+    }
+*/
+
+
+
+
+
+    @Given("Verifi that status code is {int}.")
+    public void verifi_that_status_code_is(Integer int1) {
+        PojoAdmin obj=new PojoAdmin();
+        Map<String, Object> adminUpdateReqBody=obj.expectedDataMethod("12","Art Activite","art","13","null","2023-11-14 00:00:00"
+                ,"2023-11-24 23:59:00","Paint","Art","0");
+        Response response= null;
+        try {
+            response = given().spec(HooksAPI.spec).contentType(ContentType.JSON)
+                    .headers("Authorization", "Bearer " + HooksAPI.tokenStudent)
+                    .when()
+                    .body(adminUpdateReqBody)
+                    .patch(fullPath);
+        } catch (Exception e) {
+            hataMesaji=e.getMessage();
+
+        }
+        System.out.println(hataMesaji);
+        assertTrue(hataMesaji.contains("403"));
+    }
+
+
+
+    @Given("It should be verified that the updateId information and the id information in the request body are the same LM")
+    public void ıt_should_be_verified_that_the_update_ıd_information_and_the_id_information_in_the_request_body_are_the_same_LM() {
+        PojoAdmin obj=new PojoAdmin();
+        Map<String, Object> adminUpdateLmBody=obj.expectedDataMethod("232","Principal Meeting","Kenan1","9808678686112","312121","16"
+                ,"2023-03-16","06:00 PM","06:30 PM","PTM meeting");
+        Response response=given().spec(HooksAPI.spec).contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(adminUpdateLmBody)
+                .patch(fullPath);
+        JsonPath respJP=response.jsonPath();
+        assertEquals(adminUpdateLmBody.get("id"),respJP.get("updateId"));
+    }
+
+    @Given("Verification is done by sending POST body to api/visitorsId endpoint with the updateId returned in the response body.")
+    public void verification_is_done_by_sending_post_body_to_api_visitors_ıd_endpoint_with_the_update_ıd_returned_in_the_response_body() {
+
+        String fullPath=API_Utils.createfullPath("api/visitorsUpdate");
+        JSONObject reqBody=new JSONObject();
+        reqBody.put("id",232);
+
+        Response response=given()
+                .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(reqBody.toString())
+                .post("https://qa.wonderworldcollege.com/api/visitorsId");
+        response.prettyPrint();
+
+        response
+                .then()//assert then olmadan  gelmez
+                .assertThat()
+                .statusCode(200)
+                .contentType(ContentType.JSON);
+
+    }
+
+
+
+    /*
+    @Given("Prepare request body for admin api_alumniEventsId endpoint and record response")
+    public void prepare_request_body_for_admin_api_alumni_events_ıd_endpoint_and_record_response() {
+        JSONObject reqBody = new JSONObject();
+        reqBody.put("id", "3");
+
+        response = given()
+                .spec(HooksAPI.spec)
+                .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(reqBody.toString())
+                .post(fullPath);
+
+        response.prettyPrint();
+    }
+
+     */
+
+
+
 
 
 
