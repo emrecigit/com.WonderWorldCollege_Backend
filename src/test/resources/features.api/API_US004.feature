@@ -27,8 +27,7 @@ Feature: [API_US004] As an administrator, I want to update the registered visito
   api/visitorsPurposeUpdate endpoint.
 
     * Set "api/visitorsPurposeUpdate" parameters
-    * The patch id number 4 sent in the patch query is compared with the update id "update id" returned in the response body
-
+    * Comparison test with updateId in the response when submitting a Patch body to the endpoint "api/visitorsPurposeUpdate" with valid authorization credentials "Admin" user and correct data ID 4 and visitors_purpose "came for T113" and description "team7 demo presantation"
 
 
 
@@ -36,3 +35,5 @@ Feature: [API_US004] As an administrator, I want to update the registered visito
   (This can be confirmed by using the updateId returned in the response body to send a POST body
   to the api/visitorsPurposeId endpoint and verify the record is updated.)
 
+    * Set "api/visitorsPurposeUpdate" parameters
+    * Validation test by receiving status code 200 and message "success" when a Patch body is submitted to the "api/visitorsPurposeUpdate" endpoint with valid authorization credentials user "Admin" and correct data ID 4 and visitors_purpose "came for T113" and description "team7 demo presantation"
