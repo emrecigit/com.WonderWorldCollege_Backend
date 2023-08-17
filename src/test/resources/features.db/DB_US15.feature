@@ -6,3 +6,5 @@ Feature: JDBS_US_15
     * List the books query is prepared and run and the result is obtained
     * List the books query result is validated
     * Database connection is closed
+
+
