@@ -11,5 +11,11 @@ public class TestDataAdmin {
         return requestDeleteBody;
 
     }
+    public JSONObject alumniEventsRequestDeleteBody(){
+        JSONObject requestDeleteBody = new JSONObject();
+        requestDeleteBody.put("id",1196);
+        return requestDeleteBody;
+
+    }
 
 }
