@@ -27,7 +27,7 @@ import static org.junit.Assert.assertTrue;
 public class APIStepDefinition {
     /*
     Scope
-    Emre ÇİĞİT : 1-500
+    Emre ÇİĞİT : 1-500 //
     Nur YURTSEVEN : 501-1000
     İlknur DOĞANALP : 1001-1500
     Rümeysa ARAS : 1501-2000
