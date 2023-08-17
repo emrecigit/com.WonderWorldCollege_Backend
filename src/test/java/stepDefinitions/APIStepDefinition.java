@@ -12,6 +12,7 @@ import org.junit.Assert;
 import org.testng.asserts.SoftAssert;
 import pojos.pojoBooksUpdate;
 import testData.TestDataAdmin;
+import testData.TestDataAdmin1;
 import utilities.API_Utils;
 import static io.restassured.RestAssured.given;
 import io.cucumber.java.en.When;
@@ -2295,6 +2296,7 @@ public void a_post_body_with_valid_authorization_information_and_correct_data_is
 
         response.prettyPrint();
 
+
     }
 
 
@@ -2833,7 +2835,7 @@ public void a_post_body_with_valid_authorization_information_and_correct_data_is
         response.prettyPrint();
 
     }
-    @When("Verifies that record includes {string}")
+   /* @When("Verifies that record includes {string}")
     public void verifiesThatRecordIncludes(String expectedData) {
 
         JsonPath resJP = response.jsonPath();
@@ -2841,7 +2843,7 @@ public void a_post_body_with_valid_authorization_information_and_correct_data_is
         System.out.println(actualData);
         String[] expectedArr = expectedData.split(",");
 
-    }
+    }*/
     @Given("Patch body containing correct data is prepared rumeysa.")
     public void patch_body_containing_correct_data_is_prepared_rumeysa() {
         String fullPath=API_Utils.createfullPath("api/alumniUpdate");
@@ -2955,12 +2957,98 @@ public void a_post_body_with_valid_authorization_information_and_correct_data_is
  */
 
 
+    @Given("A books post body is sent to the {string} endpoint with valid authorization information and correct data {string}")
+    public void a_books_post_body_is_sent_to_the_endpoint_with_valid_authorization_information_and_correct_data(String string, String string2) {
+        JSONObject reqBody = new JSONObject();
 
+        reqBody.put("book_no", "241404");
+        reqBody.put("book_title", "İnsanın Yazgısı");
+        reqBody.put("isbn_no", "12052018");
+        reqBody.put("subject", "");
+        reqBody.put("rock_no", "300");
+        reqBody.put("publish", "Paradigma");
+        reqBody.put("author", "Nikolay Berdyaev");
+        reqBody.put("qty", "300");
+        reqBody.put("perunitcost", "11.0");
+        reqBody.put("postdate", "2023-08");
+        reqBody.put("description", "Felsefe severlere tavsiyedir.");
 
+        response = given()
+                .spec(HooksAPI.spec)
+                .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(reqBody.toString())
+                .post(fullPath);
 
+        response.prettyPrint();
+        jsonPath = response.jsonPath();
+    }
 
+    @Given("The successful books post creation of the new vehicle record via the API should be validated.")
+    public void the_successful_books_post_creation_of_the_new_vehicle_record_via_the_apı_should_be_validated() {
+        JSONObject reqBody = new JSONObject();
+        reqBody.put("id", 0);
 
+        response = given()
+                .spec(HooksAPI.spec)
+                .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + HooksAPI.tokenAdmin)
+                .when()
+                .body(reqBody.toString())
+                .post(fullPath);
 
+        response.prettyPrint();
+      //  System.out.println("BOOK ID BODY : " + reqBody);
+       // Assert.assertTrue(response.toString().contains("id = 0"));
+    }
+
+    @Given("Delete books body containing correct data is prepared.")
+    public void delete_books_body_containing_correct_data_is_prepared() {
+        TestDataAdmin1 testDataAdmin1 = new TestDataAdmin1();
+        JSONObject reqDeleteResponseBody = testDataAdmin1.requestDeleteBody();
+
+        response= given()
+                .spec(HooksAPI.spec)
+                .headers("Authorization","Bearer"+HooksAPI.tokenAdmin)
+                .contentType(ContentType.JSON)
+                .when()
+                .body(reqDeleteResponseBody.toString())
+                .delete("https://qa.wonderworldcollege.com/api/deleteBooks");
+
+        System.out.println("Request Delete Response Body : " + reqDeleteResponseBody);
+        response.prettyPrint();
+
+    }
+
+    @Given("It is verified that the DeletedBooksId in the response body is the same as the id in the request body.")
+    public void ıt_is_verified_that_the_deleted_books_ıd_in_the_response_body_is_the_same_as_the_id_in_the_request_body() {
+        JsonPath responseJP = response.jsonPath();
+        TestDataAdmin1 testDataAdmin1 = new TestDataAdmin1();
+        JSONObject reqDeleteResponseBody = testDataAdmin1.requestDeleteBody();
+        Assert.assertEquals(reqDeleteResponseBody.get("id"),responseJP.get("deleteId"));
+
+    }
+
+    @Given("The books deletion of the desired notice record through the API should be validated.")
+    public void the_books_deletion_of_the_desired_notice_record_through_the_apı_should_be_validated() {
+        TestDataAdmin1 testDataAdmin1 = new TestDataAdmin1();
+        JSONObject deleteByIdBody = testDataAdmin1.requestDeleteBody();
+        deleteByIdBody.put("id",292);
+        response= given()
+                .spec(HooksAPI.spec)
+                .headers("Authorization","Bearer"+HooksAPI.tokenAdmin)
+                .contentType(ContentType.JSON)
+                .when()
+                .body(deleteByIdBody.toString())
+                .post("https://qa.wonderworldcollege.com/api/getBooksById");
+
+        System.out.println("Delete By Id Body : " + deleteByIdBody);
+        response.prettyPrint();
+
+        Assert.assertEquals(response.statusCode(),403);
+
+    }
 
 
 
@@ -4627,8 +4715,8 @@ public void a_post_body_with_valid_authorization_information_and_correct_data_is
 
     @Given("Delete body containing correct data is prepared.")
     public void delete_body_containing_correct_data_is_prepared() {
-        TestDataAdmin testDataAdmin = new TestDataAdmin();
-        JSONObject reqDeleteResponseBody = testDataAdmin.requestDeleteBody();
+        TestDataAdmin1 testDataAdmin1 = new TestDataAdmin1();
+        JSONObject reqDeleteResponseBody = testDataAdmin1.requestDeleteBody();
         response= given()
                 .spec(HooksAPI.spec)
                 .headers("Authorization","Bearer"+HooksAPI.tokenAdmin)
@@ -4700,6 +4788,10 @@ public void a_post_body_with_valid_authorization_information_and_correct_data_is
     // Delete Body
     // @Given("when sending a DELETE body containing the correct data \\(id)")
     // public void when_sending_a_delete_body_containing_the_correct_data_id() {
+
+
+
+
 
 
 

@@ -74,7 +74,7 @@ Mehmet Şah OKUMUŞ :3501-4000
     @Given("E-mail query is prepared and run and the result is obtained")
     public void e_mail_query_is_prepared_and_run_and_the_result_is_obtained() throws SQLException {
 
-        query = "SELECT email FROM wonderworld_qa.online_admissions WHERE firstname LIKE '%al%';";
+        query = "SELECT email FROM wonderworld_qa2.online_admissions WHERE firstname LIKE '%al%';";
         rs = getStatement().executeQuery(query);
     }
     @Given("Email query result is validated")
@@ -90,7 +90,7 @@ Mehmet Şah OKUMUŞ :3501-4000
     @Given("Book-title query is prepared and run and the result is obtained")
     public void book_title_query_is_prepared_and_run_and_the_result_is_obtained() throws SQLException {
 
-        query1 = "SELECT book_title FROM wonderworld_qa.books WHERE author IN ('Rubina malik', 'MRV');";
+        query1 = "SELECT book_title FROM wonderworld_qa2.books WHERE author IN ('Rubina malik', 'MRV');";
         rs1 = getStatement().executeQuery(query1);
         System.out.println(getQueryResultList(query1));
     }
@@ -108,7 +108,7 @@ Mehmet Şah OKUMUŞ :3501-4000
     @Given("List the books query is prepared and run and the result is obtained")
     public void list_the_books_query_is_prepared_and_run_and_the_result_is_obtained() throws SQLException {
 
-        query2 = "SELECT qty FROM wonderworld_qa.books WHERE qty BETWEEN 100 AND 500;";
+        query2 = "SELECT qty FROM wonderworld_qa2.books WHERE qty BETWEEN 100 AND 500;";
         rs2 = getStatement().executeQuery(query2);
     }
 
