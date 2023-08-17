@@ -22,3 +22,12 @@ Feature: [API_US033] As an administrator, I want to access the Visitor List thro
 
   Scenario: [TC_03_API_US_033] To validate the response body, we should check that the lists
   content contains the data with id equal to "250" and the following information:
+
+
+    * Set "api/visitorsList" parameters
+    * Record the response of the endpoint "api/visitorsList" with the current authorization "Admin"
+    * From the data in the list returned from the response body "id: 250", data content "visitors_purpose: Marketing" and "created_at: 2023-07-30 12:56:18", validation test that
+
+
+
+
