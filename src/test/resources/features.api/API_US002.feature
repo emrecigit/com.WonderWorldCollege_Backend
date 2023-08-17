@@ -3,7 +3,6 @@ Feature: [API_US002] As an administrator, I want to access the Visitor Purpose i
 
 
 
-@api
   Scenario: [TC_01_API_US002] When a valid authorization information and correct data (ID)
   are sent in the POST body to the api/visitorsPurposeId endpoint, the expected status code is 200,
   and the message in the response body should be Success.
@@ -22,4 +21,10 @@ Feature: [API_US002] As an administrator, I want to access the Visitor Purpose i
     * Validates that when sending correct or incorrect data with id 2 to the "api/visitorsPurposeId" endpoint with invalid authorization "wrongToken", the status Code of the failed connection is 403 and the message is "Forbidden"
 
 
-  Scenario: [TC_03_API_US002] Response body icindeki list datalarının (id, visitors_purpose, description, created_at) içerikleri doğrulanmali.
+  Scenario: [TC_03_API_US002] The content of the list data (ID, visitors_purpose, description, created_at)
+  in the response body should be validated.
+
+    * Set "api/visitorsPurposeId" parameters
+    * A Post body is sent to the endpoint "api/visitorsPurposeId" with valid authorization credentials "Admin" user and correct id 3
+    * The content of the list data "3" and "Student Meeting" and "" and "2023-01-18 01:07:12" in the response body should be validated.
+

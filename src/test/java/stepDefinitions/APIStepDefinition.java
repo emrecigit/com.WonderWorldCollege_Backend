@@ -3,7 +3,6 @@ package stepDefinitions;
 import hooks.HooksAPI;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -12,24 +11,15 @@ import org.hamcrest.Matchers;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Assert;
-
 import org.testng.asserts.SoftAssert;
-
 import pojos.pojoBooksUpdate;
-
 import testData.TestDataAdmin;
-
 import utilities.API_Utils;
-
 import static io.restassured.RestAssured.given;
 //import hooks.API_Hooks;
-
-
 import io.cucumber.java.en.When;
 import io.restassured.path.json.JsonPath;
-
 import pojos.PojoAdmin;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,9 +27,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class APIStepDefinition {
-    String hataMesaji;
-    JsonPath jsonPath;
-
     /*
     Scope
     Emre ÇİĞİT : 1-500
@@ -51,6 +38,10 @@ public class APIStepDefinition {
     Mustafa ÖRS : 3001-3500
     Mehmet Şah OKUMUŞ :3501-4000
      */
+    String hataMesaji;
+    JsonPath jsonPath;
+    int addId;
+    int patchid;
     public static String fullPath;
     public static String tokenAll;
 
@@ -1329,9 +1320,10 @@ public class APIStepDefinition {
     }
     // [TC_01_US_002] Step2
     @Given("A Post body is sent to the endpoint {string} with valid authorization credentials {string} user and correct id {int}")
-    public void a_post_body_is_sent_to_the_endpoint_with_valid_authorization_credentials_user_and_correct_id(String rawPaths, String userType, Integer id) {
+    public void a_post_body_is_sent_to_the_endpoint_with_valid_authorization_credentials_user_and_correct_id(String rawPaths, String userType, int id) {
         fullPath = API_Utils.createfullPath(rawPaths);
         tokenAll = API_Utils.generateTokenAll(userType);
+        patchid =id;
 
         reqBodyJson = new JSONObject();
         reqBodyJson.put("id", id);
@@ -1390,10 +1382,207 @@ public class APIStepDefinition {
 
        // assertTrue(exceptionMessage.contains(""+statusCode));
        // assertTrue(exceptionMessage.contains(message));
+    }
+    @Given("The content of the list data {string} and {string} and {string} and {string} in the response body should be validated.")
+    public void the_content_of_the_list_data_and_and_and_in_the_response_body_should_be_validated(String id, String visitors_purpose, String description, String created_at) {
 
 
+        responseJsonPath = response.jsonPath();
+        Assert.assertEquals(id, responseJsonPath.get("lists.id"));
+        Assert.assertEquals(visitors_purpose, responseJsonPath.get("lists.visitors_purpose"));
+        Assert.assertEquals(description, responseJsonPath.get("lists.description"));
+        Assert.assertEquals(created_at, responseJsonPath.get("lists.created_at"));
+    }
+    @Given("A Post body is sent to the endpoint {string} with valid authorization credentials {string} user and correct datas visitors_purpose {string} and description {string}")
+    public void a_post_body_is_sent_to_the_endpoint_with_valid_authorization_credentials_user_and_correct_datas_visitors_purpose_and_description(String rawPaths, String userType, String visitors_purpose, String description) {
+
+
+         fullPath = API_Utils.createfullPath(rawPaths);
+         tokenAll = API_Utils.generateTokenAll(userType);
+
+         reqBodyJson = new JSONObject();
+         reqBodyJson.put("visitors_purpose", visitors_purpose);
+         reqBodyJson.put("description", description);
+
+         response = given()
+                 .spec(HooksAPI.spec)
+                 .contentType(ContentType.JSON)
+                 .headers("Authorization", "Bearer " + tokenAll)
+                 .when()
+                 .body(reqBodyJson.toString())
+                 .post(fullPath);
+
+         response.prettyPrint();
+         jsonPath = response.jsonPath();
+         addId = jsonPath.get("addId");
+        System.out.println(addId);
+     }
+
+    @Given("Validates that when sending correct or incorrect data with datas visitors_purpose {string} and description {string} to the {string} endpoint with invalid authorization {string}, the status Code of the failed connection is {int} and the message is {string}")
+    public void validates_that_when_sending_correct_or_incorrect_data_with_datas_visitors_purpose_and_description_to_the_endpoint_with_invalid_authorization_the_status_code_of_the_failed_connection_is_and_the_message_is(String visitors_purpose, String description, String rawPaths, String wrongToken, Integer statusCode, String message) {
+        fullPath = API_Utils.createfullPath(rawPaths);
+        reqBodyJson = new JSONObject();
+        reqBodyJson.put("visitors_purpose", visitors_purpose);
+        reqBodyJson.put("description", description);
+
+
+        try {
+            response = given()
+                    .spec(HooksAPI.spec)
+                    .contentType(ContentType.JSON)
+                    .headers("Authorization", "Bearer " + wrongToken)
+                    .when()
+                    .body(reqBodyJson.toString())
+                    .post(fullPath);
+        } catch (Exception e) {
+            exceptionMessage = e.getMessage();
+            System.out.println("Exception :"+exceptionMessage);
+        }
+        System.out.println(exceptionMessage);
+
+        try {
+            response = given()
+                    .spec(HooksAPI.spec)
+                    .headers("Authorization", "Bearer " + wrongToken)
+                    .contentType(ContentType.JSON)
+                    .when()
+                    .get(fullPath);
+        } catch (Exception e) {
+            exceptionMessage = e.getMessage();
+        }
+
+        System.out.println("Income Message :" + exceptionMessage);
+
+        System.out.println("Income Message :" + exceptionMessage);
+
+        assertTrue(exceptionMessage.contains(""+statusCode));
+        assertTrue(exceptionMessage.contains(message));
+
+        // assertTrue(exceptionMessage.contains(""+statusCode));
+        // assertTrue(exceptionMessage.contains(message));
+    }
+    @Given("A Patch body is sent to the endpoint {string} with valid authorization credentials {string} user and correct datas id {int} and visitors_purpose {string} and description {string}")
+    public void a_patch_body_is_sent_to_the_endpoint_with_valid_authorization_credentials_user_and_correct_datas_id_and_visitors_purpose_and_description(String rawPaths, String userType, Integer id , String visitors_purpose, String description) {
+        fullPath = API_Utils.createfullPath(rawPaths);
+        tokenAll = API_Utils.generateTokenAll(userType);
+
+        reqBodyJson = new JSONObject();
+
+        reqBodyJson.put("id", id);
+        reqBodyJson.put("Introducing Team 7", visitors_purpose);
+        reqBodyJson.put("Team 7's Demo Presentation", description);
+
+        response = given()
+                .spec(HooksAPI.spec)
+                .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + tokenAll)
+                .when()
+                .body(reqBodyJson.toString())
+                .patch(fullPath);
+        response = given()
+                .spec(HooksAPI.spec)
+                .headers("Authorization", "Bearer " + tokenAll)
+                .contentType(ContentType.JSON)
+                .when()
+                .get(fullPath);
+        response.prettyPrint();
+        jsonPath = response.jsonPath();
+        patchid =id;
+    }
+
+    @Given("Validates that when sending correct or incorrect data with datas id {int} and visitors_purpose {string} and description {string} to the {string} endpoint with invalid authorization {string}, the status Code of the failed connection is {int} and the message is {string}")
+    public void validates_that_when_sending_correct_or_incorrect_data_with_datas_id_and_visitors_purpose_and_description_to_the_endpoint_with_invalid_authorization_the_status_code_of_the_failed_connection_is_and_the_message_is(int id, String visitors_purpose, String description, String rawPaths, String wrongToken, Integer statusCode, String message) {
+        fullPath = API_Utils.createfullPath(rawPaths);
+        reqBodyJson = new JSONObject();
+        reqBodyJson.put("id", id);
+        reqBodyJson.put("visitors_purpose", visitors_purpose);
+        reqBodyJson.put("description", description);
+
+
+        try {
+            response = given()
+                    .spec(HooksAPI.spec)
+                    .contentType(ContentType.JSON)
+                    .headers("Authorization", "Bearer " + wrongToken)
+                    .when()
+                    .body(reqBodyJson.toString())
+                    .patch(fullPath);
+        } catch (Exception e) {
+            exceptionMessage = e.getMessage();
+            System.out.println("Exception :"+exceptionMessage);
+        }
+        System.out.println(exceptionMessage);
+
+        try {
+            response = given()
+                    .spec(HooksAPI.spec)
+                    .headers("Authorization", "Bearer " + wrongToken)
+                    .contentType(ContentType.JSON)
+                    .when()
+                    .get(fullPath);
+        } catch (Exception e) {
+            exceptionMessage = e.getMessage();
+        }
+
+        System.out.println("Income Message :" + exceptionMessage);
+
+        System.out.println("Income Message :" + exceptionMessage);
+
+        assertTrue(exceptionMessage.contains(""+statusCode));
+        assertTrue(exceptionMessage.contains(message));
+
+        // assertTrue(exceptionMessage.contains(""+statusCode));
+        // assertTrue(exceptionMessage.contains(message));
     }
 
 
+    @Given("The patch id number {int} sent in the patch query is compared with the update id {string} returned in the response body")
+    public void the_patch_id_number_sent_in_the_patch_query_is_compared_with_the_update_id_returned_in_the_response_body(Integer int1, String string) {
+
+    }
+
+    @Given("The AddId number returned in the response of the Post request sent to the {string} endpoint with the userType {string} and the body containing {string} and {string} is compared with the id number returned from the {string} post query to verify that the registration was successful.")
+    public void the_add_id_number_returned_in_the_response_of_the_post_request_sent_to_the_endpoint_with_the_user_type_and_the_body_containing_and_is_compared_with_the_id_number_returned_from_the_post_query_to_verify_that_the_registration_was_successful(String rawPaths, String userType, String visitors_purpose, String description, String rawPaths2) {
+
+        fullPath = API_Utils.createfullPath(rawPaths);
+        tokenAll = API_Utils.generateTokenAll(userType);
+
+        reqBodyJson = new JSONObject();
+        reqBodyJson.put("visitors_purpose", visitors_purpose);
+        reqBodyJson.put("description", description);
+
+        response = given()
+                .spec(HooksAPI.spec)
+                .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + tokenAll)
+                .when()
+                .body(reqBodyJson.toString())
+                .post(fullPath);
+
+        response.prettyPrint();
+        jsonPath = response.jsonPath();
+        addId = jsonPath.get("addId");
+        System.out.println("addId : "+addId);
+
+        fullPath = API_Utils.createfullPath(rawPaths2);
+        tokenAll = API_Utils.generateTokenAll(userType);
+        patchid =addId;
+        System.out.println("patch id : "+patchid);
+        reqBodyJson = new JSONObject();
+        reqBodyJson.put("id", patchid);
+
+        response = given()
+                .spec(HooksAPI.spec)
+                .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + tokenAll)
+                .when()
+                .body(reqBodyJson.toString())
+                .post(fullPath);
+        response.prettyPrint();
+        jsonPath = response.jsonPath();
+        String checkId = jsonPath.get("lists.id");
+        System.out.println("checkId : "+checkId);
+        Assert.assertEquals(""+patchid, checkId);
+    }
 
 }

@@ -1,13 +1,15 @@
-Feature :[API_US004] As an administrator, I want to update the registered visitor purpose information in the system through API connection.
+Feature: [API_US004] As an administrator, I want to update the registered visitor purpose information in the system through API connection.
 
 
-  Scenario: [TC_01_API_US004] When invalid authorization information or missing/wrong data (id) is
-  sent in the PATCH body (with visitors_purpose, description) to the api/visitorsPurposeUpdate
-  endpoint, the expected status code is 403, and the message in the response body should be "failed."
+  Scenario: [TC_01_API_US004] When valid authorization information and correct data
+  (id, visitors_purpose, description) are sent in the PATCH body to the
+  api/visitorsPurposeUpdate endpoint, the expected status code is 200,
+  and the message in the response body should be "Success."
 
-  api/visitorsPurposeUpdate endpoint'ine gecerli authorization bilgileri ve dogru datalar
-  (id, visitors_purpose, description) iceren bir PATCH body gönderildiginde dönen status code'in 200
-  oldugu ve response body'deki message bilgisinin "Success" oldugu dogrulanmali
+    * Set "api/visitorsPurposeUpdate" parameters
+    * A Patch body is sent to the endpoint "api/visitorsPurposeUpdate" with valid authorization credentials "Admin" user and correct datas id 4 and visitors_purpose "came for T113" and description "team7 demo presantation"
+    * Verifies that status code is 200
+    * Verifies that the message information is "Success"
 
 
 
@@ -15,7 +17,8 @@ Feature :[API_US004] As an administrator, I want to update the registered visito
   is sent in the PATCH body (with visitors_purpose, description) to the api/visitorsPurposeUpdate
   endpoint, the expected status code is 403, and the message in the response body should be "failed."
 
-
+    * Set "api/visitorsPurposeUpdate" parameters
+    * Validates that when sending correct or incorrect data with datas id 700 and visitors_purpose "Veli Ziyareti" and description "Veli Ziyareti İçin Gelindi" to the "api/visitorsPurposeAdd" endpoint with invalid authorization "wrongToken", the status Code of the failed connection is 403 and the message is "Forbidden"
 
 
 
@@ -23,7 +26,8 @@ Feature :[API_US004] As an administrator, I want to update the registered visito
   validated to be the same as the id information in the PATCH request body sent to the
   api/visitorsPurposeUpdate endpoint.
 
-
+    * Set "api/visitorsPurposeUpdate" parameters
+    * The patch id number 4 sent in the patch query is compared with the update id "update id" returned in the response body
 
 
 
