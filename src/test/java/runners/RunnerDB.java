@@ -17,8 +17,8 @@ import org.junit.runner.RunWith;
         },
         features = "src/test/resources/features.db",
         glue = {"stepDefinitions", "hooks"},
-        tags = "@db",
-        dryRun = false
+        tags = "@DB_19",
+        dryRun = true
 )
 public class RunnerDB {
 }
