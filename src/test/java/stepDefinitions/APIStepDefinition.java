@@ -42,6 +42,7 @@ public class APIStepDefinition {
     int patchid;
     public static String fullPath;
     public static String tokenAll;
+    String updateId;
 
     JSONObject jsonObject;
 
@@ -1763,10 +1764,36 @@ public class APIStepDefinition {
         // assertTrue(exceptionMessage.contains(""+statusCode));
         // assertTrue(exceptionMessage.contains(message));
     }
+    @Given("Comparison test with updateId in the response when submitting a Patch body to the endpoint {string} with valid authorization credentials {string} user and correct data ID {int} and visitors_purpose {string} and description {string}")
+    public void comparison_test_with_update_id_in_the_response_when_submitting_a_patch_body_to_the_endpoint_with_valid_authorization_credentials_user_and_correct_data_ıd_and_visitors_purpose_and_description(String rawPaths, String userType, Integer id, String visitors_purpose, String description) {
 
+        fullPath = API_Utils.createfullPath(rawPaths);
+        tokenAll = API_Utils.generateTokenAll(userType);
 
-    @Given("The patch id number {int} sent in the patch query is compared with the update id {string} returned in the response body")
-    public void the_patch_id_number_sent_in_the_patch_query_is_compared_with_the_update_id_returned_in_the_response_body(Integer int1, String string) {
+        reqBodyJson = new JSONObject();
+
+        reqBodyJson.put("id", id);
+        reqBodyJson.put("Introducing Team 7", visitors_purpose);
+        reqBodyJson.put("Team 7's Demo Presentation", description);
+
+        response = given()
+                .spec(HooksAPI.spec)
+                .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + tokenAll)
+                .when()
+                .body(reqBodyJson.toString())
+                .patch(fullPath);
+        response = given()
+                .spec(HooksAPI.spec)
+                .headers("Authorization", "Bearer " + tokenAll)
+                .contentType(ContentType.JSON)
+                .when()
+                .get(fullPath);
+        response.prettyPrint();
+        jsonPath = response.jsonPath();
+        Integer updateId = Integer.parseInt(jsonPath.get("updateId"));
+        System.out.println("updateId : " + updateId);
+        Assert.assertEquals(id,updateId);
 
     }
 
