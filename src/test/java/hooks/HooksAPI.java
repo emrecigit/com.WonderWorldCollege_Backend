@@ -34,13 +34,10 @@ public class HooksAPI {
         tokenStudent = API_Utils.generateTokenStudent();
         System.out.println("Student Tokenim : " + tokenStudent);
     }
- //  @Before(order = 1)
- //  public void beforeGenerateTokenAll(String userType, String rawPaths){
- //  tokenAll = API_Utils.generateTokenAll(userType, rawPaths);
- //      System.out.println("All Tokenim : " + tokenAll);
+    //  @Before(order = 1)
+    //  public void beforeGenerateTokenAll(String userType, String rawPaths){
+    //  tokenAll = API_Utils.generateTokenAll(userType, rawPaths);
+    //      System.out.println("All Tokenim : " + tokenAll);
 
 
-    }
-
-
-
+}

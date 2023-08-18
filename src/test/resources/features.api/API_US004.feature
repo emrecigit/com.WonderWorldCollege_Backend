@@ -13,26 +13,27 @@ Feature: [API_US004] As an administrator, I want to update the registered visito
 
 
 
-  Scenario: [TC_02_API_US004] When invalid authorization information or missing/wrong data (id)
-  is sent in the PATCH body (with visitors_purpose, description) to the api/visitorsPurposeUpdate
-  endpoint, the expected status code is 403, and the message in the response body should be "failed."
+Scenario: [TC_02_API_US004] When invalid authorization information or missing/wrong data (id)
+is sent in the PATCH body (with visitors_purpose, description) to the api/visitorsPurposeUpdate
+endpoint, the expected status code is 403, and the message in the response body should be "failed."
 
     * Set "api/visitorsPurposeUpdate" parameters
     * Validates that when sending correct or incorrect data with datas id 700 and visitors_purpose "Veli Ziyareti" and description "Veli Ziyareti İçin Gelindi" to the "api/visitorsPurposeAdd" endpoint with invalid authorization "wrongToken", the status Code of the failed connection is 403 and the message is "Forbidden"
 
 
 
-  Scenario: [TC03_API_US004] The updateId information in the response body should be
-  validated to be the same as the id information in the PATCH request body sent to the
-  api/visitorsPurposeUpdate endpoint.
+Scenario: [TC03_API_US004] The updateId information in the response body should be
+validated to be the same as the id information in the PATCH request body sent to the
+api/visitorsPurposeUpdate endpoint.
 
     * Set "api/visitorsPurposeUpdate" parameters
-    * The patch id number 4 sent in the patch query is compared with the update id "update id" returned in the response body
+    * Comparison test with updateId in the response when submitting a Patch body to the endpoint "api/visitorsPurposeUpdate" with valid authorization credentials "Admin" user and correct data ID 4 and visitors_purpose "came for T113" and description "team7 demo presantation"
 
 
 
+Scenario: [TC04_API_US004] The successful update of the visitor purpose record via the API should be validated.
+This can be confirmed by using the updateId returned in the response body to send a POST body
+to the api/visitorsPurposeId endpoint and verify the record is updated.
 
-  Scenario: [TC04_API_US004] The successful update of the visitor purpose record via the API should be validated.
-  (This can be confirmed by using the updateId returned in the response body to send a POST body
-  to the api/visitorsPurposeId endpoint and verify the record is updated.)
-
+    * Set "api/visitorsPurposeUpdate" parameters
+    * Validation test by receiving status code 200 and message "success" when a Patch body is submitted to the "api/visitorsPurposeUpdate" endpoint with valid authorization credentials user "Admin" and correct data ID 4 and visitors_purpose "came for T113" and description "team7 demo presantation"
