@@ -23,6 +23,7 @@
     <open-files />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="436808e9-2014-49ad-821e-3872f800339e" dataset="u168183796_qawonder.users" active-filter-id="" />
     <filter-actions connection-id="5fd620eb-e7db-4d0e-946e-70395a1216ff" dataset="wonderworld_qa2.alumni_events" active-filter-id="" />
     <filter-actions connection-id="5fd620eb-e7db-4d0e-946e-70395a1216ff" dataset="u168183796_qawonder.alumni_events" active-filter-id="EMPTY_FILTER">
       <filter id="7d6b81e7-0146-4b81-bd1d-a4ea95299a0f" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
