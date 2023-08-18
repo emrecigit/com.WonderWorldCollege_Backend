@@ -31,8 +31,12 @@ Feature: [API_US_001] As an administrator, I want to access the Purpose List thr
   to contain data with ID "1," where the visitors_purpose is "Marketing," and
   created_at is "2023-01-18 01:07:12."
 
+ //  * Data visitors to endpoint "api/visitorsPurposeList" with user type "Admin" for visitors purpose "Parent Teacher Meeting" and created at "2023-01-18 06:07:12" in the list with id number "2" must be verified
+
+
     * Set "api/visitorsPurposeList" parameters
     * Record the response of the endpoint "api/visitorsPurposeList" with the current authorization "Admin"
-    * The data visitors purpose "Parent Teacher Meeting" and created at "2023-01-18 01:07:12" in the list with id number "2" must be validated
+    * The data visitors purpose "Parent Teacher Meeting" and created at "2023-01-18 06:07:12" in the list with id number "2" must be validated
+
 
 
