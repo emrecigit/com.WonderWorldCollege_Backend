@@ -43,6 +43,8 @@ public class APIStepDefinition {
     public static String fullPath;
     public static String tokenAll;
     public static int updateId;
+    public static int deletedId;
+    public static int responseDeletedId;
     public static int statusCode;
 
     public static String message;
@@ -2708,8 +2710,98 @@ public class APIStepDefinition {
 
     }
 
+    @Given("For the record created in a Post query sent to the {string} endpoint with visitors_purpose {string} and description {string}, a Delete body is sent to the {string} endpoint with the valid authorization credentials {string} user and the id returned from the record response")
+    public void for_the_record_created_in_a_post_query_sent_to_the_endpoint_with_visitors_purpose_and_description_a_delete_body_is_sent_to_the_endpoint_with_the_valid_authorization_credentials_user_and_the_id_returned_from_the_record_response(String rawPathsPost, String visitors_purpose, String description, String rawPathsDelete, String userType) {
 
+        fullPath = API_Utils.createfullPath(rawPathsPost);
+        tokenAll = API_Utils.generateTokenAll(userType);
 
+        reqBodyJson = new JSONObject();
+        reqBodyJson.put("visitors_purpose", visitors_purpose);
+        reqBodyJson.put("description", description);
+
+        response = given()
+                .spec(HooksAPI.spec)
+                .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + tokenAll)
+                .when()
+                .body(reqBodyJson.toString())
+                .post(fullPath);
+
+        response.prettyPrint();
+        jsonPath = response.jsonPath();
+        addId = jsonPath.get("addId");
+        System.out.println("addId : " + addId);
+
+        fullPath = API_Utils.createfullPath(rawPathsDelete);
+        tokenAll = API_Utils.generateTokenAll(userType);
+        deletedId = addId;
+        System.out.println("Deleted id : " + deletedId);
+        reqBodyJson = new JSONObject();
+        reqBodyJson.put("id", deletedId);
+
+        response = given()
+                .spec(HooksAPI.spec)
+                .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + tokenAll)
+                .when()
+                .body(reqBodyJson.toString())
+                .delete(fullPath);
+        response.prettyPrint();
+        jsonPath = response.jsonPath();
+        responseDeletedId = jsonPath.get("DeletedId");
+        System.out.println("checkId : " + responseDeletedId);
+        Assert.assertEquals(deletedId, responseDeletedId);
+    }
+
+    @Given("For the record created in a Post query sent to the {string} endpoint with visitors_purpose {string} and description {string}, a Delete body is sent to the {string} endpoint with the current authorization credentials {string} user and the id returned from the record response, and a comparison test with the DeleteId in the response returned from it")
+    public void for_the_record_created_in_a_post_query_sent_to_the_endpoint_with_visitors_purpose_and_description_a_delete_body_is_sent_to_the_endpoint_with_the_current_authorization_credentials_user_and_the_id_returned_from_the_record_response_and_a_comparison_test_with_the_delete_ıd_in_the_response_returned_from_it(String rawPathsPost, String visitors_purpose, String description, String rawPathsDelete, String userType) {
+        fullPath = API_Utils.createfullPath(rawPathsPost);
+        tokenAll = API_Utils.generateTokenAll(userType);
+
+        reqBodyJson = new JSONObject();
+        reqBodyJson.put("visitors_purpose", visitors_purpose);
+        reqBodyJson.put("description", description);
+
+        response = given()
+                .spec(HooksAPI.spec)
+                .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + tokenAll)
+                .when()
+                .body(reqBodyJson.toString())
+                .post(fullPath);
+
+        response.prettyPrint();
+        jsonPath = response.jsonPath();
+        addId = jsonPath.get("addId");
+        System.out.println("addId : " + addId);
+
+        fullPath = API_Utils.createfullPath(rawPathsDelete);
+        tokenAll = API_Utils.generateTokenAll(userType);
+        deletedId = addId;
+        System.out.println("Deleted id : " + deletedId);
+        reqBodyJson = new JSONObject();
+        reqBodyJson.put("id", deletedId);
+
+        response = given()
+                .spec(HooksAPI.spec)
+                .contentType(ContentType.JSON)
+                .headers("Authorization", "Bearer " + tokenAll)
+                .when()
+                .body(reqBodyJson.toString())
+                .delete(fullPath);
+        response.prettyPrint();
+        jsonPath = response.jsonPath();
+        responseDeletedId = jsonPath.get("DeletedId");
+        System.out.println("Response Deleted Id : " + responseDeletedId);
+        statusCode = 200;
+        message = "Success";
+        String responseMessage = jsonPath.get("message");
+        int responseStatusCode = jsonPath.get("status");
+        Assert.assertEquals(deletedId, responseDeletedId);
+        Assert.assertEquals(statusCode,responseStatusCode);
+        Assert.assertEquals(message, responseMessage);
+    }
 
 
 
@@ -4022,11 +4114,7 @@ public class APIStepDefinition {
     // Delete Body
     // @Given("when sending a DELETE body containing the correct data \\(id)")
     // public void when_sending_a_delete_body_containing_the_correct_data_id() {
-
- */
-
-
-
+*/
 
 
 

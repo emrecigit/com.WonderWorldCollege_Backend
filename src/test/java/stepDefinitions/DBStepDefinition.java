@@ -73,7 +73,7 @@ Mehmet Şah OKUMUŞ :3501-4000
     @Given("E-mail query is prepared and run and the result is obtained")
     public void e_mail_query_is_prepared_and_run_and_the_result_is_obtained() throws SQLException {
 
-        query = "SELECT email FROM wonderworld_qa2.online_admissions WHERE firstname LIKE '%al%';";
+        query = "SELECT email FROM u168183796_qawonderuser.online_admissions WHERE firstname LIKE '%al%';";
         rs = getStatement().executeQuery(query);
     }
     @Given("Email query result is validated")
@@ -89,7 +89,7 @@ Mehmet Şah OKUMUŞ :3501-4000
     @Given("Book-title query is prepared and run and the result is obtained")
     public void book_title_query_is_prepared_and_run_and_the_result_is_obtained() throws SQLException {
 
-        query1 = "SELECT book_title FROM wonderworld_qa2.books WHERE author IN ('Rubina malik', 'MRV');";
+        query1 = "SELECT book_title FROM u168183796_qawonderuser.books WHERE author IN ('Rubina malik', 'MRV');";
         rs1 = getStatement().executeQuery(query1);
         System.out.println(getQueryResultList(query1));
     }
@@ -107,7 +107,7 @@ Mehmet Şah OKUMUŞ :3501-4000
     @Given("List the books query is prepared and run and the result is obtained")
     public void list_the_books_query_is_prepared_and_run_and_the_result_is_obtained() throws SQLException {
 
-        query2 = "SELECT qty FROM wonderworld_qa2.books WHERE qty BETWEEN 100 AND 500;";
+        query2 = "SELECT qty FROM u168183796_qawonderuser.books WHERE qty BETWEEN 100 AND 500;";
         rs2 = getStatement().executeQuery(query2);
     }
 
@@ -506,7 +506,7 @@ Mehmet Şah OKUMUŞ :3501-4000
     @Given("List the students query is prepared and run and the result is obtained")
     public void list_the_students_query_is_prepared_and_run_and_the_result_is_obtained() throws SQLException {
 
-        query4 = "SELECT lastname,firstname from wonderworld_qa.students WHERE admission_no<18011 AND  admission_no>18000;";
+        query4 = "SELECT lastname,firstname from u168183796_qawonder.students WHERE admission_no<18011 AND  admission_no>18000;";
         rs4 = getStatement().executeQuery(query4);
     }
     @Given("List the students query result is validated")
@@ -515,7 +515,7 @@ Mehmet Şah OKUMUŞ :3501-4000
     }
     @Given("List the mother name and mother occupation query is prepared and run and the result is obtained")
     public void list_the_mother_name_and_mother_occupation_query_is_prepared_and_run_and_the_result_is_obtained() throws SQLException {
-        query5 = "SELECT mother_occupation,mother_name from wonderworld_qa.students WHERE lastname LIKE 'T%';";
+        query5 = "SELECT mother_occupation,mother_name from u168183796_qawonderuser.students WHERE lastname LIKE 'T%';";
         rs5 = getStatement().executeQuery(query5);
     }
     @Given("List the mother name and mother occupation query result is validated")
@@ -524,7 +524,7 @@ Mehmet Şah OKUMUŞ :3501-4000
     }
     @Given("List the roll no query is prepared and run and the result is obtained")
     public void list_the_roll_no_query_is_prepared_and_run_and_the_result_is_obtained() throws SQLException {
-        query6 = "SELECT roll_no FROM wonderworld_qa.students WHERE father_occupation IN ('Doctor', 'Police') ORDER BY roll_no DESC;";
+        query6 = "SELECT roll_no FROM u168183796_qawonderuser.students WHERE father_occupation IN ('Doctor', 'Police') ORDER BY roll_no DESC;";
         rs6 = getStatement().executeQuery(query6);
     }
     @Given("List the roll no query result is validated")
