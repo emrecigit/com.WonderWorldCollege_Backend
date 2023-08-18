@@ -63,6 +63,13 @@ Mehmet Şah OKUMUŞ :3501-4000
     ResultSet rs5;
     String query6;
     ResultSet rs6;
+    String queryEC1;
+    ResultSet rsEC1;
+    String queryEC2;
+    ResultSet rsEC2;
+    String queryEC3;
+    ResultSet rsEC3;
+
 
     @Given("Database connection is established")
     public void database_connection_is_established() {
