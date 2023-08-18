@@ -1064,7 +1064,7 @@ public class APIStepDefinition {
                 .contentType(ContentType.JSON)
                 .when()
                 .body(vehicleDeleteReqDeleteResponseBody.toString())
-                .delete(fullPath);
+                .delete("https://qa.wonderworldcollege.com/api/vehicleDelete");
 
         System.out.println("Request Delete Response Body : " + vehicleDeleteReqDeleteResponseBody);
         response.prettyPrint();
