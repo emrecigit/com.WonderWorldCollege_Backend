@@ -7,21 +7,24 @@ Feature: [API_US_001] As an administrator, I want to access the Purpose List thr
   endpoint with valid authorization credentials, you would typically need to use a programming
   language or a tool to make the API request and perform the validation
 
- // * Records response for Admin with valid authorization information
-
     * Set "api/visitorsPurposeList" parameters
     * Record the response of the endpoint "api/visitorsPurposeList" with the current authorization "Admin"
     * Verifies that status code is 200
     * Verifies that the message information is "Success"
 
 
+
+
+
   Scenario:[TC_02_API_US_001] When invalid authorization information is sent with a GET request to the
   api/alumniEventsList endpoint the expected status code is 403,
   and the message in the response body should be "failed."
 
-
     * Set "api/visitorsPurposeList" parameters
     * Verifies that the Status Code of the failed connection from the endpoint "api/visitorsPurposeList" with invalid authorization "wrongToken" is "403" and the message is "Forbidden"
+
+
+
 
 
  Scenario: [TC_03_API_US_001] The content of the lists in the response body should be validated

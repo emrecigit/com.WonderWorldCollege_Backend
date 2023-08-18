@@ -25,6 +25,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class APIStepDefinition {
+
+    //public void ilk_verifies_that_status_code_is 289 914 - 2386
+    //a_post_body_is_sent_to_the_endpoint_with_valid_authorization_credentials_user_and_correct_id 2264
     /*
     Scope
     Emre ÇİĞİT : 1-500 //
@@ -284,24 +287,24 @@ public class APIStepDefinition {
         System.out.println("actualData = " + actualData);
     }
 
-      @Given("Verifies that status code is {int}.")
-      public void verifies_that_status_code_is(int statusCode) {
-          PojoAdmin obj = new PojoAdmin();
-          Map<String, Object> adminUpdateReqBody = obj.expectedDataMethod("12", "Art Activite", "art", "13", "null", "2023-11-14 00:00:00"
-                  , "2023-11-24 23:59:00", "Paint", "Art", "0");
-          Response response = null;
-          try {
-              response = given().spec(HooksAPI.spec).contentType(ContentType.JSON)
-                      .headers("Authorization", "Bearer " + HooksAPI.tokenStudent)
-                      .when()
-                      .body(adminUpdateReqBody)
-                      .patch(fullPath);
-          } catch (Exception e) {
-              hataMesaji = e.getMessage();
-          }
-          System.out.println(hataMesaji);
-          assertTrue(hataMesaji.contains("403"));
-      }
+//     @Given("Verifies that status code is {int}.")
+//     public void verifies_that_status_code_is(int statusCode) {
+//         PojoAdmin obj = new PojoAdmin();
+//         Map<String, Object> adminUpdateReqBody = obj.expectedDataMethod("12", "Art Activite", "art", "13", "null", "2023-11-14 00:00:00"
+//                 , "2023-11-24 23:59:00", "Paint", "Art", "0");
+//         Response response = null;
+//         try {
+//             response = given().spec(HooksAPI.spec).contentType(ContentType.JSON)
+//                     .headers("Authorization", "Bearer " + HooksAPI.tokenStudent)
+//                     .when()
+//                     .body(adminUpdateReqBody)
+//                     .patch(fullPath);
+//         } catch (Exception e) {
+//             hataMesaji = e.getMessage();
+//         }
+//         System.out.println(hataMesaji);
+//         assertTrue(hataMesaji.contains("403"));
+//     }
 
     @Given("It should be verified that the updateId information and the id information in the request body are the same.")
     public void ıt_should_be_verified_that_the_update_ıd_information_and_the_id_information_in_the_request_body_are_the_same() {
@@ -911,37 +914,37 @@ public class APIStepDefinition {
     }
 
 
-    @Given("Ilk Verifies that Status Code is {int}.")
-    public void ilk_verifies_that_status_code_is(Integer int1) {
-        JSONObject reqBody = new JSONObject();
+//    @Given("Ilk Verifies that Status Code is {int}.")
+//    public void ilk_verifies_that_status_code_is(Integer int1) {
+//        JSONObject reqBody = new JSONObject();
+//
+//        reqBody.put("vehicle_no", "BHC4584");
+//        reqBody.put("vehicle_model", "Volvo xc90");
+//        reqBody.put("vehicle_photo", "1577502339-191558462463fca783b26b0!fd.png");
+//        reqBody.put("manufacture_year", "2023");
+//        reqBody.put("registration_number", "FFG-76575676787");
+//        reqBody.put("chasis_number", "523422");
+//        reqBody.put("max_seating_capacity", "50");
+//        reqBody.put("driver_name", "Jasper");
+//        reqBody.put("driver_licence", "258714545");
+//        reqBody.put("driver_contact", "8521479630");
+//
+//        Response response = null;
+//        try {
+//            response = given().spec(HooksAPI.spec).contentType(ContentType.JSON)
+//                    .headers("Authorization", "Bearer " + HooksAPI.tokenStudent)
+//                    .when()
+//                    .body(reqBody.toString())
+//                    .patch(fullPath);
+//        } catch (Exception e) {
+//            hataMesaji = e.getMessage();
+//
+//        }
 
-        reqBody.put("vehicle_no", "BHC4584");
-        reqBody.put("vehicle_model", "Volvo xc90");
-        reqBody.put("vehicle_photo", "1577502339-191558462463fca783b26b0!fd.png");
-        reqBody.put("manufacture_year", "2023");
-        reqBody.put("registration_number", "FFG-76575676787");
-        reqBody.put("chasis_number", "523422");
-        reqBody.put("max_seating_capacity", "50");
-        reqBody.put("driver_name", "Jasper");
-        reqBody.put("driver_licence", "258714545");
-        reqBody.put("driver_contact", "8521479630");
+//       System.out.println(hataMesaji);
+//       assertTrue(hataMesaji.contains("403"));
 
-        Response response = null;
-        try {
-            response = given().spec(HooksAPI.spec).contentType(ContentType.JSON)
-                    .headers("Authorization", "Bearer " + HooksAPI.tokenStudent)
-                    .when()
-                    .body(reqBody.toString())
-                    .patch(fullPath);
-        } catch (Exception e) {
-            hataMesaji = e.getMessage();
-
-        }
-
-        System.out.println(hataMesaji);
-        assertTrue(hataMesaji.contains("403"));
-
-    }
+//   }
 
     @Given("Ilk the successful creation of the new vehicle record via the API should be validated")
     public void ılk_the_successful_creation_of_the_new_vehicle_record_via_the_apı_should_be_validated() {
@@ -2258,27 +2261,27 @@ public class APIStepDefinition {
 //   }
 
     // [TC_01_US_002] Step2
-    @Given("A Post body is sent to the endpoint {string} with valid authorization credentials {string} user and correct id {int}")
-    public void a_post_body_is_sent_to_the_endpoint_with_valid_authorization_credentials_user_and_correct_id(String rawPaths, String userType, Integer id) {
-        fullPath = API_Utils.createfullPath(rawPaths);
-        tokenAll = API_Utils.generateTokenAll(userType);
+//   @Given("A Post body is sent to the endpoint {string} with valid authorization credentials {string} user and correct id {int}")
+//   public void a_post_body_is_sent_to_the_endpoint_with_valid_authorization_credentials_user_and_correct_id(String rawPaths, String userType, Integer id) {
+//       fullPath = API_Utils.createfullPath(rawPaths);
+//       tokenAll = API_Utils.generateTokenAll(userType);
 
-        reqBodyJson = new JSONObject();
-        reqBodyJson.put("id", id);
+//       reqBodyJson = new JSONObject();
+//       reqBodyJson.put("id", id);
 
-        response = given()
-                .spec(HooksAPI.spec)
-                .contentType(ContentType.JSON)
-                .headers("Authorization", "Bearer " + tokenAll)
-                .when()
-                .body(reqBodyJson.toString())
-                .post(fullPath);
+//       response = given()
+//               .spec(HooksAPI.spec)
+//               .contentType(ContentType.JSON)
+//               .headers("Authorization", "Bearer " + tokenAll)
+//               .when()
+//               .body(reqBodyJson.toString())
+//               .post(fullPath);
 
-        response.prettyPrint();
-        jsonPath = response.jsonPath();
+//       response.prettyPrint();
+//       jsonPath = response.jsonPath();
 
 
-    }
+//   }
 
 //    @Given("Validates that when sending correct or incorrect data with id {int} to the {string} endpoint with invalid authorization {string}, the status Code of the failed connection is {int} and the message is {string}")
 //    public void validates_that_when_sending_correct_or_incorrect_data_with_id_to_the_endpoint_with_invalid_authorization_the_status_code_of_the_failed_connection_is_and_the_message_is(Integer id, String rawPaths, String wrongToken, Integer statusCode, String message) {
@@ -2383,37 +2386,37 @@ public class APIStepDefinition {
 
      */
 
-    @Given("Verifies that Status Code is {int}.")
-    public void verifies_that_status_code_is(Integer int1) {
-        JSONObject reqBody = new JSONObject();
+//   @Given("Verifies that Status Code is {int}.")
+//   public void verifies_that_status_code_is(Integer int1) {
+//       JSONObject reqBody = new JSONObject();
 
-        reqBody.put("vehicle_no", "BHC4584");
-        reqBody.put("vehicle_model", "Volvo xc90");
-        reqBody.put("vehicle_photo", "1577502339-191558462463fca783b26b0!fd.png");
-        reqBody.put("manufacture_year", "2023");
-        reqBody.put("registration_number", "FFG-76575676787");
-        reqBody.put("chasis_number", "523422");
-        reqBody.put("max_seating_capacity", "50");
-        reqBody.put("driver_name", "Jasper");
-        reqBody.put("driver_licence", "258714545");
-        reqBody.put("driver_contact", "8521479630");
+//       reqBody.put("vehicle_no", "BHC4584");
+//       reqBody.put("vehicle_model", "Volvo xc90");
+//       reqBody.put("vehicle_photo", "1577502339-191558462463fca783b26b0!fd.png");
+//       reqBody.put("manufacture_year", "2023");
+//       reqBody.put("registration_number", "FFG-76575676787");
+//       reqBody.put("chasis_number", "523422");
+//       reqBody.put("max_seating_capacity", "50");
+//       reqBody.put("driver_name", "Jasper");
+//       reqBody.put("driver_licence", "258714545");
+//       reqBody.put("driver_contact", "8521479630");
 
-        Response response = null;
-        try {
-            response = given().spec(HooksAPI.spec).contentType(ContentType.JSON)
-                    .headers("Authorization", "Bearer " + HooksAPI.tokenStudent)
-                    .when()
-                    .body(reqBody.toString())
-                    .patch(fullPath);
-        } catch (Exception e) {
-            hataMesaji = e.getMessage();
+//       Response response = null;
+//       try {
+//           response = given().spec(HooksAPI.spec).contentType(ContentType.JSON)
+//                   .headers("Authorization", "Bearer " + HooksAPI.tokenStudent)
+//                   .when()
+//                   .body(reqBody.toString())
+//                   .patch(fullPath);
+//       } catch (Exception e) {
+//           hataMesaji = e.getMessage();
 
-        }
+//       }
 
-        System.out.println(hataMesaji);
-        assertTrue(hataMesaji.contains("403"));
+//       System.out.println(hataMesaji);
+//       assertTrue(hataMesaji.contains("403"));
 
-    }
+//   }
 
 /* yorummm
     @Given("The successful creation of the new vehicle record via the API should be validated.")
