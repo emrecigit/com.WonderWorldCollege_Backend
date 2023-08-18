@@ -25,11 +25,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class APIStepDefinition {
-
     //public void ilk_verifies_that_status_code_is 289 914 - 2386
     //a_post_body_is_sent_to_the_endpoint_with_valid_authorization_credentials_user_and_correct_id 2264
-    /*
-    Scope
+    /*Scope
     Emre ÇİĞİT : 1-500 //
     Nur YURTSEVEN : 501-1000
     İlknur DOĞANALP : 1001-1500
@@ -37,22 +35,20 @@ public class APIStepDefinition {
     Merve DEMİRDÜZEN : 2001-2500
     Latife MERT : 2501-3000
     Mustafa ÖRS : 3001-3500
-    Mehmet Şah OKUMUŞ :3501-4000
-     */
-    String hataMesaji;
-    JsonPath jsonPath;
-    int addId;
-    int patchid;
+    Mehmet Şah OKUMUŞ :3501-4000*/
+    public static String hataMesaji;
+    public static JsonPath jsonPath;
+    public static int addId;
+    public static int patchid;
     public static String fullPath;
     public static String tokenAll;
-    String updateId;
+    public static int updateId;
+    public static int statusCode;
 
-    JSONObject jsonObject;
-
+    public static String message;
+    public static JSONObject jsonObject;
     public static RequestSpecification spec;
-    int actData;
-
-
+    public static int actData;
     JSONObject reqBodyJson;         // ReqBody Direk yazdirilabilir Put (Update)  Post (Create) Patch (İlave) body gondermek (gonderirken toString ile gonderilir)
     Response response;              // Response Database den body olarak donen cevap direk kullanilmaz JsonPath ile kullanilir.response.prettyPrint veya prettyPeek ile yazdirilabilir.
     JsonPath responseJsonPath;// Kendi Methodlari var Response dan bilgi almak ,kaydetmek ve yazdırmak icin kullanilir.Bu sekilde AssertTrue,Assert Equal testleri yapilabilir.
@@ -172,8 +168,10 @@ public class APIStepDefinition {
     }
 
     // List element verification test [TC_03_API_US_001]_Step3
+
     @Given("The data visitors purpose {string} and created at {string} in the list with id number {string} must be validated")
-    public void the_data_visitors_purpose_and_created_at_in_the_list_with_id_number_must_be_validated(String visitors_purpose, String created_at, String id) {
+  public void the_data_visitors_purpose_and_created_at_in_the_list_with_id_number_must_be_validated(String visitors_purpose, String created_at, String id) {
+
         response.prettyPrint();
         responseJsonPath = response.jsonPath();
         Assert.assertEquals(id, responseJsonPath.get("lists[0].id"));
@@ -1711,15 +1709,11 @@ public class APIStepDefinition {
                 .when()
                 .body(reqBodyJson.toString())
                 .patch(fullPath);
-        response = given()
-                .spec(HooksAPI.spec)
-                .headers("Authorization", "Bearer " + tokenAll)
-                .contentType(ContentType.JSON)
-                .when()
-                .get(fullPath);
+
         response.prettyPrint();
         jsonPath = response.jsonPath();
         patchid = id;
+        System.out.println("Patch id: " + patchid);
     }
 
     @Given("Validates that when sending correct or incorrect data with datas id {int} and visitors_purpose {string} and description {string} to the {string} endpoint with invalid authorization {string}, the status Code of the failed connection is {int} and the message is {string}")
@@ -1767,7 +1761,7 @@ public class APIStepDefinition {
         // assertTrue(exceptionMessage.contains(message));
     }
     @Given("Comparison test with updateId in the response when submitting a Patch body to the endpoint {string} with valid authorization credentials {string} user and correct data ID {int} and visitors_purpose {string} and description {string}")
-    public void comparison_test_with_update_id_in_the_response_when_submitting_a_patch_body_to_the_endpoint_with_valid_authorization_credentials_user_and_correct_data_ıd_and_visitors_purpose_and_description(String rawPaths, String userType, Integer id, String visitors_purpose, String description) {
+    public void comparison_test_with_update_id_in_the_response_when_submitting_a_patch_body_to_the_endpoint_with_valid_authorization_credentials_user_and_correct_data_ıd_and_visitors_purpose_and_description(String rawPaths, String userType, int id, String visitors_purpose, String description) {
 
         fullPath = API_Utils.createfullPath(rawPaths);
         tokenAll = API_Utils.generateTokenAll(userType);
@@ -1775,8 +1769,8 @@ public class APIStepDefinition {
         reqBodyJson = new JSONObject();
 
         reqBodyJson.put("id", id);
-        reqBodyJson.put("Introducing Team 7", visitors_purpose);
-        reqBodyJson.put("Team 7's Demo Presentation", description);
+        reqBodyJson.put("visitors_purpose", visitors_purpose);
+        reqBodyJson.put("description", description);
 
         response = given()
                 .spec(HooksAPI.spec)
@@ -1785,17 +1779,19 @@ public class APIStepDefinition {
                 .when()
                 .body(reqBodyJson.toString())
                 .patch(fullPath);
-        response = given()
-                .spec(HooksAPI.spec)
-                .headers("Authorization", "Bearer " + tokenAll)
-                .contentType(ContentType.JSON)
-                .when()
-                .get(fullPath);
+
         response.prettyPrint();
         jsonPath = response.jsonPath();
-        Integer updateId = Integer.parseInt(jsonPath.get("updateId"));
+        updateId = jsonPath.get("updateId");
         System.out.println("updateId : " + updateId);
+        statusCode =200;
+        message = "Success";
+        int responseCode = jsonPath.get("status");
+        String responseMessage = jsonPath.get("message");
         Assert.assertEquals(id,updateId);
+        Assert.assertEquals(statusCode,responseCode);
+        Assert.assertEquals(message,responseMessage);
+
 
     }
 
@@ -3935,10 +3931,6 @@ public class APIStepDefinition {
 
 
 
-
-
-
-
 /*
 
 
@@ -5000,19 +4992,8 @@ public class APIStepDefinition {
 
 
 
-
-
-
-
-
-
-
 //for (String each : expectedArr) {
 //    Assert.assertTrue(actualData.contains(each));
-
-
-
-
 
 
 

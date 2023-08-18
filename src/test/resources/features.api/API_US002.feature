@@ -26,5 +26,5 @@ Feature: [API_US002] As an administrator, I want to access the Visitor Purpose i
 
     * Set "api/visitorsPurposeId" parameters
     * A Post body is sent to the endpoint "api/visitorsPurposeId" with valid authorization credentials "Admin" user and correct id 3
-    * The content of the list data "3" and "Student Meeting" and "" and "2023-01-18 01:07:12" in the response body should be validated.
+    * The content of the list data "3" and "Student Meeting" and "" and "2023-01-18 06:07:12" in the response body should be validated.
 

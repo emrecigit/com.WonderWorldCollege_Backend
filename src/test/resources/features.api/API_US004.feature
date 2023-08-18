@@ -27,7 +27,7 @@ validated to be the same as the id information in the PATCH request body sent to
 api/visitorsPurposeUpdate endpoint.
 
     * Set "api/visitorsPurposeUpdate" parameters
-    * Comparison test with updateId in the response when submitting a Patch body to the endpoint "api/visitorsPurposeUpdate" with valid authorization credentials "Admin" user and correct data ID 4 and visitors_purpose "came for T113" and description "team7 demo presantation"
+    * Comparison test with updateId in the response when submitting a Patch body to the endpoint "api/visitorsPurposeUpdate" with valid authorization credentials "Admin" user and correct data ID 4 and visitors_purpose "Team7 is the best team among T113 batch teams" and description "Team7 Demo Presantation_Sprint:2"
 
 
 
@@ -36,4 +36,4 @@ This can be confirmed by using the updateId returned in the response body to sen
 to the api/visitorsPurposeId endpoint and verify the record is updated.
 
     * Set "api/visitorsPurposeUpdate" parameters
-    * Validation test by receiving status code 200 and message "success" when a Patch body is submitted to the "api/visitorsPurposeUpdate" endpoint with valid authorization credentials user "Admin" and correct data ID 4 and visitors_purpose "came for T113" and description "team7 demo presantation"
+    * Comparison test with updateId in the response when submitting a Patch body to the endpoint "api/visitorsPurposeUpdate" with valid authorization credentials "Admin" user and correct data ID 4 and visitors_purpose "Team7 is the best team among T113 batch teams" and description "Team7 Demo Presantation_Sprint:2"
