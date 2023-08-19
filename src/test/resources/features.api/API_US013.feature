@@ -1,5 +1,8 @@
+
 Feature: [API_US_013] As an administrator, I want to access the Vehicle List through API connection.
 
+
+  @api
   Scenario: [TC_01_API_US013] When a valid authorization information is used to send a GET request to the
   api/vehicleList endpoint,the expected status code is 200, and the message in the response body should be "Success."
 
@@ -11,15 +14,17 @@ Feature: [API_US_013] As an administrator, I want to access the Vehicle List thr
     * Verifies that the message information is "Success"
 
 
+
+
   Scenario:[TC_02_API_US_013] When invalid authorization information is used to send a GET request to the
   api/vehicleList endpoint, the expected status code is 403, and the message in the response body should be "failed."
-
 
     * Set "api/vehicleList" parameters
     * Verifies that the Status Code of the failed connection from the endpoint "api/vehicleList" with invalid authorization "wrongToken" is "403" and the message is "Forbidden"
 
 
 
+  @api
     Scenario: [TC_03_API_013] The content of the list in the response body should be validated. Specifically,
     the content of the data with ID "1" in the lists should have the following attributes: vehicle_no as "VH1001",
     vehicle_model as "Volvo Bus", vehicle_photo as "1677502387-149436744063fca7b3a1796!fd.png",

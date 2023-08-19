@@ -1,13 +1,16 @@
+
 Feature: [API_US_O16] As an administrator, I want to update the registered Vehicle information in the
   system through API connection.
 
 
+  @api
   Scenario: [TC_01_API_US016] When valid authorization information and correct data
   are sent in the PATCH body to the api/vehicleUpdate endpoint, the expected status code is 200,
   and the message in the response body should be "Success."
 
     * Set "api/vehicleUpdate" parameters
     * Patch Body with the correct data is sent
+
 
 
   Scenario: [TC_02_API_US016] When invalid authorization information or missing/incorrect data (id)

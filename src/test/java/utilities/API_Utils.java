@@ -33,7 +33,7 @@ public class API_Utils {
             String key = "pp" + i; // pp0 pp1 pp2
             String value = paths[i].trim();
             HooksAPI.spec.pathParam(key, value);
-            System.out.println(HooksAPI.spec.pathParam(key, value).toString());
+         //   System.out.println(HooksAPI.spec.pathParam(key, value).toString());
             tempPath.append(key + "}/{");
             /*
             tempPath.append(key);            temPath den alta doğru bu şekilde de devam edebilir.
@@ -48,7 +48,7 @@ public class API_Utils {
         tempPath.deleteCharAt(tempPath.lastIndexOf("{"));
         tempPath.deleteCharAt(tempPath.lastIndexOf("/"));
         fullPath = tempPath.toString();
-        System.out.println("Create fullPath = " + fullPath);
+      //  System.out.println("Create fullPath = " + fullPath);
         return fullPath;
     }
 

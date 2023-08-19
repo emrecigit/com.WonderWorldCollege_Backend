@@ -3,6 +3,7 @@ package hooks;
 import io.cucumber.java.Before;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;
+import org.junit.After;
 import utilities.ConfigReader;
 import utilities.API_Utils;
 
@@ -22,17 +23,17 @@ public class HooksAPI {
     @Before(order = 1)
     public void beforeGenerateTokenAdmin(){
         tokenAdmin = API_Utils.generateTokenAdmin();
-        System.out.println("Admin Tokenim : " + tokenAdmin);
+       // System.out.println("Admin Tokenim : " + tokenAdmin);
     }
     @Before(order = 1)
     public void beforeGenerateTokenTeacher(){
         tokenTeacher = API_Utils.generateTokenTeacher();
-        System.out.println("Teacher Tokenim : " + tokenTeacher);
+    //    System.out.println("Teacher Tokenim : " + tokenTeacher);
     }
     @Before(order = 1)
     public void beforeGenerateTokenStudent(){
         tokenStudent = API_Utils.generateTokenStudent();
-        System.out.println("Student Tokenim : " + tokenStudent);
+    //    System.out.println("Student Tokenim : " + tokenStudent);
     }
     //  @Before(order = 1)
     //  public void beforeGenerateTokenAll(String userType, String rawPaths){
