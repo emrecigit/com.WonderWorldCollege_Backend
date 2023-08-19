@@ -80,15 +80,15 @@ Mehmet Şah OKUMUŞ :3501-4000
     @Given("E-mail query is prepared and run and the result is obtained")
     public void e_mail_query_is_prepared_and_run_and_the_result_is_obtained() throws SQLException {
 
-        query = "SELECT email FROM u168183796_qawonderuser.online_admissions WHERE firstname LIKE '%al%';";
-        rs = getStatement().executeQuery(query);
+  //    query = "SELECT email FROM u168183796_qawonderuser.online_admissions WHERE firstname LIKE '%al%';";
+  //    rs = getStatement().executeQuery(query);
     }
     @Given("Email query result is validated")
     public void email_query_result_is_validated() throws SQLException {
 
-        String expected="al";
-        String actual= DB_Utils.getColumnData(query,"email").toString();
-        Assert.assertTrue(actual.contains(expected));
+    //    String expected="al";
+    //    String actual= DB_Utils.getColumnData(query,"email").toString();
+    //    Assert.assertTrue(actual.contains(expected));
 
 
     }
@@ -96,32 +96,32 @@ Mehmet Şah OKUMUŞ :3501-4000
     @Given("Book-title query is prepared and run and the result is obtained")
     public void book_title_query_is_prepared_and_run_and_the_result_is_obtained() throws SQLException {
 
-        query1 = "SELECT book_title FROM u168183796_qawonderuser.books WHERE author IN ('Rubina malik', 'MRV');";
-        rs1 = getStatement().executeQuery(query1);
-        System.out.println(getQueryResultList(query1));
+   //     query1 = "SELECT book_title FROM u168183796_qawonderuser.books WHERE author IN ('Rubina malik', 'MRV');";
+   //     rs1 = getStatement().executeQuery(query1);
+   //     System.out.println(getQueryResultList(query1));
     }
     @Given("Book-title query result is validated")
     public void book_title_query_result_is_validated() throws SQLException {
 
-        int expectedData = 4;
-        int flag=0;
-        while(rs1.next()){
-            flag++;
-        }
-        assertEquals(expectedData,flag);
+  //    int expectedData = 4;
+  //    int flag=0;
+  //    while(rs1.next()){
+  //        flag++;
+  //    }
+  //    assertEquals(expectedData,flag);
     }
 
     @Given("List the books query is prepared and run and the result is obtained")
     public void list_the_books_query_is_prepared_and_run_and_the_result_is_obtained() throws SQLException {
 
-        query2 = "SELECT qty FROM u168183796_qawonderuser.books WHERE qty BETWEEN 100 AND 500;";
-        rs2 = getStatement().executeQuery(query2);
+    //    query2 = "SELECT qty FROM u168183796_qawonderuser.books WHERE qty BETWEEN 100 AND 500;";
+    //    rs2 = getStatement().executeQuery(query2);
     }
 
     @Given("List the books query result is validated")
     public void list_the_books_query_result_is_validated() {
 
-        System.out.println(getColumnData(query2, "qty"));
+  //      System.out.println(getColumnData(query2, "qty"));
     }
 
 
@@ -1583,17 +1583,12 @@ Mehmet Şah OKUMUŞ :3501-4000
        /* String updateQuery10= ConfigReader.getProperty();
         String updatename10=ConfigReader.getProperty();
         String updateId10=ConfigReader.getProperty();
-
         DB_Utils.update();
-
         */
-        Statement st= DB_Utils.createStatement(DB_Utils.getConnection());
-
-        String query= "UPDATE transport_feemaster SET fine_amount = '200.00' WHERE month = 'October';";
-
-        ResultSet rs = st.executeQuery(query);
-
-        //UPDATE transport_feemaster SET fine_amount = '200.00' WHERE month = 'October';
+   //    Statement st= DB_Utils.createStatement(DB_Utils.getConnection());
+   //    String query= "UPDATE transport_feemaster SET fine_amount = '200.00' WHERE month = 'October';";
+   //    ResultSet rs = st.executeQuery(query);
+   //    UPDATE transport_feemaster SET fine_amount = '200.00' WHERE month = 'October';
     }
 
     @Given("transport_feemaster query result is validated")

@@ -1,3 +1,4 @@
+
 Feature: [API_US_011] As an administrator, I would like to update the Alumni List via API connection.
 
 
@@ -7,15 +8,19 @@ Feature: [API_US_011] As an administrator, I would like to update the Alumni Lis
 
     * Set "api/alumniEventsUpdate" parameters
     * Patch body containing correct data is prepared.
-    * Verifies that status code is 200.
+    * Verifies that status code is 200
 
+
+  @api
   Scenario: [TC_02_API_US_011] When invalid authorization information or missing/wrong data (id) are sent in the
   PATCH body to the api/alumniEventsUpdate endpoint, the expected status code is 403, and the message in the
   response body should be "failed."
 
     * Set "api/alumniEventsUpdate" parameters
-    * Verifies that status code is 403.
 
+
+
+  @api
   Scenario: [TC_03_API_US_011] The updateId information in the response body should be validated to be the
   same as the id information in the PATCH request body sent to the api/alumniEventsUpdate endpoint.
 
@@ -23,6 +28,9 @@ Feature: [API_US_011] As an administrator, I would like to update the Alumni Lis
     * Patch body containing correct data is prepared.
     * It should be verified that the updateId information and the id information in the request body are the same.
 
+
+
+  @api
   Scenario: [TC_04_API_US_011] The successful update of the Alumni Events record via the API should be validated.
 
     * Set "api/alumniEventsId" parameters

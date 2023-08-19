@@ -1,5 +1,9 @@
+
 Feature: [API_US_007] As an administrator, I want to access the Alumni List through API connection.
-  @nur
+
+
+
+  @api
   Scenario: [TC_01_API_US_007] Valid authorization information to api/alumniEventsList endpoint
   a GET request is sent with a GET request, the status code returned is 200 and the response message information
   "Success" must be confirmed.
@@ -9,6 +13,9 @@ Feature: [API_US_007] As an administrator, I want to access the Alumni List thro
     * Verifies that status code is 200
     * Verifies that the message information is "Success"
 
+
+
+
   Scenario: [TC_02_API_US_007] When invalid authorization information is sent with a GET request to the
   api/alumniEventsList endpoint the expected status code is 403,
   and the message in the response body should be "failed."
@@ -16,6 +23,10 @@ Feature: [API_US_007] As an administrator, I want to access the Alumni List thro
     * Set "api/alumniEventsList" parameters
     * Verifies that the Status Code of the failed connection from the endpoint "api/alumniEventsList" with invalid authorization "wrongToken" is "403" and the message is "Forbidden"
 
+
+
+
+  @api
   Scenario: [TC_03_API_US_007] The lists content in the response body must be validated.
 
     * Set "api/alumniEventsList" parameters

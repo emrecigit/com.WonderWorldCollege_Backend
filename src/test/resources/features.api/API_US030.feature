@@ -1,7 +1,9 @@
-Feature: As an administrator, I want to create a new Books record through API connection.
+
+Feature: [US_30] As an administrator, I want to create a new Books record through API connection.
 
 
-  Scenario: When valid authorization information and correct data are sent with a POST
+  @api
+  Scenario: [TC01_US_30] When valid authorization information and correct data are sent with a POST
             body to the api/booksAdd endpoint, the expected status code is 200, and the response
             body's message should be "Success."
 
@@ -11,7 +13,8 @@ Feature: As an administrator, I want to create a new Books record through API co
     * Verifies that the message information is "Success"
 
 
-  Scenario: When invalid authorization information or incomplete data is sent with a POST
+
+  Scenario: [TC02_US_30] When invalid authorization information or incomplete data is sent with a POST
             body to the api/booksAdd endpoint, the expected status code is 403, and the response
             body's message should be "failed."
 
@@ -19,7 +22,8 @@ Feature: As an administrator, I want to create a new Books record through API co
     * Verifies that the Status Code of the failed connection from the endpoint "api/booksList" with invalid authorization "wrongToken" is "403" and the message is "Forbidden"
 
 
-  Scenario: By using the returned addId in the response body, we can verify that a new book record has
+  @api
+  Scenario: [TC03_US_30] By using the returned addId in the response body, we can verify that a new book record has
             been successfully created through the API by sending a POST body to the api/booksId endpoint.
 
     * Set "api/booksId" parameters
