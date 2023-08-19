@@ -522,7 +522,7 @@ Mehmet Şah OKUMUŞ :3501-4000
     }
     @Given("List the mother name and mother occupation query is prepared and run and the result is obtained")
     public void list_the_mother_name_and_mother_occupation_query_is_prepared_and_run_and_the_result_is_obtained() throws SQLException {
-        query5 = "SELECT mother_occupation,mother_name from u168183796_qawonderuser.students WHERE lastname LIKE 'T%';";
+        query5 = "SELECT mother_name, mother_occupation FROM u168183796_qawonder.students WHERE lastname LIKE 'T%';";
         rs5 = getStatement().executeQuery(query5);
     }
     @Given("List the mother name and mother occupation query result is validated")
@@ -4207,6 +4207,74 @@ Mehmet Şah OKUMUŞ :3501-4000
 
 
 
+    @Given("Database connection is always Ready")
+    public void database_connection_is_always_ready() {
+        //Before Method running
+    }
+
+    @Given("Database connection is always closed")
+    public void database_connection_is_always_closed() {
+      //After Method running
+    }
+
+
+    @Given("A querry showing that the number of users with create_staff_id= {int} in the chat_users table in the database is {int} is prepared, run and saved.")
+    public void a_querry_showing_that_the_number_of_users_with_create_staff_id_in_the_chat_users_table_in_the_database_is_is_prepared_run_and_saved(Integer int1, Integer int2) throws SQLException {
+        queryEC1 = "SELECT COUNT(*) AS user_count FROM u168183796_qawonder.chat_users WHERE create_staff_id = 1;";
+        rsEC1= DB_Utils.getStatement().executeQuery(queryEC1);
+
+    }
+    @Given("Verify the query result")
+    public void verify_the_query_result() throws SQLException {
+     int actualUserNumber=0;
+        while (rsEC1.next()){
+        actualUserNumber =rsEC1.getInt("user_count");
+            System.out.println("actualUserNumber : "+actualUserNumber);
+     }
+        int expectedUserNumber =11;
+        Assert.assertEquals(expectedUserNumber,actualUserNumber);
+    }
+
+    @Given("A query that lists the ids of the contents with equal class_id and section data is prepared, run and saved from the data in the class_sections table in the database.")
+    public void a_query_that_lists_the_ids_of_the_contents_with_equal_class_id_and_section_data_is_prepared_run_and_saved_from_the_data_in_the_class_sections_table_in_the_database() throws SQLException {
+        queryEC2 = "SELECT id FROM u168183796_qawonder.class_sections WHERE class_id = section_id;";
+        rsEC2= DB_Utils.getStatement().executeQuery(queryEC2);
+    }
+
+    @Given("List and verify the query result")
+    public void list_and_verify_the_query_result() throws SQLException {
+        System.out.println("List of ids of content whose class_id and section_id are equal to each other : "+getColumnData(queryEC2, " id"));
+        int expectedlContent1 = 1;
+        int expectedContent2 = 5;
+        int actualContent1=0;
+        int actualContent2=0;
+        while (rsEC2.next()){
+        actualContent1=rsEC2.getInt("id");
+        System.out.println("actualContent1 : "+actualContent1);
+        rsEC2.next();
+        actualContent2=rsEC2.getInt("id");
+        System.out.println("actualContent2 : "+actualContent2);
+        }
+        Assert.assertEquals(expectedlContent1,actualContent1);
+        Assert.assertEquals(expectedContent2,actualContent2);
+    }
+
+    @Given("The query confirming that the email information of the student with firstname= Brian and lastname= Kohlar in the wonderworld_qa.students table over the database is prepared, run and saved.")
+    public void the_query_confirming_that_the_email_information_of_the_student_with_firstname_brian_and_lastname_kohlar_in_the_wonderworld_qa_students_table_over_the_database_is_prepared_run_and_saved() throws SQLException {
+        queryEC3 = "SELECT email FROM u168183796_qawonder.students WHERE firstname = 'Brian' AND lastname = 'Kohlar';";
+        rsEC3= DB_Utils.getStatement().executeQuery(queryEC3);
+    }
+
+    @Given("Verify the email in the query result")
+    public void verify_the_email_in_the_query_result() throws SQLException {
+        String expectedEmail="brain@gmail.com";
+        String actualEmail="";
+        while (rsEC3.next()){
+            actualEmail =rsEC3.getString("email");
+            System.out.println("actualEMail : "+actualEmail);
+        }
+       Assert.assertEquals(expectedEmail,actualEmail);
+    }
 
 
 

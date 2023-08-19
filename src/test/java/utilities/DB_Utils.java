@@ -12,24 +12,24 @@ public class DB_Utils {
     private static Statement statement;
     private static ResultSet resultSet;
 
-    //public static void createConnection()                                             31
-    //public static void updateQuery(String query)                                      45
-    //public static synchronized void update(String query)                              54
-    //public static void executeQuery(String query)                                     67
-    // public static void closeConnection()                                             86
-    //public static Connection getConnection()                                          103
-    //public static Statement getStatement()                                            119
-    //public static ResultSet getResultset()                                            132
-    // public static int get_Row_Count()                                                146
-    // public static Object get_Cell_Value(String query)                                157
-    // public static List<Object> get_Row_List(String query)                            166
-    // public static Map<String, Object> get_Row_Map(String query)                      175
-    // public static List<List<Object>> get_Query_Result_List(String query)             187
-    // public static List<Object> get_Column_Data(String query, String column)          214
-    // public static List<Map<String, Object>> get_Query_Result_Map(String query)       238
-    // public static List<String> get_Column_Names(String query)                        262
-    // public static void printResultSet(ResultSet resultSet)                           277
-    //  public static Statement createStatement(Connection con)                         294
+//public static void createConnection() Bağlantı Oluşturur                                                                  31
+//public static void updateQuery(String query) Güncelleme Sorgusu Guncellenen Satır sayısı dondurur                         45
+//public static synchronized void update(String query) Güncelleme Sorgusu Guncellenen Satır sayısı dondurur                 54
+//public static void executeQuery(String query) Sorgu çalıştırıp donen sonuçları resultsete depolar                         67
+//public static void closeConnection() Bağlantıyı sonlandırır                                                               86
+//public static Connection getConnection() Bağlanmaya ve querry de kullanılan connection oluşturur                          103
+//public static Statement getStatement()-veritabanına bağlı querryleri taşıyan statement oluşturur                          119
+//public static ResultSet getResultset() Sorgu sonıçlarını içeren ResultSet oluşturur                                       132
+// public static int get_Row_Count() ResultSet içindeki satır sayını elde eder                                              146
+// public static Object get_Cell_Value(String query) Result setin ilk hücresinin değerini dondurur                          157
+// public static List<Object> get_Row_List(String query) Result setin ilk satırını List olarak dondurur                     166
+// public static Map<String, Object> get_Row_Map(String query) Result setin ilk satırını Map olarak dondurur                175
+// public static List<List<Object>> get_Query_Result_List(String query) Result set öğelerini liste olarak dondurur          187
+// public static List<Object> get_Column_Data(String query, String column) Resultsette istenen sütunu List dondurur         213
+// public static List<Map<String, Object>> get_Query_Result_Map(String query) Resultsette her satiri Map olan List dondurur 236
+// public static List<String> get_Column_Names(String query) Result setteki sütun adlarını list olarak dondurur             260
+// public static void printResultSet(ResultSet resultSet) Resultset ogelerini yazdırmak için kullanılır                    277
+// public static Statement createStatement(Connection con) Querry leri taşıyan Statement oluşturmak için kullanilir         294
     public static void createConnection()  {
         String url=ConfigReader.getProperty("db_credentials_url");
         String username=ConfigReader.getProperty("db_username");
@@ -100,8 +100,6 @@ public class DB_Utils {
             e.printStackTrace();
         }
     }
-
-
     public static Connection getConnection() {
         String url = "";
         String username="";
@@ -144,7 +142,7 @@ public class DB_Utils {
 
 
 
-    // This method returns the number fo row in a table in the database
+    // This method returns the number for row in a table in the database
     public static int getRowCount() throws Exception {
         resultSet.last();
         int rowCount = resultSet.getRow();

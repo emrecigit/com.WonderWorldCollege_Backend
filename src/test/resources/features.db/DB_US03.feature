@@ -8,5 +8,5 @@ Feature: [DB_US03] Verify that there are 11 users in the chat_users table with c
 
     * Database connection is established
     * The query confirming that the email information of the student with firstname= Brian and lastname= Kohlar in the wonderworld_qa.students table over the database is prepared, run and saved.
-    * Verify the query result
+    * Verify the email in the query result
     * Database connection is closed
