@@ -531,7 +531,7 @@ Mehmet Şah OKUMUŞ :3501-4000
     }
     @Given("List the roll no query is prepared and run and the result is obtained")
     public void list_the_roll_no_query_is_prepared_and_run_and_the_result_is_obtained() throws SQLException {
-        query6 = "SELECT roll_no FROM u168183796_qawonderuser.students WHERE father_occupation IN ('Doctor', 'Police') ORDER BY roll_no DESC;";
+        query6 = "SELECT roll_no FROM u168183796_qawonder.students WHERE father_occupation IN ('Doctor', 'Police') ORDER BY roll_no DESC;";
         rs6 = getStatement().executeQuery(query6);
     }
     @Given("List the roll no query result is validated")

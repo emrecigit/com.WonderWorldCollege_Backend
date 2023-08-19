@@ -1,3 +1,4 @@
+@db
 Feature: [DB_US_004] List the firstname and lastname of students in the students table with admission
   numbers between 18001 and 18010.
 

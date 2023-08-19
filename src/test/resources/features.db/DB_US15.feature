@@ -1,5 +1,6 @@
+@db
 Feature: JDBS_US_15
-  @Merve
+
   Scenario: List the books from the books table where the quantity (qty) value is between 100 and 500.
 
     * Database connection is established

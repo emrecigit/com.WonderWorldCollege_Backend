@@ -1,6 +1,6 @@
-
+@db
 Feature: JDBS US_13
-  @Mina
+
   Scenario:List the email addresses of records in the online_admissions table where the firstname
            contains the word 'al'
 

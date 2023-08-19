@@ -1,3 +1,4 @@
+@db
 Feature: [DB_US_006] Database üzerinden students tablosundaki father_occupation değeri Doctor
   veya Police olan öğrencilerin roll_no bilgilerini büyükten küçüğe listeleyiniz.
 
