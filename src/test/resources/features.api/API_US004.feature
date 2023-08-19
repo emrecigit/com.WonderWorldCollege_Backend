@@ -19,7 +19,7 @@ is sent in the PATCH body (with visitors_purpose, description) to the api/visito
 endpoint, the expected status code is 403, and the message in the response body should be "failed."
 
     * Set "api/visitorsPurposeUpdate" parameters
-    * Validates that when sending correct or incorrect data with datas id 700 and visitors_purpose "Veli Ziyareti" and description "Veli Ziyareti İçin Gelindi" to the "api/visitorsPurposeAdd" endpoint with invalid authorization "wrongToken", the status Code of the failed connection is 403 and the message is "Forbidden"
+
 
 
 

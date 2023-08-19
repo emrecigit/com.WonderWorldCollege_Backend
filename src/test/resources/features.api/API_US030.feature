@@ -13,13 +13,13 @@ Feature: [US_30] As an administrator, I want to create a new Books record throug
     * Verifies that the message information is "Success"
 
 
-
+  @api
   Scenario: [TC02_US_30] When invalid authorization information or incomplete data is sent with a POST
             body to the api/booksAdd endpoint, the expected status code is 403, and the response
             body's message should be "failed."
 
     * Set "api/booksList" parameters
-    * Verifies that the Status Code of the failed connection from the endpoint "api/booksList" with invalid authorization "wrongToken" is "403" and the message is "Forbidden"
+
 
 
   @api

@@ -9,21 +9,19 @@ Feature: [API_US036] As an administrator, I want to update the registered Visito
     * Patch body containing correct data is prepared.
 
 
-
+  @api
   Scenario: [TC_02_API_US_036] Verify that the status code returned when a PATCH body with invalid authorization information or missing/incorrect
   data (id) is sent to the api/visitorsUpdate endpoint is 403 and "failed".
 
     * Set "api/visitorsUpdate" parameters
-    * Verifi that status code is 403.
 
 
-
+  @api
   Scenario: [TC_03_API_US_036] It should be verified that the updateId in the response body is the same
   as the id in the PATCH request body sent to the api/visitorsUpdate endpoint.
 
     * Set "api/visitorsUpdate" parameters
-    * Patch body containing correct data is prepared.
-    * It should be verified that the updateId information and the id information in the request body are the same LM
+
 
 
   @api

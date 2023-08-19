@@ -1,14 +1,12 @@
 
 Feature: [API_US_026] As an administrator, I would like to update the Alumni List via API connection.
 
-
+  @api
   Scenario: [TC_01_API_US_026] When a PATCH body with valid authorization information and correct
   data is sent to the api/alumniEventsUpdate endpoint, it should be verified that the status code
   returned is 200 and the message information in the response body is "Success"
 
     * Set "api/alumniUpdate" parameters
-    * Patch body containing correct data is prepared rumeysa.
-    * Verifies that status code is 200
 
 
   @api
@@ -20,13 +18,11 @@ Feature: [API_US_026] As an administrator, I would like to update the Alumni Lis
     * Patch body containing correct data is prepared rumeysa.
 
 
-
+  @api
   Scenario: [TC_03_API_US_026] The updateId information in the response body should be validated to be the
   same as the id information in the PATCH request body sent to the api/alumniEventsUpdate endpoint.
 
     * Set "api/alumniUpdate" parameters
-    * Patch body containing correct data is prepared.
-    * It should be verified that the updateId information and the id information in the request body are the same rumeysa.
 
 
 

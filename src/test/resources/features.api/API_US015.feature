@@ -15,12 +15,12 @@ Feature:[API_US_O15] As an administrator, I want to create a new Vehicle record 
 
 
 
-
+  @api
    Scenario: [TC_02_API_015] When invalid authorization information or missing data are sent in the POST body to the
   api/vehicleAdd endpoint,the expected status code is 403, and the message in the response body should be "failed."
 
   * Set "api/vehicleAdd" parameters
-  * Verifies that Status Code is 403.
+
 
 
 

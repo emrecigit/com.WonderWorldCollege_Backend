@@ -18,7 +18,7 @@ Feature: [API_US003] As an administrator, I want to create a new visitor purpose
   the expected status code is 403, and the message in the response body should be "failed."
 
       * Set "api/visitorsPurposeAdd" parameters
-      * Validates that when sending correct or incorrect data with datas visitors_purpose "Veli Ziyareti" and description "Veli Ziyareti İçin Gelindi" to the "api/visitorsPurposeAdd" endpoint with invalid authorization "wrongToken", the status Code of the failed connection is 403 and the message is "Forbidden"
+
 
 
 

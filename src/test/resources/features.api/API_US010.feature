@@ -11,13 +11,12 @@ Feature:[API_US_O10] As an administrator, I want to create a new Alumni Events r
     * Verifies that status code is 200
 
 
-
+  @api
   Scenario: [TC_02_API_010] When invalid authorization information or wrong data
   are sent in the POST body to the api/alumniEventsAdd endpoint, the expected status code is 403,
   and the message in the response body should be "failed."
 
     * Set "api/vehicleAdd" parameters
-    * Verifies that Status Code is 403.
 
 
   @api

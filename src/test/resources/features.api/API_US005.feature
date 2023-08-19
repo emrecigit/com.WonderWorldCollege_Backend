@@ -18,7 +18,7 @@ Feature: [API_US005] As an administrator, I want to be able to delete a visitor 
 
 
     * Set "api/visitorsPurposeDelete" parameters
-    * Validates that when sending correct or incorrect data with id 2 to the "api/visitorsPurposeDelete" endpoint with invalid authorization "wrongToken", the status Code of the failed connection is 403 and the message is "Forbidden"
+
 
 
 

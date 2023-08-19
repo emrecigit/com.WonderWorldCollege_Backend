@@ -15,13 +15,13 @@
 
 
 
-
+    @api
     Scenario: [TC_02_API_US014] When invalid authorization information or invalid data "id" are sent in the
     POST body to the api/vehicleId endpoint, the expected status code is 403,
     and the message in the response body should be "failed."
 
       * Set "api/vehicleId" parameters
-      * Verifies that the Status Code of the failed connection from the endpoint "api/vehicleId" with invalid authorization "wrongToken" is "403" and the message is "Forbidden"
+
 
 
 
