@@ -1,6 +1,7 @@
+@db
 Feature: JDBS_US_14
 
-  @Yusuf
+
   Scenario: List the book titles of books in the books table where the author data is 'Rubina Malik'
   or 'MRV'
 

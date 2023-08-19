@@ -1,3 +1,4 @@
+@db
 Feature: [DB_US_005] Database üzerinden students tablosundaki lastname bilgisi 'T' ile başlayan
   öğrencinin mother_name ve mother:occupation degrlerini listeleyiniz.
 

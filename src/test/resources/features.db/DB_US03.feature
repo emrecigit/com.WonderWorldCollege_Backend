@@ -1,3 +1,4 @@
+@db
 Feature: [DB_US03] Verify that there are 11 users in the chat_users table with create_staff_id equal to 1.
 
 

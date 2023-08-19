@@ -1,3 +1,4 @@
+@db
 Feature: [DB_US_10] A specific entry should be deletable from the visitors_book table
 
 

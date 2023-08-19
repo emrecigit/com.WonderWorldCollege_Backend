@@ -1,3 +1,4 @@
+@db
 Feature: [DB_US16] List the last 10 records from the online_admissions table.
 
 
