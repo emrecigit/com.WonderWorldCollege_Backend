@@ -8,5 +8,5 @@ Feature: [DB_US02] Verify that there are 11 users in the chat_users table with c
 
     * Database connection is established
     * A query that lists the ids of the contents with equal class_id and section data is prepared, run and saved from the data in the class_sections table in the database.
-    * Verify the query result
+    * List and verify the query result
     * Database connection is closed
