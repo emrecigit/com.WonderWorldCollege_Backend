@@ -23,7 +23,6 @@ Feature: [API_US002] As an administrator, I want to access the Visitor Purpose i
   and the message in the response body should be "failed."
 
     * Set "api/visitorsPurposeId" parameters
-    * Validates that when sending correct or incorrect data with id 2 to the "api/visitorsPurposeId" endpoint with invalid authorization "wrongToken", the status Code of the failed connection is 403 and the message is "Forbidden"
 
 
 

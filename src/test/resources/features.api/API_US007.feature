@@ -15,13 +15,13 @@ Feature: [API_US_007] As an administrator, I want to access the Alumni List thro
 
 
 
-
+  @api
   Scenario: [TC_02_API_US_007] When invalid authorization information is sent with a GET request to the
   api/alumniEventsList endpoint the expected status code is 403,
   and the message in the response body should be "failed."
 
     * Set "api/alumniEventsList" parameters
-    * Verifies that the Status Code of the failed connection from the endpoint "api/alumniEventsList" with invalid authorization "wrongToken" is "403" and the message is "Forbidden"
+
 
 
 

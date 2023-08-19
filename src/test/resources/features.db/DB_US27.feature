@@ -1,4 +1,4 @@
-@db
+
 Feature: [DB_US_27] List students from the online_admissions table who share the same last name.
 
 

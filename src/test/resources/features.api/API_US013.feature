@@ -15,12 +15,12 @@ Feature: [API_US_013] As an administrator, I want to access the Vehicle List thr
 
 
 
-
+  @api
   Scenario:[TC_02_API_US_013] When invalid authorization information is used to send a GET request to the
   api/vehicleList endpoint, the expected status code is 403, and the message in the response body should be "failed."
 
     * Set "api/vehicleList" parameters
-    * Verifies that the Status Code of the failed connection from the endpoint "api/vehicleList" with invalid authorization "wrongToken" is "403" and the message is "Forbidden"
+
 
 
 

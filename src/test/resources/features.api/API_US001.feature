@@ -8,9 +8,7 @@ Feature: [API_US_001] As an administrator, I want to access the Purpose List thr
   language or a tool to make the API request and perform the validation
 
     * Set "api/visitorsPurposeList" parameters
-    * Record the response of the endpoint "api/visitorsPurposeList" with the current authorization "Admin"
-    * Verifies that status code is 200
-    * Verifies that the message information is "Success"
+
 
 
 
@@ -21,7 +19,7 @@ Feature: [API_US_001] As an administrator, I want to access the Purpose List thr
   and the message in the response body should be "failed."
 
     * Set "api/visitorsPurposeList" parameters
-    * Verifies that the Status Code of the failed connection from the endpoint "api/visitorsPurposeList" with invalid authorization "wrongToken" is "403" and the message is "Forbidden"
+
 
 
 

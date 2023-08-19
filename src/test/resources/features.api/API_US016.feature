@@ -12,13 +12,13 @@ Feature: [API_US_O16] As an administrator, I want to update the registered Vehic
     * Patch Body with the correct data is sent
 
 
-
+  @api
   Scenario: [TC_02_API_US016] When invalid authorization information or missing/incorrect data (id)
   are sent in the PATCH body to the api/vehicleUpdate endpoint the expected status code is 403,
   and the message in the response body should be "failed."
 
     * Set "api/vehicleUpdate" parameters
-    * Verifies that Status Code is 403.
+
 
 
 

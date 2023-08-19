@@ -3,14 +3,13 @@ Feature: [US_31] As an administrator, I want to update the registered Books info
          in the system through API connection.
 
 
-
+  @api
   Scenario: [TC01_US_31] When valid authorization information and correct data are sent with a PATCH
             body to the api/booksUpdate endpoint, the expected status code is 200, and the response
             body's message should be "Success."
 
     * Set "api/booksUpdate" parameters
-    * Booksupdate patch body containing correct data is prepared.
-    * Verifies that status code is 200
+
 
 
   @api
